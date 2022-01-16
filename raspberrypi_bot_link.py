@@ -27,5 +27,7 @@ async def ping(ctx: ApplicationContext, message: str):
     """Pings the gamer with the given message"""
     # TODO: send message to PyBadge
     await ctx.respond("Pinging {0} with your message!".format(MY_NAME))
+    
+# Test commit
 
 bot.run(secrets["login-token"])
