@@ -7,8 +7,8 @@ from secrets import secrets
 
 # Initialize Bluetooth-related objects
 ble = BLERadio()
-#uart = UARTService()
-#advertisement = ProvideServicesAdvertisement(uart)
+uart = UARTService()
+advertisement = ProvideServicesAdvertisement(uart)
 uart_connection = None
 
 # Connect to the PyBadge if connection exists
