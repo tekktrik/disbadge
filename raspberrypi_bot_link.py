@@ -41,7 +41,7 @@ async def bluetooth_functionality():
                 ble.stop_scan() # Stop scanning whether or not we are connected
 
         # Main code that only executes while Pi is connected to PyBadge
-        while uart_connection and uart_connection.connect:
+        while uart_connection and uart_connection.connected:
             print("Connected!")
 
 # Prepare Discord bot
