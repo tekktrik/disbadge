@@ -115,3 +115,6 @@ dmypy.json
 
 # CircuitPython-specific files
 secrets.py
+
+# VS Code helper files
+.vscode
