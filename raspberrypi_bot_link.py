@@ -6,15 +6,15 @@ from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
 from secrets import secrets
 
+# Define variables used throughout Discord bot
+MY_NAME = "Tekktrik"
+MY_NUMBER = "0458"
+
 # Initialize Bluetooth-related objects
 ble = BLERadio()
 uart = UARTService()
 advertisement = ProvideServicesAdvertisement(uart)
 uart_connection = None
-
-# Define variables used throughout Discord bot
-MY_NAME = "Tekktrik"
-MY_NUMBER = "0458"
 
 async def bluetooth_functionality():
     # Connect to the PyBadge if connection exists
