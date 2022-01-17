@@ -7,14 +7,38 @@ from secrets import secrets
 
 # Initialize Bluetooth-related objects
 ble = BLERadio()
-uart = UARTService()
-advertisement = ProvideServicesAdvertisement(uart)
+#uart = UARTService()
+#advertisement = ProvideServicesAdvertisement(uart)
+uart_connection = None
 
-# Set up Bluetooth connection
-ble.start_advertising(advertisement)
+# Connect to the PyBadge if connection exists
+print(ble.connected)
+if ble.connected:
+    for connection in ble.connections:
+        if UARTService in connection:
+            uart_connection = connection
+        break
+
+# Main loop
+while True:
+    
+    # Set up Bluetooth connection
+    if not uart_connection or not uart_connection.connected:
+        print("Scanning...")
+        for adv in ble.start_scan(ProvideServicesAdvertisement, timeout=5): # Scan...
+            if UARTService in adv.services: # If UARTService found...
+                print("Found a UARTService advertisement!")
+                uart_connection = ble.connect(adv) # Create a UART connection
+                break # No need to scan any more
+            ble.stop_scan() # Stop scanning whether or not we are connected
+
+    # Main code that only executes while Pi is connected to PyBadge
+    while uart_connection and uart_connection.connect:
+        print("Connected!")
 
 # Define variables used throughout Discord bot
 MY_NAME = "Tekktrik"
+MY_NUMBER = "0458"
 
 # Prepare Discord bot
 bot = discord.Bot()
