@@ -1,9 +1,10 @@
 import discord
 from discord.commands.context import ApplicationContext
 import asyncio
-from adafruit_ble import BLERadio
+from adafruit_ble import BLERadio, BLEConnection
 from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
+from typing import Optional
 from secrets import secrets
 
 # Define variables used throughout Discord bot
@@ -17,6 +18,7 @@ advertisement = ProvideServicesAdvertisement(uart)
 uart_connection = None
 
 async def bluetooth_functionality():
+    uart_connection: Optional[BLEConnection]
     # Connect to the PyBadge if connection exists
     if ble.connected:
         for connection in ble.connections:
@@ -31,6 +33,7 @@ async def bluetooth_functionality():
         if not uart_connection or not uart_connection.connected:
             print("Scanning...")
             for adv in ble.start_scan(ProvideServicesAdvertisement, timeout=5): # Scan...
+                adv: ProvideServicesAdvertisement
                 if UARTService in adv.services: # If UARTService found...
                     print("Found a UARTService advertisement!")
                     uart_connection = ble.connect(adv) # Create a UART connection
