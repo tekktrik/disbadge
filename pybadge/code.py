@@ -42,10 +42,6 @@ bg_sprite = displayio.TileGrid(color_bitmap,
                                x=0, y=0)
 splash.append(bg_sprite)
 
-# Load the Hello font
-large_font = bitmap_font.load_font(MESSAGE_FONTNAME)
-large_font.load_glyphs(HELLO_STRING.encode('utf-8'))
-
 # Setup and Center the Hello Label
 hello_label = Label(large_font, text=HELLO_STRING)
 (x, y, w, h) = hello_label.bounding_box
