@@ -13,11 +13,11 @@ class CommandType:
 
 class DiscordMessageBase:
 
-    def __init__(self, message: str, username: Optional[str] = None, cmd_type: Optional[int] = None) -> None:
+    def __init__(self, message: str, user: Optional[str] = None, cmd_type: Optional[int] = None) -> None:
 
-        self.message = message
-        self.username = username
-        self.cmd_type = cmd_type
+        self._message = message
+        self._user = user
+        self._cmd_type = cmd_type
 
     def __repr__(self) -> str:
         return "{0}: {1}".format(self.username, self.message)
