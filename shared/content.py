@@ -30,7 +30,7 @@ class DiscordMessageBase:
             if other.message == self.message and other.username == self.username:
                 return True
             return False
-        raise ValueError("Can only compare to other Discord messages")
+        raise TypeError("Can only compare to other Discord messages")
 
     @property
     def user(self) -> str:
