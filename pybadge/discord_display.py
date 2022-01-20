@@ -15,7 +15,7 @@ MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 class DiscordMessageGroup(content.DiscordMessageBase, displayio.Group):
     """Display class for Discord messages"""
 
-    def __init__(self, message: str, username: str, dark_mode: bool = True) -> None:
+    def __init__(self, message: str, username: str, cmd_type: int, dark_mode: bool = True) -> None:
 
         super().__init__(message, username)
 
