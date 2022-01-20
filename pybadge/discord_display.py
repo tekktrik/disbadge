@@ -5,11 +5,11 @@ import shared.layout_helper as layout
 import shared.content as content
 
 # Load the title font
-TITLE_FONTNAME = "/fonts/cozette.bdf"
+TITLE_FONTNAME = "/fonts/cherry-13-b.bdf"
 TITLE_FONT = bitmap_font.load_font(TITLE_FONTNAME)
 
 # Load the message font
-MESSAGE_FONTNAME = "/fonts/Tewi-11.bdf"
+MESSAGE_FONTNAME = "/fonts/cherry-11-r.bdf"
 MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 
 class DiscordMessageGroup(content.DiscordMessageBase, displayio.Group):
