@@ -2,6 +2,9 @@ import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
 
+# Load the title and message font
+TITLE_FONTNAME = "/fonts/cozette.bdf"
+TITLE_FONT = bitmap_font.load_font(TITLE_FONTNAME)
 MESSAGE_FONTNAME = "/fonts/Tewi-11.bdf"
 MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 
@@ -12,7 +15,7 @@ class DiscordMessage(displayio.Group):
         super().__init__()
 
         text_color = 0xFFFFFF if dark_mode else 0x000000
-        self.username_label = Label(MESSAGE_FONT, text=username, color=text_color, y=8)
+        self.username_label = Label(TITLE_FONT, text=username, color=text_color, y=8)
         self.append(self.username_label)
 
         message_lines = DiscordMessage._wrap_nicely(message, 26)
