@@ -17,7 +17,8 @@ class DiscordMessageGroup(content.DiscordMessageBase, displayio.Group):
 
     def __init__(self, message: str, username: str, cmd_type: int, dark_mode: bool = True) -> None:
 
-        super().__init__(message, username)
+        content.DiscordMessageBase.__init__(message, username, cmd_type)
+        displayio.Group.__init__()
 
         text_color = 0xFFFFFF if dark_mode else 0x000000
         self.username_label = Label(TITLE_FONT, text=username, color=text_color, y=8)
