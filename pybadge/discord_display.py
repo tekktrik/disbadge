@@ -2,8 +2,7 @@ import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
 
-# Load the message font
-MESSAGE_FONTNAME = "/fonts/cozette.bdf"
+MESSAGE_FONTNAME = "/fonts/Tewi-11.bdf"
 MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 
 class DiscordMessage(displayio.Group):
