@@ -48,9 +48,9 @@ class DiscordMessageBase:
     def username(self) -> str:
         return self._user[:-5]
 
-    def transmit(self):
+    def to_payload(self) -> str:
         raise NotImplementedError("Must be defined in subclass")
 
     @classmethod
-    def receive(cls, payload: str):
+    def from_payload(cls, payload: str) -> "DiscordMessageBase":
         raise NotImplementedError("Must be defined in subclass")
