@@ -15,14 +15,14 @@ MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 class DiscordMessageGroup(displayio.Group, content.DiscordMessageBase):
     """Display class for Discord messages"""
 
-    def __init__(self, message: str, username: str, cmd_type: int, dark_mode: bool = True) -> None:
     max_lines = 5
 
         content.DiscordMessageBase.__init__(message, username, cmd_type)
         displayio.Group.__init__()
+    def __init__(self, message: str, user: str, cmd_type: int, dark_mode: bool = True) -> None:
 
         text_color = 0xFFFFFF if dark_mode else 0x000000
-        self.username_label = Label(TITLE_FONT, text=username, color=text_color, y=8)
+        self.username_label = Label(TITLE_FONT, text=user, color=text_color, y=8)
         self.append(self.username_label)
 
         message_lines = layout.wrap_text(message, 26)
