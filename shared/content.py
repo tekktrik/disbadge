@@ -32,6 +32,22 @@ class DiscordMessageBase:
             return False
         raise ValueError("Can only compare to other Discord messages")
 
+    @property
+    def user(self) -> str:
+        return self._user
+
+    @property
+    def message(self) -> str:
+        return self._message
+
+    @property
+    def command_type(self) -> int:
+        return self._cmd_type
+
+    @property
+    def username(self) -> str:
+        return self._user[:-5]
+
     def transmit(self):
         raise NotImplementedError("Must be defined in subclass")
 
