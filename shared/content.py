@@ -25,9 +25,9 @@ class DiscordMessageBase:
     def __str__(self) -> str:
         return str(self.message)
 
-    def __eq__(self, __o: Any) -> bool:
-        if isinstance(__o, DiscordMessageBase):
-            if __o.message == self.message and __o.username == self.username:
+    def __eq__(self, other: Any) -> bool:
+        if isinstance(other, DiscordMessageBase):
+            if other.message == self.message and other.username == self.username:
                 return True
             return False
         raise ValueError("Can only compare to other Discord messages")
