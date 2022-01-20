@@ -9,6 +9,7 @@ from micropython import const
 import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
+from discord_display import DiscordMessage
 
 # Button Constants
 BUTTON_LEFT = const(128)
@@ -41,18 +42,9 @@ bg_sprite = displayio.TileGrid(color_bitmap,
                                pixel_shader=color_palette,
                                x=0, y=0)
 splash.append(bg_sprite)
+time.sleep(3)
 
-# Setup and Center the Hello Label
-hello_label = Label(large_font, text=HELLO_STRING)
-(x, y, w, h) = hello_label.bounding_box
-print(x)
-print(y)
-print(w)
-print(h)
-hello_label.x = (80 - w // 2)
-hello_label.y = 15
-hello_label.color = MESSAGE_TEXT_COLOR
-splash.append(hello_label)
+# Test message
+notification = DiscordMessage("Tekktrik", "This is a test message!")
+splash.append(notification)
 time.sleep(10)
-splash.remove(hello_label)
-splash.append(hello_label)
