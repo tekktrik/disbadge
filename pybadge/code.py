@@ -42,7 +42,6 @@ bg_sprite = displayio.TileGrid(color_bitmap,
                                pixel_shader=color_palette,
                                x=0, y=0)
 splash.append(bg_sprite)
-time.sleep(3)
 
 # Test message
 notification = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
