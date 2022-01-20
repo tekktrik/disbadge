@@ -9,7 +9,7 @@ from micropython import const
 import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
-from discord_display import DiscordMessage
+from discord_display import DiscordMessageGroup
 
 # Button Constants
 BUTTON_LEFT = const(128)
@@ -45,6 +45,6 @@ splash.append(bg_sprite)
 time.sleep(3)
 
 # Test message
-notification = DiscordMessage("Tekktrik", "This is a test message!")
+notification = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
 splash.append(notification)
 time.sleep(10)
