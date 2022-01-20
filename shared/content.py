@@ -1,7 +1,7 @@
 import json
 
 try:
-    from typing import Optional
+    from typing import Optional, Any
 except ImportError:
     pass
 
@@ -24,6 +24,13 @@ class DiscordMessageBase:
 
     def __str__(self) -> str:
         return str(self.message)
+
+    def __eq__(self, __o: Any) -> bool:
+        if isinstance(__o, DiscordMessageBase):
+            if __o.message == self.message and __o.username == self.username:
+                return True
+            return False
+        raise ValueError("Can only compare to other Discord messages")
 
     def transmit(self):
         raise NotImplementedError("Must be defined in subclass")
