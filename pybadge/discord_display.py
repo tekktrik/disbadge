@@ -16,6 +16,7 @@ class DiscordMessageGroup(displayio.Group, content.DiscordMessageBase):
     """Display class for Discord messages"""
 
     def __init__(self, message: str, username: str, cmd_type: int, dark_mode: bool = True) -> None:
+    max_lines = 5
 
         content.DiscordMessageBase.__init__(message, username, cmd_type)
         displayio.Group.__init__()
@@ -25,8 +26,7 @@ class DiscordMessageGroup(displayio.Group, content.DiscordMessageBase):
         self.append(self.username_label)
 
         message_lines = layout.wrap_text(message, 26)
-        max_lines = 4
-        self.wrapped_message = "\n".join(message_lines[:max_lines])
+        self.wrapped_message = "\n".join(message_lines[:self.max_lines])
 
         self.message_label = Label(MESSAGE_FONT, text=self.wrapped_message, color=text_color, y=32)
         self.append(self.message_label)
