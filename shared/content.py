@@ -32,6 +32,11 @@ class DiscordMessageBase:
             return False
         raise TypeError("Can only compare to other Discord messages")
 
+    def __contains__(self, value: str) -> bool:
+        if isinstance(value, str):
+            return value in self._message
+        raise TypeError("Can only check messages for strings")
+
     @property
     def user(self) -> str:
         return self._user
