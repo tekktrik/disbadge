@@ -22,6 +22,9 @@ class DiscordMessageBase:
     def __repr__(self) -> str:
         return "{0}: {1}".format(self.username, self.message)
 
+    def __str__(self) -> str:
+        return str(self.message)
+
     def transmit(self):
         raise NotImplementedError("Must be defined in subclass")
 
