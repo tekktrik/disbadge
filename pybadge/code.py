@@ -14,6 +14,11 @@ from adafruit_ble.services.nordic import UARTService
 from discord_display import DiscordMessageGroup
 from screen_displays import ScreenManager, SplashBackground, TextSplashScreen
 
+try:
+    from typing import Optional
+except ImportError:
+    pass
+
 # Button Constants
 BUTTON_LEFT = const(128)
 BUTTON_UP = const(64)
