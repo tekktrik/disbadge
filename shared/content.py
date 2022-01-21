@@ -32,6 +32,15 @@ class DiscordMessageBase:
             return False
         raise TypeError("Can only compare to other Discord messages")
 
+    def __add__(self, other: str) -> "DiscordMessageBase":
+        if isinstance(other, DiscordMessageBase):
+            self._message += other._message
+            return self
+        elif isinstance(other, str):
+            self._message += other
+            return self
+        raise TypeError("Can only add strings or other Discord messages")
+
     def __contains__(self, value: str) -> bool:
         if isinstance(value, str):
             return value in self._message
