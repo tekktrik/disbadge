@@ -20,14 +20,14 @@ class DiscordMessageBase:
         self._cmd_type = cmd_type
 
     def __repr__(self) -> str:
-        return "{0}: {1}".format(self.username, self.message)
+        return "{0}: {1}".format(self.user, self.message)
 
     def __str__(self) -> str:
-        return str(self.message)
+        return str(self._message)
 
     def __eq__(self, other: Any) -> bool:
         if isinstance(other, DiscordMessageBase):
-            if other.message == self.message and other.username == self.username:
+            if other._message == self._message and other._user == self._user:
                 return True
             return False
         raise TypeError("Can only compare to other Discord messages")
