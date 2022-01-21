@@ -29,29 +29,51 @@ BUTTON_START = const(4)
 BUTTON_A = const(2)
 BUTTON_B = const(1)
 
-# Customizations
-HELLO_STRING = "Hello! This is a much much longer test"
-MY_NAME_STRING = "MY NAME IS"
-NAME_STRING = "Blinka"
-MESSAGE_FONTNAME = "/fonts/Tewi-11.bdf"
-CHARACTERS_PER_LINE = 31
-BACKGROUND_COLOR = 0x37393F
-MESSAGE_TEXT_COLOR = 0xFFFFFF
+CURRENT_MESSAGE = None
 
-# Make the Display Background
-splash = displayio.Group()
-board.DISPLAY.show(splash)
+screen = ScreenManager()
+screen.set_loading_splash()
 
-color_bitmap = displayio.Bitmap(160, 128, 1)
-color_palette = displayio.Palette(1)
-color_palette[0] = BACKGROUND_COLOR
+# Set up Bluetooth
+esp32 = ESP32(
+    reset=board.D12,
+    gpio0=board.D10,
+    busy=board.D11,
+    chip_select=board.D13,
+    tx=board.TX,
+    rx=board.RX,
+)
+adapter = esp32.start_bluetooth()
+ble = BLERadio(adapter)
 
-bg_sprite = displayio.TileGrid(color_bitmap,
-                               pixel_shader=color_palette,
-                               x=0, y=0)
-splash.append(bg_sprite)
+screen.set_connecting_splash()
 
-# Test message
-notification = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
-splash.append(notification)
-time.sleep(10)
+# Main loop
+while True:
+    
+    # While connected, look through connections and connect to one with UARTService
+    while ble.connected and any(
+        UARTService in connection for connection in ble.connections
+    ):
+        print("UARTService found in connection, getting connection...")
+        for connection in ble.connections:
+            if UARTService not in connection:
+                continue
+            uart: UARTService = connection[UARTService]
+            print("UARTService connected!")
+
+            # Show message background
+    print("No connections to be made :(")
+    time.sleep(1)
+    
+    screen.set_no_message_splash()
+    time.sleep(1)
+
+    message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
+    screen.set_message_splash(message)
+
+    while True:
+
+        time.sleep(1)
+
+            # Main functionality goes here
