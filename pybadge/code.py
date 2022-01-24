@@ -60,8 +60,9 @@ while True:
             print("UARTService connected!")
 
             # Main functionality at this level
-            uart_mngr = UARTManager(uart, ble)
             with UARTManager(uart, ble) as uart_mngr:
+            
+                while uart_mngr.data_available == 0:
 
                     # Show message background
                     screen.set_no_message_splash()
