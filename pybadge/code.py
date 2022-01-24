@@ -61,14 +61,14 @@ while True:
 
             # Main functionality at this level
             uart_mngr = UARTManager(uart, ble)
+            with UARTManager(uart, ble) as uart_mngr:
 
-            # Show message background
-            screen.set_no_message_splash()
-            print("No connections to be made :(")
-            time.sleep(1)
+                    # Show message background
+                    screen.set_no_message_splash()
+                    time.sleep(1)
 
-            message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
-            screen.set_message_splash(message)
+                message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
+                screen.set_message_splash(message)
 
     screen.set_connecting_splash()
 
