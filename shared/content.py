@@ -1,7 +1,7 @@
 import json
 
 try:
-    from typing import Optional, Any
+    from typing import Optional, Any, Dict
 except ImportError:
     pass
 
@@ -66,5 +66,5 @@ class DiscordMessageBase:
         raise NotImplementedError("Must be defined in subclass")
 
     @classmethod
-    def from_payload(cls, payload: str) -> "DiscordMessageBase":
+    def from_payload(cls, payload: Dict[str, Any]) -> "DiscordMessageBase":
         raise NotImplementedError("Must be defined in subclass")
