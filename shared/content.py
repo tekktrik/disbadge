@@ -62,7 +62,7 @@ class DiscordMessageBase:
     def username(self) -> str:
         return self._user[:-5]
 
-    def to_payload(self) -> str:
+    def to_payload(self) -> Dict[str, Any]:
         raise NotImplementedError("Must be defined in subclass")
 
     @classmethod
