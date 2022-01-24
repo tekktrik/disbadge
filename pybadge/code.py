@@ -13,6 +13,7 @@ from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
 from discord_display import DiscordMessageGroup
 from screen_displays import ScreenManager, SplashBackground, TextSplashScreen
+from shared.ble_uart import UARTManager
 
 try:
     from typing import Optional
@@ -44,8 +45,6 @@ esp32 = ESP32(
 adapter = esp32.start_bluetooth()
 ble = BLERadio(adapter)
 
-screen.set_connecting_splash()
-
 # Main loop
 while True:
     
@@ -60,18 +59,22 @@ while True:
             uart: UARTService = connection[UARTService]
             print("UARTService connected!")
 
+            # Main functionality at this level
+            uart_mngr = UARTManager(uart, ble)
+
             # Show message background
-    print("No connections to be made :(")
-    time.sleep(1)
-    
-    screen.set_no_message_splash()
-    time.sleep(1)
+            screen.set_no_message_splash()
+            print("No connections to be made :(")
+            time.sleep(1)
 
-    message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
-    screen.set_message_splash(message)
+            message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
+            screen.set_message_splash(message)
 
-    while True:
+    screen.set_connecting_splash()
 
-        time.sleep(1)
-
-            # Main functionality goes here
+    for advertisement in ble.start_scan(ProvideServicesAdvertisement, timeout=1):
+        advertisement: ProvideServicesAdvertisement
+        if UARTService not in advertisement.services:
+            continue
+        ble.connect(advertisement)
+        print("Connected!")
