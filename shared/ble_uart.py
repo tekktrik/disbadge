@@ -55,3 +55,7 @@ class UARTManager:
     @property
     def last_received(self) -> bytearray:
         return self._buffer
+
+    @property
+    def data_available(self) -> int:
+        return self._uart.in_waiting
