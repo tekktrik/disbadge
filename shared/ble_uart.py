@@ -1,7 +1,8 @@
 import json
 
 try:
-    from typing import Dict, Any
+    from typing import Dict, Any, Optional, Type
+    from types import TracebackType
     from adafruit_ble.services.nordic import UARTService
     from adafruit_ble import BLERadio
 except ImportError:
@@ -13,6 +14,17 @@ class UARTManager:
         self._uart = uart_connection
         self._ble = ble_radio
         self._buffer = bytearray(100)
+
+    def __enter__(self) -> "UARTManager":
+        return self
+
+    def __exit__(
+        self,
+        exc_type: Optional[Type[type]],
+        exc_val: Optional[BaseException],
+        exc_tb: Optional[TracebackType]
+    ) -> None:
+        self._uart.reset_input_buffer()
 
     def _prepare_buffer(self, payload_length: int) -> None:
         if len(self._buffer) > payload_length:
