@@ -29,7 +29,7 @@ NO_MESSAGES_TEXT = "No messages!"
 SPLASH_FONTNAME = "/fonts/Noto-18.bdf"
 SPLASH_FONT = bitmap_font.load_font(SPLASH_FONTNAME)
 
-class SplashScreenEnum:
+class SplashScreenIDs:
 
     CONNECTING = 0
     NO_MESSAGE = 1
