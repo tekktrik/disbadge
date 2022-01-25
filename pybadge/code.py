@@ -49,7 +49,7 @@ ble = BLERadio(adapter)
 while True:
     
     # While connected, look through connections and connect to one with UARTService
-    while ble.connected and any(
+    if ble.connected and any(
         UARTService in connection for connection in ble.connections
     ):
         print("UARTService found in connection, getting connection...")
@@ -62,14 +62,17 @@ while True:
             # Main functionality at this level
             with UARTManager(uart, ble) as uart_mngr:
             
-                while uart_mngr.data_available == 0:
+                while uart_mngr.connected:
 
+                    
                     # Show message background
                     screen.set_no_message_splash()
                     time.sleep(1)
 
-                message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
-                screen.set_message_splash(message)
+                    uart_mngr.receive()
+
+                    message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
+                    screen.set_message_splash(message)
 
     screen.set_connecting_splash()
 
