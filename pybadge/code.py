@@ -48,7 +48,7 @@ ble = BLERadio(adapter)
 # Main loop
 while True:
     
-    # While connected, look through connections and connect to one with UARTService
+    # If connected, look through connections and connect to one with UARTService
     if ble.connected and any(
         UARTService in connection for connection in ble.connections
     ):
@@ -74,8 +74,8 @@ while True:
                     message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
                     screen.set_message_splash(message)
 
+    # If not connected, attempt to do so
     screen.set_connecting_splash()
-
     for advertisement in ble.start_scan(ProvideServicesAdvertisement, timeout=1):
         advertisement: ProvideServicesAdvertisement
         if UARTService not in advertisement.services:
