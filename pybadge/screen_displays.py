@@ -29,6 +29,16 @@ NO_MESSAGES_TEXT = "No messages!"
 SPLASH_FONTNAME = "/fonts/Noto-18.bdf"
 SPLASH_FONT = bitmap_font.load_font(SPLASH_FONTNAME)
 
+class SplashScreenEnum:
+
+    CONNECTING = 0
+    NO_MESSAGE = 1
+    HAS_MESSAGE = 2
+    PING = 3
+    CHEER = 4
+    HYPE = 5
+
+
 class SplashBackground(displayio.Group):
 
     def __init__(self, color: int) -> None:
