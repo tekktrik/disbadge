@@ -60,19 +60,7 @@ while True:
             print("UARTService connected!")
 
             # Main functionality at this level
-            with UARTManager(uart, ble) as uart_mngr:
-            
-                while uart_mngr.connected:
-
-                    
-                    # Show message background
-                    screen.set_no_message_splash()
-                    time.sleep(1)
-
-                    uart_mngr.receive()
-
-                    message = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
-                    screen.set_message_splash(message)
+            # Add async functions here
 
     # If not connected, attempt to do so
     screen.set_connecting_splash()
