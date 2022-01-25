@@ -59,3 +59,7 @@ class UARTManager:
     @property
     def data_available(self) -> int:
         return self._uart.in_waiting
+
+    @property
+    def connected(self) -> bool:
+        return self._ble.connected
