@@ -62,7 +62,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         message_lines = layout.wrap_text(text, 26)
         self._wrapped_message = "\n".join(message_lines[:self.max_lines])
 
-        self._message_label = Label(MESSAGE_FONT, text=self._wrapped_message, color=text_color, y=32)
+        self._message_label = Label(MESSAGE_FONT, text=self._wrapped_message, color=self._text_color, y=32)
         self.append(self._message_label)
 
     def from_payload(self, payload: Dict[str, Any]) -> "DiscordMessageGroup":
