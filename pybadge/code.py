@@ -51,10 +51,10 @@ CURRENT_MESSAGE = DiscordMessageGroup()
 async def data_transmission(uart: UARTService):
 
     with UARTManager(uart, ble) as uart_manager:
-
         while uart_manager.connected:
-
-            # Main loop for getting data over UART
+            while uart_manager.data_available > 0:
+                message_dict = uart_manager.receive()
+                CURRENT_MESSAGE.from_payload(message_dict)
             asyncio.sleep(0)
 
 async def ui_management():
@@ -62,6 +62,7 @@ async def ui_management():
     while ble.connected:
 
         # Main loop for handling UI and buttons
+        
         asyncio.sleep(0)
 
 async def main():
@@ -81,8 +82,9 @@ async def main():
                 print("UARTService connected!")
 
                 # Create and await tasks to achieve main functionality at this level
-                asyncio.create_task(data_transmission(uart))
-                await asyncio.gather(data_transmission, ui_management)
+                data_task = asyncio.create_task(data_transmission(uart))
+                ui_task = asyncio.create_task(ui_management())
+                await asyncio.gather(data_task, ui_task)
 
         # If not connected, attempt to do so
         screen.set_connecting_splash()
