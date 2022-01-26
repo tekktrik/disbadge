@@ -12,9 +12,9 @@ from adafruit_airlift.esp32 import ESP32
 from adafruit_ble import BLERadio
 from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
-from discord_display import DiscordMessageGroup
-from screen_displays import ScreenManager, SplashBackground, TextSplashScreen
-from shared.ble_uart import UARTManager
+from pybadge_messages import DiscordMessageGroup
+from display import ScreenManager, SplashBackground, TextSplashScreen
+from shared.uart_manager import UARTManager
 
 try:
     from typing import Optional
