@@ -64,3 +64,9 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
         self._message_label = Label(MESSAGE_FONT, text=self._wrapped_message, color=text_color, y=32)
         self.append(self._message_label)
+
+    def from_payload(self, payload: Dict[str, Any]) -> "DiscordMessageGroup":
+        
+        self.message = payload["message"]
+        self.user = payload["user"]
+        self.cmd_type = payload["Cmd_type"]
