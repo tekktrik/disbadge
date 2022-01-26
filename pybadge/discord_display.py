@@ -4,6 +4,11 @@ from adafruit_bitmap_font import bitmap_font
 import shared.layout_helper as layout
 import shared.messages as messages
 
+try:
+    from typing import Dict, Any
+except ImportError:
+    pass
+
 # Load the title font
 TITLE_FONTNAME = "/fonts/cherry-13-b.bdf"
 TITLE_FONT = bitmap_font.load_font(TITLE_FONTNAME)
@@ -31,3 +36,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
         self.message_label = Label(MESSAGE_FONT, text=self.wrapped_message, color=text_color, y=32)
         self.append(self.message_label)
+
+    @classmethod
+    def from_payload(cls, payload: Dict[str, Any]) -> "DiscordMessageGroup":
+        return cls(payload["message"], payload["user"], payload["type"])
