@@ -7,6 +7,7 @@ import time
 import board
 from micropython import const
 import displayio
+import asyncio
 from adafruit_airlift.esp32 import ESP32
 from adafruit_ble import BLERadio
 from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
@@ -45,28 +46,51 @@ esp32 = ESP32(
 adapter = esp32.start_bluetooth()
 ble = BLERadio(adapter)
 
-# Main loop
-while True:
-    
-    # If connected, look through connections and connect to one with UARTService
-    if ble.connected and any(
-        UARTService in connection for connection in ble.connections
-    ):
-        print("UARTService found in connection, getting connection...")
-        for connection in ble.connections:
-            if UARTService not in connection:
+CURRENT_MESSAGE = DiscordMessageGroup()
+
+async def data_transmission(uart: UARTService):
+
+    with UARTManager(uart, ble) as uart_manager:
+
+        while uart_manager.connected:
+
+            # Main loop for getting data over UART
+            asyncio.sleep(0)
+
+async def ui_management():
+
+    while ble.connected:
+
+        # Main loop for handling UI and buttons
+        asyncio.sleep(0)
+
+async def main():
+
+    # Main loop
+    while True:
+        
+        # If connected, look through connections and connect to one with UARTService
+        if ble.connected and any(
+            UARTService in connection for connection in ble.connections
+        ):
+            print("UARTService found in connection, getting connection...")
+            for connection in ble.connections:
+                if UARTService not in connection:
+                    continue
+                uart: UARTService = connection[UARTService]
+                print("UARTService connected!")
+
+                # Create and await tasks to achieve main functionality at this level
+                asyncio.create_task(data_transmission(uart))
+                await asyncio.gather(data_transmission, ui_management)
+
+        # If not connected, attempt to do so
+        screen.set_connecting_splash()
+        for advertisement in ble.start_scan(ProvideServicesAdvertisement, timeout=1):
+            advertisement: ProvideServicesAdvertisement
+            if UARTService not in advertisement.services:
                 continue
-            uart: UARTService = connection[UARTService]
-            print("UARTService connected!")
+            ble.connect(advertisement)
+            print("Connected!")
 
-            # Main functionality at this level
-            # Add async functions here
-
-    # If not connected, attempt to do so
-    screen.set_connecting_splash()
-    for advertisement in ble.start_scan(ProvideServicesAdvertisement, timeout=1):
-        advertisement: ProvideServicesAdvertisement
-        if UARTService not in advertisement.services:
-            continue
-        ble.connect(advertisement)
-        print("Connected!")
+asyncio.run(main())
