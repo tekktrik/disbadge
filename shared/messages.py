@@ -55,12 +55,16 @@ class DiscordMessageBase:
         return self._message
 
     @property
-    def command_type(self) -> int:
-        return self._cmd_type
-
-    @property
     def username(self) -> str:
         return self._user[:-5]
+
+    @property
+    def cmd_type(self) -> int:
+        return self._cmd_type
+
+    @cmd_type.setter
+    def cmd_type(self, type: int) -> None:
+        self._cmd_type = type
 
     def to_payload(self) -> Dict[str, Any]:
         raise NotImplementedError("Must be defined in subclass")
