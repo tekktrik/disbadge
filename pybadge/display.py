@@ -6,7 +6,7 @@ from adafruit_display_text.label import Label
 
 try:
     from typing import Optional, Tuple
-    from discord_display import DiscordMessageGroup
+    from pybadge_messages import DiscordMessageGroup
 except ImportError:
     pass
 
@@ -228,7 +228,9 @@ class ScreenManager:
         self.splash.append(self.hype_splash)
 
     @property
-    def current_splash(self) -> str:
+    def current_splash(self) -> int:
         """Gets the current splash screen's title"""
-        current_splash: SplashBackground =  self.splash[-1]
-        return current_splash.title
+        current_splash: SplashBackground = self.splash[-1]
+        return current_splash.id
+
+    
