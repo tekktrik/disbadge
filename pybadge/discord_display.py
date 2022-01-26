@@ -25,18 +25,42 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
     def __init__(self, message: str, user: str, cmd_type: int, dark_mode: bool = True) -> None:
 
         super().__init__()
-        messages.DiscordMessageBase.__init__(self, message, user, cmd_type)
 
-        text_color = 0xFFFFFF if dark_mode else 0x000000
-        self.username_label = Label(TITLE_FONT, text=user, color=text_color, y=8)
-        self.append(self.username_label)
+        self._text_color = 0xFFFFFF if dark_mode else 0x000000
+        self._message = message
+        self._user = user
+        self._cmd_type = cmd_type
 
-        message_lines = layout.wrap_text(message, 26)
-        self.wrapped_message = "\n".join(message_lines[:self.max_lines])
+        self.user = user
+        self.message = message
 
-        self.message_label = Label(MESSAGE_FONT, text=self.wrapped_message, color=text_color, y=32)
-        self.append(self.message_label)
+    @property
+    def user(self) -> str:
+        return self._user
 
-    @classmethod
-    def from_payload(cls, payload: Dict[str, Any]) -> "DiscordMessageGroup":
-        return cls(payload["message"], payload["user"], payload["type"])
+    @user.setter
+    def user(self, name: str) -> None:
+
+        if self._username_label:
+            self.remove(self._username_label)
+
+        self._username_label = Label(TITLE_FONT, text=name, color=self._text_color, y=8)
+        self.append(self._username_label)
+        self._message_label = None
+
+
+    @property
+    def message(self) -> str:
+        return self._message
+
+    @message.setter
+    def message(self, text: str) -> None:
+
+        if self._message_label:
+            self.remove(self._message_label)
+
+        message_lines = layout.wrap_text(text, 26)
+        self._wrapped_message = "\n".join(message_lines[:self.max_lines])
+
+        self._message_label = Label(MESSAGE_FONT, text=self._wrapped_message, color=text_color, y=32)
+        self.append(self._message_label)
