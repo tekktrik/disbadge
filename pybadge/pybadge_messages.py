@@ -22,7 +22,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
     max_lines = 5
 
-    def __init__(self, message: str, user: str, cmd_type: int, dark_mode: bool = True) -> None:
+    def __init__(self, message: str = "", user: str = "", cmd_type: int = messages.CommandType.NONE, dark_mode: bool = True) -> None:
 
         super().__init__()
 
