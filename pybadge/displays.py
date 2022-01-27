@@ -29,6 +29,7 @@ NO_MESSAGES_TEXT = "No messages!"
 SPLASH_FONTNAME = "/fonts/Noto-18.bdf"
 SPLASH_FONT = bitmap_font.load_font(SPLASH_FONTNAME)
 
+
 class SplashScreenIDs:
 
     CONNECTING = 0
@@ -56,9 +57,9 @@ class SplashBackground(displayio.Group):
         self._bg_bitmap = displayio.Bitmap(SCREEN_WIDTH, SCREEN_HEIGHT, 1)
         self._bg_palette = displayio.Palette(1)
         self._bg_palette[0] = self._color
-        self._bg = displayio.TileGrid(self._bg_bitmap,
-                                        pixel_shader=self._bg_palette,
-                                        x=0, y=0)
+        self._bg = displayio.TileGrid(
+            self._bg_bitmap, pixel_shader=self._bg_palette, x=0, y=0
+        )
 
         self.append(self._bg)
 
@@ -91,6 +92,7 @@ class SplashBackground(displayio.Group):
     def id(self, value: int) -> None:
         self._id = value
 
+
 class TextSplashScreen(SplashBackground):
     """A splash screen with a text label in the center
 
@@ -100,7 +102,9 @@ class TextSplashScreen(SplashBackground):
     :param int text_color: (Optional) The color to apply to the text, default is white
     """
 
-    def __init__(self, id: int, color: int, text: str, text_color: int = 0xFFFFFF) -> None:
+    def __init__(
+        self, id: int, color: int, text: str, text_color: int = 0xFFFFFF
+    ) -> None:
 
         super().__init__(color, id=id)
 
@@ -121,6 +125,7 @@ class TextSplashScreen(SplashBackground):
     def text_color(self) -> int:
         return self._text_color
 
+
 class ImageSplashScreen(SplashBackground):
     """A splash screen with an image in the center
 
@@ -130,13 +135,22 @@ class ImageSplashScreen(SplashBackground):
     :param int image_size: (Optional) The height/width of the image in pixels, default is 32
     """
 
-    def __init__(self, id: int, color: int, image_filename: str, image_size: int = 32) -> None:
+    def __init__(
+        self, id: int, color: int, image_filename: str, image_size: int = 32
+    ) -> None:
 
         super().__init__(id, color)
         self._image_size = image_size
 
         splash_image, splash_palette = adafruit_imageload.load(image_filename)
-        self._image = displayio.TileGrid(splash_image, pixel_shader=splash_palette, width=1, height=1, tile_height=image_size, tile_width=image_size)
+        self._image = displayio.TileGrid(
+            splash_image,
+            pixel_shader=splash_palette,
+            width=1,
+            height=1,
+            tile_height=image_size,
+            tile_width=image_size,
+        )
         self._image.x = (SCREEN_WIDTH - image_size) // 2
         self._image.y = (SCREEN_HEIGHT - image_size) // 2
         self.append(self._image)
@@ -151,6 +165,7 @@ class ImageSplashScreen(SplashBackground):
         """The image dimensions as a tuole"""
         return (self._image_size, self._image_size)
 
+
 class ScreenManager:
     """A class for managing splash screens and transitions between them"""
 
@@ -161,18 +176,32 @@ class ScreenManager:
         board.DISPLAY.show(self.splash)
 
         # Display loading screen
-        self.loading_splash = TextSplashScreen(SETUP_BG_COLOR, LOADING_TEXT, SETUP_TEXT_COLOR)
+        self.loading_splash = TextSplashScreen(
+            SETUP_BG_COLOR, LOADING_TEXT, SETUP_TEXT_COLOR
+        )
         self.splash.append(self.loading_splash)
 
         # Set up other splash screens
-        self.connecting_splash = TextSplashScreen(SplashScreenIDs.CONNECTING, SETUP_BG_COLOR, CONNECTING_TEXT)
-        self.no_message_splash = TextSplashScreen(SplashScreenIDs.NO_MESSAGE, MESSAGE_BG_COLOR, NO_MESSAGES_TEXT)
-        self.has_message_splash = SplashBackground(SplashScreenIDs.HAS_MESSAGE, MESSAGE_BG_COLOR)
+        self.connecting_splash = TextSplashScreen(
+            SplashScreenIDs.CONNECTING, SETUP_BG_COLOR, CONNECTING_TEXT
+        )
+        self.no_message_splash = TextSplashScreen(
+            SplashScreenIDs.NO_MESSAGE, MESSAGE_BG_COLOR, NO_MESSAGES_TEXT
+        )
+        self.has_message_splash = SplashBackground(
+            SplashScreenIDs.HAS_MESSAGE, MESSAGE_BG_COLOR
+        )
         self.has_message_splash.append(displayio.Group())
-        self.ping_splash = ImageSplashScreen(SplashScreenIDs.PING, MESSAGE_BG_COLOR, "ping.bmp")
-        self.cheer_splash = ImageSplashScreen(SplashScreenIDs.CHEER, MESSAGE_BG_COLOR, "cheer.bmp")
-        self.hype_splash = ImageSplashScreen(SplashScreenIDs.HYPE, MESSAGE_BG_COLOR, "hype.bmp")
- 
+        self.ping_splash = ImageSplashScreen(
+            SplashScreenIDs.PING, MESSAGE_BG_COLOR, "ping.bmp"
+        )
+        self.cheer_splash = ImageSplashScreen(
+            SplashScreenIDs.CHEER, MESSAGE_BG_COLOR, "cheer.bmp"
+        )
+        self.hype_splash = ImageSplashScreen(
+            SplashScreenIDs.HYPE, MESSAGE_BG_COLOR, "hype.bmp"
+        )
+
         self.splash.insert(0, self.connecting_splash)
         self.splash.insert(0, self.no_message_splash)
         self.splash.insert(0, self.has_message_splash)
@@ -200,7 +229,7 @@ class ScreenManager:
 
     def set_message_splash(self, message: displayio.Group) -> None:
         """Set the message splash screen
-        
+
         :param display.Group message: The message or Group to display
         """
 
@@ -223,7 +252,7 @@ class ScreenManager:
 
     def set_hype_splash(self) -> None:
         """Set the hype notification splash screen"""
-        
+
         self.splash.remove(self.hype_splash)
         self.splash.append(self.hype_splash)
 
@@ -232,5 +261,3 @@ class ScreenManager:
         """Gets the current splash screen's title"""
         current_splash: SplashBackground = self.splash[-1]
         return current_splash.id
-
-    
