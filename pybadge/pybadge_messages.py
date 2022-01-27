@@ -18,9 +18,21 @@ MESSAGE_FONTNAME = "/fonts/cherry-11-r.bdf"
 MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 
 class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
-    """Display class for Discord messages"""
+    """Display class for Discord messages, as both a displayio Group and
+    an extension of DiscordMessageBase
+    
+    :param str message: (Optional) The Discord message, default is a
+        blank string
+    :param str user: (Optional) The message sender, default is a
+        blank string
+    :param int cmd_type: (Optional) The command type used to send the
+        message, default is message.CommandType.NONE
+    :param bool dark_mode: (Optional) Whether dark mode should be used
+        for text color, default is True
+    """
 
     max_lines = 5
+    """The max number of lines the message can be"""
 
     def __init__(self, message: str = "", user: str = "", cmd_type: int = messages.CommandType.NONE, dark_mode: bool = True) -> None:
 
@@ -36,6 +48,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
     @property
     def user(self) -> str:
+        """The user that sent the message"""
         return self._user
 
     @user.setter
@@ -51,6 +64,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
     @property
     def message(self) -> str:
+        """The Discord message that was sent"""
         return self._message
 
     @message.setter
@@ -65,8 +79,13 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         self._message_label = Label(MESSAGE_FONT, text=self._wrapped_message, color=self._text_color, y=32)
         self.append(self._message_label)
 
-    def from_payload(self, payload: Dict[str, Any]) -> "DiscordMessageGroup":
+    def from_dict(self, dict_object: Dict[str, Any]) -> None:
+        """Turns a dict into a DiscordMessageGroup.  The dict must have keys
+        for 'message', 'user', and 'cmd_type'
         
-        self.message = payload["message"]
-        self.user = payload["user"]
-        self.cmd_type = payload["Cmd_type"]
+        :param dict_object: The dict to load from
+        """
+        
+        self.message = dict_object["message"]
+        self.user = dict_object["user"]
+        self.cmd_type = dict_object["cmd_type"]
