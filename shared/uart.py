@@ -56,8 +56,13 @@ class UARTManager:
         return self._buffer
 
     @property
-    def data_available(self) -> int:
+    def in_waiting(self) -> int:
         return self._uart.in_waiting
+
+    @property
+    def data_available(self) -> bool:
+        """Whether any data is waiting in the UART receive pipeline"""
+        return self._uart.in_waiting > 0
 
     @property
     def connected(self) -> bool:
