@@ -7,9 +7,10 @@ except ImportError:
 
 class CommandType:
 
-    PING = 0
-    CHEER = 1
-    HYPE = 2
+    NONE = 0
+    PING = 1
+    CHEER = 2
+    HYPE = 3
 
 class DiscordMessageBase:
 
