@@ -68,8 +68,9 @@ class DiscordMessageBase:
         return self._message
 
     @property
-    def username(self) -> str:
-        return self._user[:-5]
+    def username(self) -> Optional[str]:
+        """The username of the person that sent the message"""
+        return self._user[:-5] if self._user is not None else None
 
     @property
     def cmd_type(self) -> Optional[int]:
