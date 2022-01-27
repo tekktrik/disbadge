@@ -9,6 +9,8 @@ def wrap_text(string: str, max_chars: int) -> List[str]:
 
     :param str string: The text to be wrapped.
     :param int max_chars: The maximum number of characters on a line before wrapping.
+    :return: A list of strings representing the wrapped message
+    :rtype: List[str]
     """
 
     string = string.replace("\n", "").replace("\r", "")  # strip confusing newlines
