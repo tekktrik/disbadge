@@ -19,16 +19,6 @@ try:
 except ImportError:
     pass
 
-# Button Constants
-BUTTON_LEFT = const(7)
-BUTTON_UP = const(6)
-BUTTON_DOWN = const(5)
-BUTTON_RIGHT = const(4)
-BUTTON_SEL = const(3)
-BUTTON_START = const(2)
-BUTTON_A = const(1)
-BUTTON_B = const(0)
-
 screen = ScreenManager()
 screen.set_loading_splash()
 
