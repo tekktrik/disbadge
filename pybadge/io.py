@@ -7,7 +7,7 @@ from adafruit_led_animation.animation.pulse import Pulse
 from adafruit_led_animation.color import RED, BLACK
 from adafruit_led_animation.animation.rainbow import Rainbow
 from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
-from states import StateIDs
+from states import DisplayStateIDs, LEDStateIDs
 
 try:
     from typing import Optional
@@ -51,15 +51,15 @@ class IOManager:
             pixel_order=neopixel.GRB,
             brightness=0.2,
             auto_write=False)
-
-        self._current_animation = None
         self._blank_animation = Solid(self._neopixels, color=BLACK)
+        self._current_animation = self._blank_animation
         self._animations = {
-            StateIDs.PING: Pulse(self._neopixels, speed=0.5, color=RED, period=2),
-            StateIDs.CHEER: Rainbow(self._neopixels, speed=0.1, period=0.75),
-            StateIDs.HYPE: RainbowSparkle(self._neopixels, speed=0.1, period=0.75),
-            StateIDs.MESSAGE: self._blank_animation,
-            StateIDs.NO_MESSAGE: self._blank_animation,
+            LEDStateIDs.PING: Pulse(self._neopixels, speed=0.5, color=RED, period=2),
+            LEDStateIDs.CHEER: Rainbow(self._neopixels, speed=0.1, period=0.75),
+            LEDStateIDs.HYPE: RainbowSparkle(self._neopixels, speed=0.1, period=0.75),
+            LEDStateIDs.NONE: self._blank_animation,
+        }
+
         }
 
     def update_inputs(self) -> bool:
