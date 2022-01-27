@@ -13,7 +13,7 @@ from adafruit_ble import BLERadio
 from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
 from pybadge_messages import DiscordMessageGroup
-from displays import ScreenManager, SplashBackground, TextSplashScreen
+from display import ScreenManager, SplashBackground, TextSplashScreen
 from shared.uart import UARTManager
 
 try:
