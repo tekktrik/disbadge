@@ -61,6 +61,10 @@ class IOManager:
             LEDStateIDs.NONE: self._blank_animation,
         }
 
+        self._tones = {
+            DisplayStateIDs.PING: None,
+            DisplayStateIDs.CHEER: None,
+            DisplayStateIDs.HYPE: None,
         }
 
     def update_inputs(self) -> bool:
