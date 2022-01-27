@@ -27,8 +27,8 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         super().__init__()
 
         self._text_color = 0xFFFFFF if dark_mode else 0x000000
-        self._message = message
-        self._user = user
+        self._message_label = None
+        self._username_label = None
         self._cmd_type = cmd_type
 
         self.user = user
