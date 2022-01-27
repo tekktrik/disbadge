@@ -3,7 +3,6 @@ from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
 import shared.layout as layout
 import shared.messages as messages
-from states import StateIDs
 
 try:
     from typing import Dict, Any

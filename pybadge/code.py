@@ -3,17 +3,15 @@ This is a Conference Badge type Name Tag that is intended to be displayed on
 the PyBadge. Feel free to customize it to your heart's content.
 """
 
-import time
 import board
 from micropython import const
-import displayio
 import asyncio
 from adafruit_airlift.esp32 import ESP32
 from adafruit_ble import BLERadio
 from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
 from pybadge_messages import DiscordMessageGroup
-from display import ScreenManager, SplashBackground, TextSplashScreen
+from display import ScreenManager
 from shared.uart import UARTManager
 
 try:

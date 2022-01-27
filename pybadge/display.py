@@ -7,7 +7,6 @@ from states import StateIDs
 
 try:
     from typing import Optional, Tuple
-    from pybadge_messages import DiscordMessageGroup
 except ImportError:
     pass
 
