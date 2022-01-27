@@ -68,9 +68,13 @@ class DiscordMessageBase:
     def cmd_type(self, type: int) -> None:
         self._cmd_type = type
 
-    def to_payload(self) -> Dict[str, Any]:
+    def to_dict(self) -> Dict[str, Any]:
+        """Converts the message object into an equivalent dict, must be
+        implemented in subclasses of DiscordMessageBase"""
         raise NotImplementedError("Must be defined in subclass")
 
-    @classmethod
-    def from_payload(cls, payload: Dict[str, Any]) -> "DiscordMessageBase":
+    def from_dict(cls, dict_object: Dict[str, Any]) -> None:
+        """Converts a dict into the equivalent DiscordMessageBase object,
+        must be implemented in subclasses of DiscordMessageBase
+        """
         raise NotImplementedError("Must be defined in subclass")

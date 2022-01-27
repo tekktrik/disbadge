@@ -43,7 +43,7 @@ async def data_transmission(uart: UARTService):
         while uart_manager.connected:
             while uart_manager.data_available:
                 message_dict = uart_manager.receive()
-                CURRENT_MESSAGE.from_payload(message_dict)
+                CURRENT_MESSAGE.from_dict(message_dict)
             asyncio.sleep(0)
 
 
