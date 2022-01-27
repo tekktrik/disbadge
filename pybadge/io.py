@@ -2,8 +2,8 @@ import board
 from micropython import const
 from keypad import ShiftRegisterKeys, Event
 
-class IOManager:
 
+class IOManager:
     def __init__(self):
 
         self._pad = ShiftRegisterKeys(
@@ -13,7 +13,8 @@ class IOManager:
             key_count=8,
             value_when_pressed=True,
             interval=0.1,
-            max_events=1)
+            max_events=1,
+        )
 
         self._event = Event(8)
 
