@@ -28,7 +28,10 @@ class Buttons:
 
 
 class IOManager:
-    
+    """A helper class that manages the IO for the PyBadge, including NeoPixels,
+    sound, and button inputs
+    """
+
     def __init__(self):
 
         self._pad = ShiftRegisterKeys(
@@ -59,6 +62,12 @@ class IOManager:
         }
 
     def update_inputs(self) -> bool:
+        """Get the latest button press Event
+        
+        :return: Whether the lastest event was a press
+        :rtype: bool
+        """
+
         self._pad.events.get_into(self._event)
         if self._event.released:
             self._event = Event(8)
@@ -67,10 +76,12 @@ class IOManager:
 
     @property
     def button_pressed(self) -> int:
+        """The key number of the button pressed"""
         return self._event.key_number
 
     @property
     def animation(self) -> Optional[int]:
+        """The ID of the current animation"""
         return self._current_animation
 
     @animation.setter
