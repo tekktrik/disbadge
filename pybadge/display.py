@@ -179,10 +179,10 @@ class ScreenManager:
         self.no_message_splash = TextSplashScreen(
             StateIDs.NO_MESSAGE, MESSAGE_BG_COLOR, NO_MESSAGES_TEXT
         )
-        self.has_message_splash = SplashBackground(
-            StateIDs.HAS_MESSAGE, MESSAGE_BG_COLOR
+        self.message_splash = SplashBackground(
+            StateIDs.MESSAGE, MESSAGE_BG_COLOR
         )
-        self.has_message_splash.append(displayio.Group())
+        self.message_splash.append(displayio.Group())
         self.ping_splash = ImageSplashScreen(
             StateIDs.PING, MESSAGE_BG_COLOR, "ping.bmp"
         )
@@ -195,57 +195,28 @@ class ScreenManager:
 
         self.splash.insert(0, self.connecting_splash)
         self.splash.insert(0, self.no_message_splash)
-        self.splash.insert(0, self.has_message_splash)
+        self.splash.insert(0, self.message_splash)
         self.splash.insert(0, self.ping_splash)
         self.splash.insert(0, self.cheer_splash)
         self.splash.insert(0, self.hype_splash)
 
-    def set_loading_splash(self) -> None:
-        """Set the loading splash screen"""
+    def set_splash(self, id: int, message: Optional[displayio.Group] = None) -> None:
+        """Sets the splash screen
 
-        self.splash.remove(self.loading_splash)
-        self.splash.append(self.loading_splash)
-
-    def set_connecting_splash(self) -> None:
-        """Set the connecting splash screen"""
-
-        self.splash.remove(self.connecting_splash)
-        self.splash.append(self.connecting_splash)
-
-    def set_no_message_splash(self) -> None:
-        """Set the no message splash screen"""
-
-        self.splash.remove(self.no_message_splash)
-        self.splash.append(self.no_message_splash)
-
-    def set_message_splash(self, message: displayio.Group) -> None:
-        """Set the message splash screen
-
+        :param int id: The id of the splash screen
         :param display.Group message: The message or Group to display
         """
 
-        self.splash.remove(self.has_message_splash)
-        self.has_message_splash.pop()
-        self.has_message_splash.append(message)
-        self.splash.append(self.has_message_splash)
-
-    def set_ping_splash(self) -> None:
-        """Set the ping notification splash screen"""
-
-        self.splash.remove(self.ping_splash)
-        self.splash.append(self.ping_splash)
-
-    def set_cheer_splash(self) -> None:
-        """Set the cheer notification splash screen"""
-
-        self.splash.remove(self.cheer_splash)
-        self.splash.append(self.cheer_splash)
-
-    def set_hype_splash(self) -> None:
-        """Set the hype notification splash screen"""
-
-        self.splash.remove(self.hype_splash)
-        self.splash.append(self.hype_splash)
+        for screen in self.splash:
+            screen: SplashBackground
+            if screen.id == id:
+                self.splash.remove(screen)
+                if message:
+                    screen.pop()
+                    screen.append(message)
+                self.splash.append(screen)
+                return
+        raise ValueError("Invalid screen ID")
 
     @property
     def current_splash(self) -> int:
