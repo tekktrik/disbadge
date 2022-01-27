@@ -8,8 +8,8 @@ try:
 except ImportError:
     pass
 
-class UARTManager:
 
+class UARTManager:
     def __init__(self, uart_connection: UARTService, ble_radio: BLERadio) -> None:
         self._uart = uart_connection
         self._ble = ble_radio
@@ -22,7 +22,7 @@ class UARTManager:
         self,
         exc_type: Optional[Type[type]],
         exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType]
+        exc_tb: Optional[TracebackType],
     ) -> None:
         self._uart.reset_input_buffer()
 
@@ -31,7 +31,6 @@ class UARTManager:
             self._buffer = self._buffer[:payload_length]
         elif len(self._buffer) < payload_length:
             self._buffer = bytearray(payload_length)
-        
 
     def transmit(self, data: Dict[str, Any]) -> None:
         """Transmits the number of bytes to be sent followed by newline,
