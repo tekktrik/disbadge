@@ -1,8 +1,11 @@
 class StateIDs:
+    """The current state of the program, especially with regards to what
+    is currently being displayed"""
 
-    CONNECTING = 0
-    NO_MESSAGE = 1
-    MESSAGE = 2
-    PING = 3
-    CHEER = 4
-    HYPE = 5
+    LOADING = 0
+    CONNECTING = 1
+    NO_MESSAGE = 2
+    MESSAGE = 3
+    PING = 4
+    CHEER = 5
+    HYPE = 6
