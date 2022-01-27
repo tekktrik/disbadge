@@ -23,7 +23,7 @@ class DiscordMessageBase:
     """
 
     def __init__(
-        self, message: str, user: Optional[str] = None, cmd_type: Optional[int] = None
+        self, message: Optional[str] = None, user: Optional[str] = None, cmd_type: int = CommandType.NONE
     ) -> None:
 
         self._message = message
