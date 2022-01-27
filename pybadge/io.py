@@ -37,9 +37,9 @@ class IOManager:
 
         self._current_animation = None
         self._animations = {
-            StateIDs.PING: Pulse(self._neopixels, speed=0.5, color=RED, period=2),
-            StateIDs.CHEER: Rainbow(self._neopixels, speed=0.1, period=0.75),
-            StateIDs.HYPE: RainbowSparkle(self._neopixels, speed=0.1, period=0.75),
+            StateIDs.PING: Pulse(self._neopixels, speed=0.5, color=RED, period=2, name="PING"),
+            StateIDs.CHEER: Rainbow(self._neopixels, speed=0.1, period=0.75, name="CHEER"),
+            StateIDs.HYPE: RainbowSparkle(self._neopixels, speed=0.1, period=0.75, name="HYPE"),
             StateIDs.MESSAGE: None,
             StateIDs.NO_MESSAGE: None,
         }
