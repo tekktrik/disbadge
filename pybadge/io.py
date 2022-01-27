@@ -53,12 +53,13 @@ class IOManager:
             auto_write=False)
 
         self._current_animation = None
+        self._blank_animation = Solid(self._neopixels, color=BLACK)
         self._animations = {
-            StateIDs.PING: Pulse(self._neopixels, speed=0.5, color=RED, period=2, name="PING"),
-            StateIDs.CHEER: Rainbow(self._neopixels, speed=0.1, period=0.75, name="CHEER"),
-            StateIDs.HYPE: RainbowSparkle(self._neopixels, speed=0.1, period=0.75, name="HYPE"),
-            StateIDs.MESSAGE: None,
-            StateIDs.NO_MESSAGE: None,
+            StateIDs.PING: Pulse(self._neopixels, speed=0.5, color=RED, period=2),
+            StateIDs.CHEER: Rainbow(self._neopixels, speed=0.1, period=0.75),
+            StateIDs.HYPE: RainbowSparkle(self._neopixels, speed=0.1, period=0.75),
+            StateIDs.MESSAGE: self._blank_animation,
+            StateIDs.NO_MESSAGE: self._blank_animation,
         }
 
     def update_inputs(self) -> bool:
