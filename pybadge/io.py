@@ -34,6 +34,7 @@ class IOManager:
 
     def __init__(self):
 
+        # Initialize keypad-related functionalities
         self._pad = ShiftRegisterKeys(
             clock=board.BUTTON_CLOCK,
             data=board.BUTTON_OUT,
@@ -43,9 +44,9 @@ class IOManager:
             interval=0.1,
             max_events=1,
         )
-
         self._event = Event(8)
 
+        # Initialize LED-related functionalities
         self._neopixels = neopixel.NeoPixel(board.NEOPIXEL,
             5,
             pixel_order=neopixel.GRB,
