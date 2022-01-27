@@ -13,8 +13,8 @@ from adafruit_ble import BLERadio
 from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
 from pybadge_messages import DiscordMessageGroup
-from display import ScreenManager, SplashBackground, TextSplashScreen
-from shared.uart_manager import UARTManager
+from displays import ScreenManager, SplashBackground, TextSplashScreen
+from shared.uart import UARTManager
 
 try:
     from typing import Optional
@@ -48,6 +48,7 @@ ble = BLERadio(adapter)
 
 CURRENT_MESSAGE = DiscordMessageGroup()
 
+
 async def data_transmission(uart: UARTService):
 
     with UARTManager(uart, ble) as uart_manager:
@@ -57,19 +58,21 @@ async def data_transmission(uart: UARTService):
                 CURRENT_MESSAGE.from_payload(message_dict)
             asyncio.sleep(0)
 
+
 async def ui_management():
 
     while ble.connected:
 
         # Main loop for handling UI and buttons
-        
+
         asyncio.sleep(0)
+
 
 async def main():
 
     # Main loop
     while True:
-        
+
         # If connected, look through connections and connect to one with UARTService
         if ble.connected and any(
             UARTService in connection for connection in ble.connections
@@ -94,5 +97,6 @@ async def main():
                 continue
             ble.connect(advertisement)
             print("Connected!")
+
 
 asyncio.run(main())
