@@ -5,6 +5,7 @@ except ImportError:
 
 
 class CommandType:
+    """Enum-like class for command types"""
 
     NONE = 0
     PING = 1
@@ -13,6 +14,14 @@ class CommandType:
 
 
 class DiscordMessageBase:
+    """The base class for representing Discord messages
+    
+    :param str message: (Optional) The Discord message; default is None
+    :param str user: (Optional) The sender of the message; defualt is None
+    :param int cmd_type: (Optional) The slash command type used to send the
+        message; default is CommandType.NONE
+    """
+
     def __init__(
         self, message: str, user: Optional[str] = None, cmd_type: Optional[int] = None
     ) -> None:
@@ -49,11 +58,13 @@ class DiscordMessageBase:
         raise TypeError("Can only check messages for strings")
 
     @property
-    def user(self) -> str:
+    def user(self) -> Optional[str]:
+        """The user that sent the message, including the number after username"""
         return self._user
 
     @property
-    def message(self) -> str:
+    def message(self) -> Optional[str]:
+        """The message that was sent"""
         return self._message
 
     @property
@@ -61,7 +72,8 @@ class DiscordMessageBase:
         return self._user[:-5]
 
     @property
-    def cmd_type(self) -> int:
+    def cmd_type(self) -> Optional[int]:
+        """The slash command type used to send the message"""
         return self._cmd_type
 
     @cmd_type.setter
