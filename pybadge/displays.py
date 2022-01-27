@@ -3,6 +3,7 @@ import displayio
 from adafruit_bitmap_font import bitmap_font
 import adafruit_imageload
 from adafruit_display_text.label import Label
+from states import StateIDs
 
 try:
     from typing import Optional, Tuple
@@ -28,16 +29,6 @@ NO_MESSAGES_TEXT = "No messages!"
 # Load the splash font
 SPLASH_FONTNAME = "/fonts/Noto-18.bdf"
 SPLASH_FONT = bitmap_font.load_font(SPLASH_FONTNAME)
-
-
-class SplashScreenIDs:
-
-    CONNECTING = 0
-    NO_MESSAGE = 1
-    HAS_MESSAGE = 2
-    PING = 3
-    CHEER = 4
-    HYPE = 5
 
 
 class SplashBackground(displayio.Group):
@@ -183,23 +174,23 @@ class ScreenManager:
 
         # Set up other splash screens
         self.connecting_splash = TextSplashScreen(
-            SplashScreenIDs.CONNECTING, SETUP_BG_COLOR, CONNECTING_TEXT
+            StateIDs.CONNECTING, SETUP_BG_COLOR, CONNECTING_TEXT
         )
         self.no_message_splash = TextSplashScreen(
-            SplashScreenIDs.NO_MESSAGE, MESSAGE_BG_COLOR, NO_MESSAGES_TEXT
+            StateIDs.NO_MESSAGE, MESSAGE_BG_COLOR, NO_MESSAGES_TEXT
         )
         self.has_message_splash = SplashBackground(
-            SplashScreenIDs.HAS_MESSAGE, MESSAGE_BG_COLOR
+            StateIDs.HAS_MESSAGE, MESSAGE_BG_COLOR
         )
         self.has_message_splash.append(displayio.Group())
         self.ping_splash = ImageSplashScreen(
-            SplashScreenIDs.PING, MESSAGE_BG_COLOR, "ping.bmp"
+            StateIDs.PING, MESSAGE_BG_COLOR, "ping.bmp"
         )
         self.cheer_splash = ImageSplashScreen(
-            SplashScreenIDs.CHEER, MESSAGE_BG_COLOR, "cheer.bmp"
+            StateIDs.CHEER, MESSAGE_BG_COLOR, "cheer.bmp"
         )
         self.hype_splash = ImageSplashScreen(
-            SplashScreenIDs.HYPE, MESSAGE_BG_COLOR, "hype.bmp"
+            StateIDs.HYPE, MESSAGE_BG_COLOR, "hype.bmp"
         )
 
         self.splash.insert(0, self.connecting_splash)
