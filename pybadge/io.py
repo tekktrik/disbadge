@@ -15,6 +15,7 @@ except ImportError:
 
 
 class IOManager:
+    
     def __init__(self):
 
         self._pad = ShiftRegisterKeys(
