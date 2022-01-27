@@ -5,6 +5,7 @@ try:
 except ImportError:
     pass
 
+
 class CommandType:
 
     NONE = 0
@@ -12,9 +13,11 @@ class CommandType:
     CHEER = 2
     HYPE = 3
 
-class DiscordMessageBase:
 
-    def __init__(self, message: str, user: Optional[str] = None, cmd_type: Optional[int] = None) -> None:
+class DiscordMessageBase:
+    def __init__(
+        self, message: str, user: Optional[str] = None, cmd_type: Optional[int] = None
+    ) -> None:
 
         self._message = message
         self._user = user
