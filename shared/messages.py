@@ -1,5 +1,3 @@
-import json
-
 try:
     from typing import Optional, Any, Dict
 except ImportError:

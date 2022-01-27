@@ -2,14 +2,16 @@ import board
 from micropython import const
 from keypad import ShiftRegisterKeys, Event
 import neopixel
+from adafruit_led_animation.animation.solid import Solid
 from adafruit_led_animation.animation.pulse import Pulse
-from adafruit_led_animation.color import RED
+from adafruit_led_animation.color import RED, BLACK
 from adafruit_led_animation.animation.rainbow import Rainbow
 from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
 from states import StateIDs
 
 try:
     from typing import Optional
+    from adafruit_led_animation.animation import Animation
 except ImportError:
     pass
 
