@@ -80,7 +80,7 @@ class IOManager:
         return self._event.key_number
 
     @property
-    def animation(self) -> Optional[int]:
+    def animation(self) -> int:
         """The ID of the current animation"""
         return self._current_animation
 
