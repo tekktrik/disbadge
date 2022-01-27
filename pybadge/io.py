@@ -18,7 +18,7 @@ class IOManager:
 
         self._event = Event(8)
 
-    def update(self) -> bool:
+    def update_inputs(self) -> bool:
         self._pad.events.get_into(self._event)
         if self._event.released:
             self._event = Event(8)
