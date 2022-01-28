@@ -111,9 +111,18 @@ class DiscordPyBadge:
         # Initialize sounds
         self._current_sound = None
         self._sounds = {
-            #DisplayStateIDs.PING: MP3Decoder(open("sound/Victory Stinger.mp3", "rb")),
-            DisplayStateIDs.CHEER: WaveFile(open("sound/chipquest.wav", "rb")),
-            DisplayStateIDs.HYPE: WaveFile(open("sound/Victory.wav", "rb")),
+            DisplayStateIDs.PING: {
+                "type": "mp3",
+                "file": "sound/Victory Stinger.mp3"
+            },
+            DisplayStateIDs.CHEER: {
+                "type": "wav",
+                "file": "sound/chipquest.wav"
+            },
+            DisplayStateIDs.HYPE: {
+                "type": "wav",
+                "file": "sound/Victory.wav"
+            },
         }
         if external_speaker:
             self.speaker_enable = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
@@ -159,6 +168,7 @@ class DiscordPyBadge:
         self.splash.append(new_splash)
         if len(self.splash) > 1:
             self.splash.remove(self.splash[0])
+            gc.collect()
 
     @property
     def current_splash(self) -> int:
@@ -166,11 +176,21 @@ class DiscordPyBadge:
         current_splash: SplashBackground = self.splash[-1]
         return current_splash.screen_id
 
-    def play_notification(self, id: int) -> None:
-        self._current_sound = self._sounds.get(id)
+    def _generate_audio_file(self, sound_id: int) -> Union[MP3Decoder, WaveFile]:
+        sound_reqs = self._sounds[sound_id]
+        if sound_reqs["type"] == "mp3":
+            return MP3Decoder(open(sound_reqs["file"], "rb")).deinit
+        elif sound_reqs["type"] == "wav":
+            return WaveFile(open(sound_reqs["file"], "rb"))
+
+    def play_notification(self, sound_id: int) -> None:
+
+        self._current_sound = self._generate_audio_file(sound_id)
         if self._current_sound:
             self.speaker_enable.value = True
             self.audio.play(self._current_sound)
             while self.audio.playing:
                 pass
             self.speaker_enable.value = False
+            self._current_sound.deinit()
+            gc.collect()
