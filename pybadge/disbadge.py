@@ -59,7 +59,7 @@ class DiscordPyBadge:
         self.splash = displayio.Group()
         board.DISPLAY.show(self.splash)
 
-        # Display loading screen
+        # Display loading screen details
         self._splashes = {
             DisplayStateIDs.LOADING: {
                 "type": "ts",
@@ -108,6 +108,7 @@ class DiscordPyBadge:
             LEDStateIDs.NONE: self._blank_animation,
         }
 
+        # Initialize sounds
         self._current_sound = None
         self._sounds = {
             #DisplayStateIDs.PING: MP3Decoder(open("sound/Victory Stinger.mp3", "rb")),
@@ -119,7 +120,6 @@ class DiscordPyBadge:
             self.speaker_enable.switch_to_output()
         
         self.audio = AudioOut(board.SPEAKER)
-        print("Fdafdas")
         """The audio object for the DiscordPyBadge"""
 
     @property
@@ -155,7 +155,6 @@ class DiscordPyBadge:
         :param display.Group message: The message or Group to display
         """
 
-        print("A", type(message))
         new_splash = self._generate_screen(screen_id, message)
         self.splash.append(new_splash)
         if len(self.splash) > 1:
