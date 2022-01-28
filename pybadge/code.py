@@ -58,36 +58,32 @@ async def ui_management():
 
         asyncio.sleep(0)
 
+# Main loop
+while True:
 
-async def main():
-
-    # Main loop
-    while True:
-
-        # If connected, look through connections and connect to one with UARTService
-        if ble.connected and any(
-            UARTService in connection for connection in ble.connections
-        ):
-            print("UARTService found in connection, getting connection...")
-            for connection in ble.connections:
-                if UARTService not in connection:
-                    continue
-                uart: UARTService = connection[UARTService]
-                print("UARTService connected!")
-
-                # Create and await tasks to achieve main functionality at this level
-                data_task = asyncio.create_task(data_transmission(uart))
-                ui_task = asyncio.create_task(ui_management())
-                await asyncio.gather(data_task, ui_task)
-
-        # If not connected, attempt to do so
-        screen.set_connecting_splash()
-        for advertisement in ble.start_scan(ProvideServicesAdvertisement, timeout=1):
-            advertisement: ProvideServicesAdvertisement
-            if UARTService not in advertisement.services:
+    # If connected, look through connections and connect to one with UARTService
+    if ble.connected and any(
+        UARTService in connection for connection in ble.connections
+    ):
+        print("UARTService found in connection, getting connection...")
+        for connection in ble.connections:
+            if UARTService not in connection:
                 continue
-            ble.connect(advertisement)
-            print("Connected!")
+            uart: UARTService = connection[UARTService]
+            print("UARTService connected!")
 
+            # Create and await tasks to achieve main functionality at this level
+            data_task = asyncio.create_task(data_transmission(uart))
+            ui_task = asyncio.create_task(ui_management())
+            asyncio.gather(data_task, ui_task)
 
-asyncio.run(main())
+    # If not connected, attempt to do so
+    disbadge.set_splash(DisplayStateIDs.CONNECTING)
+    for advertisement in ble.start_scan(ProvideServicesAdvertisement, timeout=1):
+        advertisement: ProvideServicesAdvertisement
+        if UARTService not in advertisement.services:
+            continue
+        ble.connect(advertisement)
+        print("Connected!")
+
+print("what")
