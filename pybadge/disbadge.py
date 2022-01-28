@@ -169,6 +169,7 @@ class DiscordPyBadge:
     @animation.setter
     def animation(self, id: int) -> None:
         self._current_animation = self._animations.get(id)
+        gc.collect()
 
     def animate_leds(self) -> None:
         """Animates the NeoPixels if there is a current animation"""
