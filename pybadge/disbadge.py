@@ -108,6 +108,18 @@ class DiscordPyBadge:
             LEDStateIDs.NONE: self._blank_animation,
         }
 
+        # Initialize keypad-related functionalities
+        self._pad = ShiftRegisterKeys(
+            clock=board.BUTTON_CLOCK,
+            data=board.BUTTON_OUT,
+            latch=board.BUTTON_LATCH,
+            key_count=8,
+            value_when_pressed=True,
+            interval=0.1,
+            max_events=1,
+        )
+        self._event = Event(8)
+
         # Initialize sounds
         self._current_sound = None
         self._sounds = {
@@ -130,6 +142,24 @@ class DiscordPyBadge:
         
         self.audio = AudioOut(board.SPEAKER)
         """The audio object for the DiscordPyBadge"""
+
+    def update_inputs(self) -> bool:
+        """Get the latest button press Event
+        
+        :return: Whether the lastest event was a press
+        :rtype: bool
+        """
+
+        self._pad.events.get_into(self._event)
+        if self._event.released:
+            self._event = Event(8)
+            return False
+        return True
+
+    @property
+    def button_pressed(self) -> int:
+        """The key number of the button pressed"""
+        return self._event.key_number
 
     @property
     def animation(self) -> int:
@@ -179,7 +209,7 @@ class DiscordPyBadge:
     def _generate_audio_file(self, sound_id: int) -> Union[MP3Decoder, WaveFile]:
         sound_reqs = self._sounds[sound_id]
         if sound_reqs["type"] == "mp3":
-            return MP3Decoder(open(sound_reqs["file"], "rb")).deinit
+            return MP3Decoder(open(sound_reqs["file"], "rb"))
         elif sound_reqs["type"] == "wav":
             return WaveFile(open(sound_reqs["file"], "rb"))
 
