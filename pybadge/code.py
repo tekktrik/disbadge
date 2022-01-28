@@ -22,8 +22,8 @@ try:
 except ImportError:
     pass
 
-screen = ScreenManager()
-screen.set_loading_splash()
+disbadge = DiscordPyBadge(external_speaker=True)
+disbadge.set_splash(DisplayStateIDs.LOADING)
 
 # Set up Bluetooth
 esp32 = ESP32(
