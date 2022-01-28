@@ -1,5 +1,6 @@
 import board
 from micropython import const
+import gc
 from keypad import ShiftRegisterKeys, Event
 import neopixel
 import digitalio
@@ -16,7 +17,7 @@ from states import DisplayStateIDs, LEDStateIDs
 from screens import SplashBackground, TextSplashScreen, ImageSplashScreen
 
 try:
-    from typing import Optional
+    from typing import Optional, Union
     from adafruit_led_animation.animation import Animation
 except ImportError:
     pass
