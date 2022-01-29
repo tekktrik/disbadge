@@ -1,6 +1,16 @@
+"""
+`screens`
+====================================================
+
+Various program states stored in Enum-like objects
+
+* Author(s): Alec Delaney
+
+"""
+
+# pylint: disable=too-few-public-methods
 class DisplayStateIDs:
-    """The current state of the program, especially with regards to what
-    is currently being displayed"""
+    """The current display state of the program"""
 
     LOADING = 0
     CONNECTING = 1
@@ -11,7 +21,9 @@ class DisplayStateIDs:
     HYPE = 6
 
 
+# pylint: disable=too-few-public-methods
 class LEDStateIDs:
+    """The current LED animation state of the program"""
 
     NONE = 0
     PING = 1
