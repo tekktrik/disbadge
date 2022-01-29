@@ -1,5 +1,5 @@
 """
-`screens`
+`states`
 ====================================================
 
 Various program states stored in Enum-like objects
