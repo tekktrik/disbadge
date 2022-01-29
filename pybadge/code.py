@@ -1,6 +1,11 @@
 """
-This is a Conference Badge type Name Tag that is intended to be displayed on
-the PyBadge. Feel free to customize it to your heart's content.
+`code`
+====================================================
+
+Main sequence for Discord PyBadge
+
+* Author(s): Alec Delaney
+
 """
 
 import asyncio
