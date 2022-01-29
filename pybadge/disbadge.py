@@ -189,7 +189,7 @@ class DiscordPyBadge:
             )
         elif splash_reqs["type"] == "s":
             new_splash = SplashBackground(screen_id, splash_reqs["bg"])
-            new_message = message if splash_reqs else displayio.Group()
+            new_message = message if message else displayio.Group()
             new_splash.append(new_message)
         elif splash_reqs["type"] == "is":
             new_splash = ImageSplashScreen(
