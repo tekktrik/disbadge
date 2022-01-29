@@ -1,8 +1,18 @@
+"""
+`pybadge_messages`
+====================================================
+
+PyBadge-specific Discord message class that also inherits from
+displayio.Group
+
+* Author(s): Alec Delaney
+
+"""
+
 import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
-import shared.layout as layout
-import shared.messages as messages
+from shared import layout, messages
 
 try:
     from typing import Dict, Any
@@ -18,6 +28,7 @@ MESSAGE_FONTNAME = "/fonts/cherry-11-r.bdf"
 MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 
 
+# pylint: disable=too-many-instance-attributes
 class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
     """Display class for Discord messages, as both a displayio Group and
     an extension of DiscordMessageBase
@@ -96,4 +107,4 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
         self.message = dict_object["message"]
         self.user = dict_object["user"]
-        self.cmd_type = dict_object["cmd_type"]
+        self._cmd_type = dict_object["cmd_type"]
