@@ -28,6 +28,7 @@ from screens import SplashBackground, TextSplashScreen, ImageSplashScreen
 
 try:
     from typing import Optional, Union
+    from pybadge_messages import DiscordMessageGroup
 except ImportError:
     pass
 
@@ -183,6 +184,7 @@ class DiscordPyBadge:
     def _generate_screen(
         self, screen_id: int, message: Optional[displayio.Group] = None
     ) -> SplashBackground:
+        self._current_message = message if message else None
         splash_reqs = self._splashes[screen_id]
         if splash_reqs["type"] == "ts":
             new_splash = TextSplashScreen(
@@ -191,7 +193,6 @@ class DiscordPyBadge:
         elif splash_reqs["type"] == "s":
             new_splash = SplashBackground(screen_id, splash_reqs["bg"])
             new_message = message if message else displayio.Group()
-            self._current_message = message if message else None
             new_splash.append(new_message)
         elif splash_reqs["type"] == "is":
             new_splash = ImageSplashScreen(
@@ -213,6 +214,11 @@ class DiscordPyBadge:
         if len(self.splash) > 1:
             self.splash.remove(self.splash[0])
             gc.collect()
+
+    @property
+    def current_message(self) -> Optional[DiscordMessageGroup]:
+        """The current message being displayed"""
+        return self._current_message
 
     @property
     def current_splash(self) -> int:
