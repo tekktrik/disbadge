@@ -230,6 +230,7 @@ class DiscordPyBadge:
 
     def play_notification(self, sound_id: int) -> None:
         """Plays a notification sound, and pauses execution while doing so
+        (still animates LEDs, however)
 
         :param int sound_id: The id of the notification sound
         """
