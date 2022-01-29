@@ -1,12 +1,20 @@
-import board
+"""
+`screens`
+====================================================
+
+Screens that are generated as part of the Discord PyBadge program
+
+* Author(s): Alec Delaney
+
+"""
+
 import displayio
 from adafruit_bitmap_font import bitmap_font
 import adafruit_imageload
 from adafruit_display_text.label import Label
-from states import DisplayStateIDs
 
 try:
-    from typing import Optional, Tuple
+    from typing import Tuple
 except ImportError:
     pass
 
@@ -102,6 +110,7 @@ class TextSplashScreen(SplashBackground):
 
     @property
     def text_color(self) -> int:
+        """The color of the text"""
         return self._text_color
 
 
