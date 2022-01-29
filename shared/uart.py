@@ -1,3 +1,13 @@
+"""
+`shared.messages`
+====================================================
+
+Class for managing UART for both the PyBadge and Raspberry Pi
+
+* Author(s): Alec Delaney
+
+"""
+
 import json
 
 try:
@@ -16,7 +26,7 @@ class UARTManager:
     :param UARTService uart_connection: The UART service connection
     :param BLERadio ble_radio: The BLE radio object
     """
-    
+
     def __init__(self, uart_connection: UARTService, ble_radio: BLERadio) -> None:
         self._uart = uart_connection
         self._ble = ble_radio
@@ -42,7 +52,7 @@ class UARTManager:
     def transmit(self, data: Dict[str, Any]) -> None:
         """Transmits the number of bytes to be sent followed by newline,
         then sends a JSON payload
-        
+
         :param data: The data to send over UART
         :type data: Dict[str, Any]
         """
@@ -55,7 +65,7 @@ class UARTManager:
 
     def receive(self) -> Dict[str, Any]:
         """Receives a JSON payload and converts it into an object
-        
+
         :return: An object described by the JSON
         :rtype: Dict[str, Any]
         """
