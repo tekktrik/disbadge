@@ -73,6 +73,7 @@ class DiscordPyBadge:
         board.DISPLAY.show(self.splash)
 
         # Display loading screen details
+        self._current_message = None
         self._splashes = {
             DisplayStateIDs.LOADING: {
                 "type": "ts",
@@ -190,6 +191,7 @@ class DiscordPyBadge:
         elif splash_reqs["type"] == "s":
             new_splash = SplashBackground(screen_id, splash_reqs["bg"])
             new_message = message if message else displayio.Group()
+            self._current_message = message if message else None
             new_splash.append(new_message)
         elif splash_reqs["type"] == "is":
             new_splash = ImageSplashScreen(
