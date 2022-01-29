@@ -53,7 +53,7 @@ class DiscordPyBadge:
         external speaker; default is False
     """
 
-    def __init__(self, external_speaker: bool = False):
+    def __init__(self, external_speaker: bool = False) -> None:
 
         # Make the Display Background
         self.splash = displayio.Group()
@@ -175,7 +175,7 @@ class DiscordPyBadge:
         """Animates the NeoPixels if there is a current animation"""
         self._current_animation.animate()
 
-    def _generate_screen(self, screen_id: int, message: Optional[displayio.Group] = None):
+    def _generate_screen(self, screen_id: int, message: Optional[displayio.Group] = None) -> SplashBackground:
         splash_reqs = self._splashes[screen_id]
         if splash_reqs["type"] == "ts":
             new_splash = TextSplashScreen(screen_id, splash_reqs["bg"], splash_reqs["text"])
@@ -215,6 +215,10 @@ class DiscordPyBadge:
             return WaveFile(open(sound_reqs["file"], "rb"))
 
     def play_notification(self, sound_id: int) -> None:
+        """Plays a notification sound, and pauses execution while doing so
+        
+        :param int sound_id: The id of the notification sound
+        """
 
         self._current_sound = self._generate_audio_file(sound_id)
         if self._current_sound:
