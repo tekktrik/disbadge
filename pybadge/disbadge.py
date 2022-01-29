@@ -240,7 +240,8 @@ class DiscordPyBadge:
             self.speaker_enable.value = True
             self.audio.play(self._current_sound)
             while self.audio.playing:
-                pass
+                if self._current_animation:
+                    self._current_animation.animate()
             self.speaker_enable.value = False
             self._current_sound.deinit()
             gc.collect()
