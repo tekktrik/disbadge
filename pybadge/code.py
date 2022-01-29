@@ -85,5 +85,3 @@ while True:
             continue
         ble.connect(advertisement)
         print("Connected!")
-
-print("what")
