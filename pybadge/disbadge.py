@@ -33,8 +33,10 @@ LOADING_TEXT = "Loading..."
 CONNECTING_TEXT = "Connecting..."
 NO_MESSAGES_TEXT = "No messages!"
 
+
 class Buttons:
     """An enum-like class for the button constants"""
+
     BUTTON_LEFT = const(7)
     BUTTON_UP = const(6)
     BUTTON_DOWN = const(5)
@@ -94,7 +96,7 @@ class DiscordPyBadge:
                 "type": "is",
                 "bg": MESSAGE_BG_COLOR,
                 "image": "hype.bmp",
-            }
+            },
         }
 
         # Initialize LED animations
@@ -123,29 +125,20 @@ class DiscordPyBadge:
         # Initialize sounds
         self._current_sound = None
         self._sounds = {
-            DisplayStateIDs.PING: {
-                "type": "mp3",
-                "file": "sound/Victory Stinger.mp3"
-            },
-            DisplayStateIDs.CHEER: {
-                "type": "wav",
-                "file": "sound/chipquest.wav"
-            },
-            DisplayStateIDs.HYPE: {
-                "type": "wav",
-                "file": "sound/Victory.wav"
-            },
+            DisplayStateIDs.PING: {"type": "mp3", "file": "sound/Victory Stinger.mp3"},
+            DisplayStateIDs.CHEER: {"type": "wav", "file": "sound/chipquest.wav"},
+            DisplayStateIDs.HYPE: {"type": "wav", "file": "sound/Victory.wav"},
         }
         if external_speaker:
             self.speaker_enable = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
             self.speaker_enable.switch_to_output()
-        
+
         self.audio = AudioOut(board.SPEAKER)
         """The audio object for the DiscordPyBadge"""
 
     def update_inputs(self) -> bool:
         """Get the latest button press Event
-        
+
         :return: Whether the lastest event was a press
         :rtype: bool
         """
@@ -175,20 +168,28 @@ class DiscordPyBadge:
         """Animates the NeoPixels if there is a current animation"""
         self._current_animation.animate()
 
-    def _generate_screen(self, screen_id: int, message: Optional[displayio.Group] = None) -> SplashBackground:
+    def _generate_screen(
+        self, screen_id: int, message: Optional[displayio.Group] = None
+    ) -> SplashBackground:
         splash_reqs = self._splashes[screen_id]
         if splash_reqs["type"] == "ts":
-            new_splash = TextSplashScreen(screen_id, splash_reqs["bg"], splash_reqs["text"])
+            new_splash = TextSplashScreen(
+                screen_id, splash_reqs["bg"], splash_reqs["text"]
+            )
         elif splash_reqs["type"] == "s":
             new_splash = SplashBackground(screen_id, splash_reqs["bg"])
             new_message = message if splash_reqs else displayio.Group()
             print("B", type(new_message))
             new_splash.append(new_message)
         elif splash_reqs["type"] == "is":
-            new_splash = ImageSplashScreen(screen_id, splash_reqs["color"], splash_reqs["image"])
+            new_splash = ImageSplashScreen(
+                screen_id, splash_reqs["color"], splash_reqs["image"]
+            )
         return new_splash
 
-    def set_splash(self, screen_id: int, message: Optional[displayio.Group] = None) -> None:
+    def set_splash(
+        self, screen_id: int, message: Optional[displayio.Group] = None
+    ) -> None:
         """Sets the splash screen
 
         :param int screen_id: The id of the splash screen
@@ -216,7 +217,7 @@ class DiscordPyBadge:
 
     def play_notification(self, sound_id: int) -> None:
         """Plays a notification sound, and pauses execution while doing so
-        
+
         :param int sound_id: The id of the notification sound
         """
 

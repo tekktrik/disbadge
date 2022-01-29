@@ -10,6 +10,7 @@ class DisplayStateIDs:
     CHEER = 5
     HYPE = 6
 
+
 class LEDStateIDs:
 
     NONE = 0
