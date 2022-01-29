@@ -6,44 +6,83 @@ the PyBadge. Feel free to customize it to your heart's content.
 import time
 import board
 from micropython import const
-import displayio
-from adafruit_display_text.label import Label
-from adafruit_bitmap_font import bitmap_font
-from discord_display import DiscordMessageGroup
+import asyncio
+from adafruit_airlift.esp32 import ESP32
+from adafruit_ble import BLERadio
+from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
+from adafruit_ble.services.nordic import UARTService
+from pybadge_messages import DiscordMessageGroup
+from disbadge import DiscordPyBadge
+from shared.messages import CommandType
+from shared.uart import UARTManager
+from states import DisplayStateIDs, LEDStateIDs
 
-# Button Constants
-BUTTON_LEFT = const(128)
-BUTTON_UP = const(64)
-BUTTON_DOWN = const(32)
-BUTTON_RIGHT = const(16)
-BUTTON_SEL = const(8)
-BUTTON_START = const(4)
-BUTTON_A = const(2)
-BUTTON_B = const(1)
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
-# Customizations
-HELLO_STRING = "Hello! This is a much much longer test"
-MY_NAME_STRING = "MY NAME IS"
-NAME_STRING = "Blinka"
-MESSAGE_FONTNAME = "/fonts/Tewi-11.bdf"
-CHARACTERS_PER_LINE = 31
-BACKGROUND_COLOR = 0x37393F
-MESSAGE_TEXT_COLOR = 0xFFFFFF
+disbadge = DiscordPyBadge(external_speaker=True)
+disbadge.set_splash(DisplayStateIDs.LOADING)
 
-# Make the Display Background
-splash = displayio.Group()
-board.DISPLAY.show(splash)
+# Set up Bluetooth
+esp32 = ESP32(
+    reset=board.D12,
+    gpio0=board.D10,
+    busy=board.D11,
+    chip_select=board.D13,
+    tx=board.TX,
+    rx=board.RX,
+)
+adapter = esp32.start_bluetooth()
+ble = BLERadio(adapter)
 
-color_bitmap = displayio.Bitmap(160, 128, 1)
-color_palette = displayio.Palette(1)
-color_palette[0] = BACKGROUND_COLOR
+CURRENT_MESSAGE = DiscordMessageGroup()
 
-bg_sprite = displayio.TileGrid(color_bitmap,
-                               pixel_shader=color_palette,
-                               x=0, y=0)
-splash.append(bg_sprite)
 
-# Test message
-notification = DiscordMessageGroup("This is a test message! It is considerably longer than the previous message, but this will let me test the wrapping and cutoff of texts.", "Tekktrik", 0)
-splash.append(notification)
-time.sleep(10)
+async def data_transmission(uart: UARTService):
+
+    with UARTManager(uart, ble) as uart_manager:
+        while uart_manager.connected:
+            while uart_manager.data_available:
+                message_dict = uart_manager.receive()
+                CURRENT_MESSAGE.from_dict(message_dict)
+            asyncio.sleep(0)
+
+
+async def ui_management():
+
+    while ble.connected:
+
+        # Main loop for handling UI and buttons
+
+        asyncio.sleep(0)
+
+
+# Main loop
+while True:
+
+    # If connected, look through connections and connect to one with UARTService
+    if ble.connected and any(
+        UARTService in connection for connection in ble.connections
+    ):
+        print("UARTService found in connection, getting connection...")
+        for connection in ble.connections:
+            if UARTService not in connection:
+                continue
+            uart: UARTService = connection[UARTService]
+            print("UARTService connected!")
+
+            # Create and await tasks to achieve main functionality at this level
+            data_task = asyncio.create_task(data_transmission(uart))
+            ui_task = asyncio.create_task(ui_management())
+            asyncio.gather(data_task, ui_task)
+
+    # If not connected, attempt to do so
+    disbadge.set_splash(DisplayStateIDs.CONNECTING)
+    for advertisement in ble.start_scan(ProvideServicesAdvertisement, timeout=1):
+        advertisement: ProvideServicesAdvertisement
+        if UARTService not in advertisement.services:
+            continue
+        ble.connect(advertisement)
+        print("Connected!")
