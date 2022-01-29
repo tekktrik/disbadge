@@ -1,6 +1,16 @@
+"""
+`disbadge`
+====================================================
+
+Manager for the PyBadge that handles user input, displays, and sounds
+
+* Author(s): Alec Delaney
+
+"""
+
+import gc
 import board
 from micropython import const
-import gc
 from keypad import ShiftRegisterKeys, Event
 import neopixel
 import digitalio
@@ -18,7 +28,6 @@ from screens import SplashBackground, TextSplashScreen, ImageSplashScreen
 
 try:
     from typing import Optional, Union
-    from adafruit_led_animation.animation import Animation
 except ImportError:
     pass
 
@@ -34,6 +43,7 @@ CONNECTING_TEXT = "Connecting..."
 NO_MESSAGES_TEXT = "No messages!"
 
 
+# pylint: disable=too-few-public-methods
 class Buttons:
     """An enum-like class for the button constants"""
 
@@ -47,6 +57,7 @@ class Buttons:
     BUTTON_B = const(0)
 
 
+# pylint: disable=too-many-instance-attributes, no-member
 class DiscordPyBadge:
     """A helper class that manages the IO for the PyBadge, including NeoPixels,
     sound, and button inputs
@@ -160,8 +171,8 @@ class DiscordPyBadge:
         return self._current_animation
 
     @animation.setter
-    def animation(self, id: int) -> None:
-        self._current_animation = self._animations.get(id)
+    def animation(self, animation_id: int) -> None:
+        self._current_animation = self._animations.get(animation_id)
         gc.collect()
 
     def animate_leds(self) -> None:
@@ -209,11 +220,12 @@ class DiscordPyBadge:
         return current_splash.screen_id
 
     def _generate_audio_file(self, sound_id: int) -> Union[MP3Decoder, WaveFile]:
-        sound_reqs = self._sounds[sound_id]
+        sound_reqs = self._sounds.get(sound_id)
+        if not sound_reqs:
+            raise ValueError("Invalid sound id")
         if sound_reqs["type"] == "mp3":
             return MP3Decoder(open(sound_reqs["file"], "rb"))
-        elif sound_reqs["type"] == "wav":
-            return WaveFile(open(sound_reqs["file"], "rb"))
+        return WaveFile(open(sound_reqs["file"], "rb"))
 
     def play_notification(self, sound_id: int) -> None:
         """Plays a notification sound, and pauses execution while doing so
