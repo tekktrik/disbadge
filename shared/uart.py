@@ -13,8 +13,9 @@ import json
 try:
     from typing import Dict, Any, Optional, Type
     from types import TracebackType
-    from adafruit_ble.services.nordic import UARTService
-    from adafruit_ble import BLERadio
+    from usb_cdc import Serial
+    #from adafruit_ble.services.nordic import UARTService
+    #from adafruit_ble import BLERadio
 except ImportError:
     pass
 
@@ -23,13 +24,12 @@ class UARTManager:
     """Effectively a wrapper class for UARTService that adds functionality
     for managing UART for our purposes
 
-    :param UARTService uart_connection: The UART service connection
+    :param Serial uart_connection: The UART service connection
     :param BLERadio ble_radio: The BLE radio object
     """
 
-    def __init__(self, uart_connection: UARTService, ble_radio: BLERadio) -> None:
+    def __init__(self, uart_connection: Serial) -> None:
         self._uart = uart_connection
-        self._ble = ble_radio
         self._buffer = bytearray(100)
 
     def __enter__(self) -> "UARTManager":
@@ -92,7 +92,3 @@ class UARTManager:
         """Whether any data is waiting in the UART receive pipeline"""
         return self._uart.in_waiting > 0
 
-    @property
-    def connected(self) -> bool:
-        """Whether the BLE radio is connected"""
-        return self._ble.connected

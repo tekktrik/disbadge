@@ -1,20 +1,9 @@
-"""
-`shared.messages`
-====================================================
-
-Base class for holding Discord messages
-
-* Author(s): Alec Delaney
-
-"""
-
 try:
     from typing import Optional, Any, Dict
 except ImportError:
     pass
 
 
-# pylint: disable=too-few-public-methods
 class CommandType:
     """Enum-like class for command types"""
 
@@ -26,7 +15,7 @@ class CommandType:
 
 class DiscordMessageBase:
     """The base class for representing Discord messages
-
+    
     :param str message: (Optional) The Discord message; default is None
     :param str user: (Optional) The sender of the message; defualt is None
     :param int cmd_type: (Optional) The slash command type used to send the
@@ -34,10 +23,7 @@ class DiscordMessageBase:
     """
 
     def __init__(
-        self,
-        message: Optional[str] = None,
-        user: Optional[str] = None,
-        cmd_type: int = CommandType.NONE,
+        self, message: Optional[str] = None, user: Optional[str] = None, cmd_type: int = CommandType.NONE
     ) -> None:
 
         self._message = message
@@ -48,9 +34,11 @@ class DiscordMessageBase:
         return "{0}: {1}".format(self.user, self.message)
 
     def __str__(self) -> str:
-        return str(self._message)
+        return str(self.message)
 
     def __eq__(self, other: Any) -> bool:
+        if other is None:
+            return False
         if isinstance(other, DiscordMessageBase):
             if other._message == self._message and other._user == self._user:
                 return True
@@ -61,7 +49,7 @@ class DiscordMessageBase:
         if isinstance(other, DiscordMessageBase):
             self._message += other._message
             return self
-        if isinstance(other, str):
+        elif isinstance(other, str):
             self._message += other
             return self
         raise TypeError("Can only add strings or other Discord messages")
@@ -92,15 +80,15 @@ class DiscordMessageBase:
         return self._cmd_type
 
     @cmd_type.setter
-    def cmd_type(self, command: int) -> None:
-        self._cmd_type = command
+    def cmd_type(self, type: int) -> None:
+        self._cmd_type = type
 
     def to_dict(self) -> Dict[str, Any]:
         """Converts the message object into an equivalent dict, must be
         implemented in subclasses of DiscordMessageBase"""
         raise NotImplementedError("Must be defined in subclass")
 
-    def from_dict(self, dict_object: Dict[str, Any]) -> None:
+    def from_dict(cls, dict_object: Dict[str, Any]) -> None:
         """Converts a dict into the equivalent DiscordMessageBase object,
         must be implemented in subclasses of DiscordMessageBase
         """

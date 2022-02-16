@@ -1,14 +1,3 @@
-"""
-`shared.layout`
-====================================================
-
-Helper function(s) that may be used as part of layout management
-across the PyBadge and Raspberry Pi
-
-* Author(s): Alec Delaney
-
-"""
-
 try:
     from typing import List
 except ImportError:
@@ -28,12 +17,12 @@ def wrap_text(string: str, max_chars: int) -> List[str]:
     words = string.split(" ")
     the_lines = []
     the_line = ""
-    for word in words:
-        if len(the_line + " " + word) <= max_chars:
-            the_line += " " + word
+    for w in words:
+        if len(the_line + " " + w) <= max_chars:
+            the_line += " " + w
         else:
             the_lines.append(the_line)
-            the_line = "" + word
+            the_line = "" + w
     if the_line:  # last line remaining
         the_lines.append(the_line)
     # remove first space from first line:
