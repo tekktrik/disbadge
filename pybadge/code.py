@@ -16,7 +16,7 @@ from adafruit_airlift.esp32 import ESP32
 from adafruit_ble import BLERadio
 from adafruit_ble.advertising.standard import ProvideServicesAdvertisement
 from adafruit_ble.services.nordic import UARTService
-from pybadge.states import LEDStateIDs
+from states import LEDStateIDs
 from pybadge_messages import DiscordMessageGroup
 from disbadge import DiscordPyBadge, Buttons
 from shared.messages import CommandType
