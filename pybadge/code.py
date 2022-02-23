@@ -69,6 +69,7 @@ disbadge.set_splash(DisplayStateIDs.CONNECT)
 while True:
     disbadge.update_inputs()
     if disbadge.button_pressed == Buttons.BUTTON_A:
+        disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
         break
 
 def main():
@@ -84,49 +85,48 @@ def main():
                 # TODO: Try to reconnect
                 pass
 
-        print("CURRENT:", global_state.CURRENT_MESSAGE)
-        print("current:", disbadge.current_message)
-
         wsgi_server.update_poll()
 
-        if global_state.CURRENT_MESSAGE != disbadge.current_message:
+        # Guard statement for message equality
+        if global_state.CURRENT_MESSAGE == disbadge.current_message:
+            continue
             
-            # Check if no messsage
-            if global_state.CURRENT_MESSAGE is None:
-                disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
-                continue
+        # Check if no messsage
+        if global_state.CURRENT_MESSAGE is None:
+            disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
+            continue
 
-            # Handle actual message
-            if global_state.CURRENT_MESSAGE.cmd_type == CommandType.PING:
-                led_animation_id = LEDStateIDs.PING
-                new_splash_id = DisplayStateIDs.PING
-            elif global_state.CURRENT_MESSAGE.cmd_type == CommandType.CHEER:
-                led_animation_id = LEDStateIDs.CHEER
-                new_splash_id = DisplayStateIDs.CHEER
-            else:
-                led_animation_id = LEDStateIDs.HYPE
-                new_splash_id = DisplayStateIDs.HYPE
-            disbadge.set_splash(new_splash_id)
-            disbadge.animation = led_animation_id
-            disbadge.play_notification(new_splash_id)
-            disbadge.set_splash(DisplayStateIDs.MESSAGE, message=global_state.CURRENT_MESSAGE)
+        # Handle actual message
+        if global_state.CURRENT_MESSAGE.cmd_type == CommandType.PING:
+            led_animation_id = LEDStateIDs.PING
+            new_splash_id = DisplayStateIDs.PING
+        elif global_state.CURRENT_MESSAGE.cmd_type == CommandType.CHEER:
+            led_animation_id = LEDStateIDs.CHEER
+            new_splash_id = DisplayStateIDs.CHEER
+        else:
+            led_animation_id = LEDStateIDs.HYPE
+            new_splash_id = DisplayStateIDs.HYPE
+        disbadge.set_splash(new_splash_id)
+        disbadge.animation = led_animation_id
+        disbadge.play_notification(new_splash_id)
+        disbadge.set_splash(DisplayStateIDs.MESSAGE, message=global_state.CURRENT_MESSAGE)
 
-            # Start LED animation clock
-            popup_start_time = time.monotonic()
-            while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) or global_state.CURRENT_MESSAGE != disbadge.current_message:
-                disbadge.animate_leds()
-                wsgi_server.update_poll()
-                if disbadge.button_pressed == Buttons.BUTTON_B:
-                    break
-            disbadge.animation = LEDStateIDs.NONE
+        # Start LED animation clock
+        popup_start_time = time.monotonic()
+        while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) or global_state.CURRENT_MESSAGE != disbadge.current_message:
+            disbadge.animate_leds()
+            wsgi_server.update_poll()
+            if disbadge.button_pressed == Buttons.BUTTON_B:
+                break
+        disbadge.animation = LEDStateIDs.NONE
 
-            # Check if new message available
-            if global_state.CURRENT_MESSAGE != disbadge.current_message: # New message
-                disbadge.set_splash(DisplayStateIDs.LOADING)
-                continue
-            else: # Timed out of LED animation
-                disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
-                global_state.CURRENT_MESSAGE = None
+        # Check if new message available
+        if global_state.CURRENT_MESSAGE != disbadge.current_message: # New message
+            disbadge.set_splash(DisplayStateIDs.LOADING)
+            continue
+        else: # Timed out of LED animation
+            disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
+            global_state.CURRENT_MESSAGE = None
 
 
 main()
