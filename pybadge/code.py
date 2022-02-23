@@ -22,8 +22,7 @@ from shared.messages import CommandType
 from states import DisplayStateIDs
 from shared.uart import UARTManager
 from adafruit_wsgi.wsgi_app import WSGIApp
-
-from secrets import secrets
+from shared.secrets import secrets
 
 try:
     import typing  # pylint: disable=unused-import

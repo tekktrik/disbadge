@@ -5,7 +5,7 @@ import requests
 from shared.messages import CommandType
 from raspberrypi.rpi_messages import RPiDiscordMessage
 from shared.uart import UARTManager
-from secrets import secrets
+from shared.secrets import secrets
 
 # Define variables used throughout Discord bot
 MY_NAME = "Tekktrik"
