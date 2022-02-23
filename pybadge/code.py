@@ -84,6 +84,9 @@ def main():
                 # TODO: Try to reconnect
                 pass
 
+        print("CURRENT:", global_state.CURRENT_MESSAGE)
+        print("current:", disbadge.current_message)
+
         wsgi_server.update_poll()
 
         if global_state.CURRENT_MESSAGE != disbadge.current_message:

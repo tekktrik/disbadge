@@ -61,8 +61,10 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         self._username_label = None
         self._cmd_type = cmd_type
 
-        self.user = user
-        self.message = message
+        self._user = user
+        self._message = message
+        self.user = self._user
+        self.message = self._message
 
     @property
     def user(self) -> str:
