@@ -213,7 +213,7 @@ class DiscordPyBadge:
             new_splash.append(new_message)
         elif splash_reqs["type"] == "is":
             new_splash = ImageSplashScreen(
-                screen_id, splash_reqs["color"], splash_reqs["image"]
+                screen_id, splash_reqs["bg"], splash_reqs["image"]
             )
         elif splash_reqs["type"] == "lts":
             new_splash = LabeledTextSplashScreen(screen_id, splash_reqs["bg"], splash_reqs["text"], self.ip_address)
