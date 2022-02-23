@@ -98,7 +98,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         )
         self.append(self._message_label)
 
-    def from_dict(self, dict_object: Dict[str, Any]) -> None:
+    def from_json(self, dict_object: Dict[str, Any]) -> None:
         """Turns a dict into a DiscordMessageGroup.  The dict must have keys
         for 'message', 'user', and 'cmd_type'
 

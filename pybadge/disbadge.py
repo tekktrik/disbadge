@@ -63,11 +63,15 @@ class DiscordPyBadge:
     """A helper class that manages the IO for the PyBadge, including NeoPixels,
     sound, and button inputs
 
+    :param str ip_address: The IP address of the 
     :param bool external_speaker: Whether the PyBadge is set up to use an
         external speaker; default is False
     """
 
-    def __init__(self, external_speaker: bool = False) -> None:
+    def __init__(self, ip_address: Optional[str] = None, external_speaker: bool = False) -> None:
+
+        # Set IP address
+        self._ip_address = ip_address
 
         # Make the Display Background
         self.splash = displayio.Group()
@@ -110,6 +114,11 @@ class DiscordPyBadge:
                 "bg": MESSAGE_BG_COLOR,
                 "image": "hype.bmp",
             },
+            DisplayStateIDs.CONNECT: {
+                "type": "dts",
+                "bg": SETUP_BG_COLOR,
+                "text": "/n".join(["IP Address:", ip_address]),
+            },
         }
 
         # Initialize LED animations
@@ -148,6 +157,14 @@ class DiscordPyBadge:
 
         self.audio = AudioOut(board.SPEAKER)
         """The audio object for the DiscordPyBadge"""
+
+    @property
+    def ip_address(self) -> Optional[str]:
+        return self._ip_address
+
+    @ip_address.setter
+    def ip_address(self, ip_address: str) -> None:
+        self._ip_address = ip_address
 
     def update_inputs(self) -> bool:
         """Get the latest button press Event
@@ -198,6 +215,8 @@ class DiscordPyBadge:
             new_splash = ImageSplashScreen(
                 screen_id, splash_reqs["color"], splash_reqs["image"]
             )
+        elif splash_reqs["type"] == "dts":
+            new_splash = TextSplashScreen(screen_id, splash_reqs["color"], splash_reqs["text"]())
         return new_splash
 
     def set_splash(

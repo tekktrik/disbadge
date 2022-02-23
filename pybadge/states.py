@@ -19,6 +19,7 @@ class DisplayStateIDs:
     PING = 4
     CHEER = 5
     HYPE = 6
+    CONNECT = 7
 
 
 # pylint: disable=too-few-public-methods
