@@ -24,7 +24,7 @@ from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
 from audiocore import WaveFile
 from audiomp3 import MP3Decoder
 from states import DisplayStateIDs, LEDStateIDs
-from screens import SplashBackground, TextSplashScreen, ImageSplashScreen
+from screens import SplashBackground, TextSplashScreen, ImageSplashScreen, LabeledTextSplashScreen
 
 try:
     from typing import Optional, Union
@@ -115,9 +115,9 @@ class DiscordPyBadge:
                 "image": "hype.bmp",
             },
             DisplayStateIDs.CONNECT: {
-                "type": "dts",
+                "type": "lts",
                 "bg": SETUP_BG_COLOR,
-                "text": "/n".join(["IP Address:", ip_address]),
+                "text": "IP:",
             },
         }
 
@@ -215,8 +215,8 @@ class DiscordPyBadge:
             new_splash = ImageSplashScreen(
                 screen_id, splash_reqs["color"], splash_reqs["image"]
             )
-        elif splash_reqs["type"] == "dts":
-            new_splash = TextSplashScreen(screen_id, splash_reqs["color"], splash_reqs["text"]())
+        elif splash_reqs["type"] == "lts":
+            new_splash = LabeledTextSplashScreen(screen_id, splash_reqs["bg"], splash_reqs["text"], self.ip_address)
         return new_splash
 
     def set_splash(

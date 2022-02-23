@@ -20,8 +20,8 @@ from pybadge_messages import DiscordMessageGroup
 from disbadge import DiscordPyBadge, Buttons
 from shared.messages import CommandType
 from states import DisplayStateIDs
-from shared.uart import UARTManager
 from adafruit_wsgi.wsgi_app import WSGIApp
+import global_state
 from shared.secrets import secrets
 
 try:
@@ -48,16 +48,14 @@ wifi.connect()
 
 web_app = WSGIApp()
 
-CURRENT_MESSAGE = DiscordMessageGroup()
-
 
 @web_app.route("/message", ["POST"])
 def display_message(request: Request):
     """Function for handling data transmission over WSGI app
     """
 
-    CURRENT_MESSAGE = DiscordMessageGroup()
-    CURRENT_MESSAGE.from_dict(request.query_params)
+    global_state.CURRENT_MESSAGE = DiscordMessageGroup()
+    global_state.CURRENT_MESSAGE.from_dict(request.query_params)
     # gc.collect()
 
 server.set_interface(esp32)
@@ -68,6 +66,8 @@ pretty_ip_address = esp32.pretty_ip(esp32.ip_address)
 disbadge.ip_address = pretty_ip_address
 print(pretty_ip_address)
 disbadge.set_splash(DisplayStateIDs.CONNECT)
+while disbadge.button_pressed != Buttons.BUTTON_A:
+    pass
 
 def main():
     """Main sequence"""
@@ -84,19 +84,18 @@ def main():
 
         wsgi_server.update_poll()
 
-        if CURRENT_MESSAGE != disbadge.current_message:
+        if global_state.CURRENT_MESSAGE != disbadge.current_message:
             
             # Check if no messsage
-            if CURRENT_MESSAGE is None:
+            if global_state.CURRENT_MESSAGE is None:
                 disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
                 continue
 
             # Handle actual message
-            CURRENT_MESSAGE: DiscordMessageGroup
-            if CURRENT_MESSAGE.cmd_type == CommandType.PING:
+            if global_state.CURRENT_MESSAGE.cmd_type == CommandType.PING:
                 led_animation_id = LEDStateIDs.PING
                 new_splash_id = DisplayStateIDs.PING
-            elif CURRENT_MESSAGE.cmd_type == CommandType.CHEER:
+            elif global_state.CURRENT_MESSAGE.cmd_type == CommandType.CHEER:
                 led_animation_id = LEDStateIDs.CHEER
                 new_splash_id = DisplayStateIDs.CHEER
             else:
@@ -105,11 +104,11 @@ def main():
             disbadge.set_splash(new_splash_id)
             disbadge.animation = led_animation_id
             disbadge.play_notification(new_splash_id)
-            disbadge.set_splash(DisplayStateIDs.MESSAGE, message=CURRENT_MESSAGE)
+            disbadge.set_splash(DisplayStateIDs.MESSAGE, message=global_state.CURRENT_MESSAGE)
 
             # Start LED animation clock
             popup_start_time = time.monotonic()
-            while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) or CURRENT_MESSAGE != disbadge.current_message:
+            while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) or global_state.CURRENT_MESSAGE != disbadge.current_message:
                 disbadge.animate_leds()
                 wsgi_server.update_poll()
                 if disbadge.button_pressed == Buttons.BUTTON_B:
@@ -117,12 +116,12 @@ def main():
             disbadge.animation = LEDStateIDs.NONE
 
             # Check if new message available
-            if CURRENT_MESSAGE != disbadge.current_message: # New message
+            if global_state.CURRENT_MESSAGE != disbadge.current_message: # New message
                 disbadge.set_splash(DisplayStateIDs.LOADING)
                 continue
             else: # Timed out of LED animation
                 disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
-                CURRENT_MESSAGE = None
+                global_state.CURRENT_MESSAGE = None
 
 
 main()

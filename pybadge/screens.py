@@ -114,6 +114,43 @@ class TextSplashScreen(SplashBackground):
         return self._text_color
 
 
+class LabeledTextSplashScreen(SplashBackground):
+    """A TextSplashScreen with a label for the given text
+    
+    :param int id: The id of this splash screen
+    :param int color: The background color of the splash screen
+    :param str label: The text to be used as the label text
+    :param str text: The text to be displayed on the screen as the message
+    :param int text_color: (Optional) The color to apply to the text, default is white
+    """
+
+    def __init__(
+        self, screen_id: int, color: int, label: str, message: str, text_color: int = 0xFFFFFF
+    ) -> None:
+
+        super().__init__(screen_id, color)
+
+        self._text = message
+        self._text_color = text_color
+        self._label_label = Label(SPLASH_FONT, text=label, color=self._text_color)
+        self._label_label.x = (SCREEN_WIDTH - self._label_label.width) // 2
+        self._label_label.y = SCREEN_HEIGHT // 2 - self._label_label.height
+        self._message_label = Label(SPLASH_FONT, text=message, color=self._text_color)
+        self._message_label.x = (SCREEN_WIDTH - self._message_label.width) // 2
+        self._message_label.y = SCREEN_HEIGHT // 2
+        self.append(self._label_label)
+        self.append(self._message_label)
+
+    @property
+    def text(self) -> str:
+        """The text of the splash screen"""
+        return self._text
+
+    @property
+    def text_color(self) -> int:
+        """The color of the text"""
+        return self._text_color
+
 class ImageSplashScreen(SplashBackground):
     """A splash screen with an image in the center
 
@@ -150,5 +187,5 @@ class ImageSplashScreen(SplashBackground):
 
     @property
     def image_size(self) -> Tuple[int, int]:
-        """The image dimensions as a tuole"""
+        """The image dimensions as a tuple"""
         return (self._image_size, self._image_size)
