@@ -17,7 +17,7 @@ bot = discord.Bot()
 
 def send_message_post(message: str, user: str, command_type: int) -> None:
     new_message = RPiDiscordMessage(message, user, command_type)
-    requests.post("URL", json=new_message.to_json) # TODO: Add ability to use IP address here
+    requests.post("URL", json=new_message.to_json()) # TODO: Add ability to use IP address here
 
 @bot.event
 async def on_ready():
