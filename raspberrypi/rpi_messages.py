@@ -1,4 +1,5 @@
 from typing import Dict, Any
+import json
 from shared.messages import DiscordMessageBase
 
 class RPiDiscordMessage(DiscordMessageBase):
@@ -11,4 +12,3 @@ class RPiDiscordMessage(DiscordMessageBase):
             "user": self._user,
             "cmd_type": self._cmd_type,
         }
-        return dict_object

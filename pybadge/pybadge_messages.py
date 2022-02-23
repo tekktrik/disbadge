@@ -9,6 +9,7 @@ displayio.Group
 
 """
 
+import json
 import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
@@ -100,13 +101,14 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         )
         self.append(self._message_label)
 
-    def from_json(self, dict_object: Dict[str, Any]) -> None:
+    def from_json(self, json_str: str) -> None:
         """Turns a dict into a DiscordMessageGroup.  The dict must have keys
         for 'message', 'user', and 'cmd_type'
 
-        :param dict_object: The dict to load from
+        :param json_str: The JSON str
         """
 
+        dict_object = json.loads(json_str)
         self.message = dict_object["message"]
         self.user = dict_object["user"]
         self._cmd_type = dict_object["cmd_type"]
