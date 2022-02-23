@@ -66,8 +66,10 @@ pretty_ip_address = esp32.pretty_ip(esp32.ip_address)
 disbadge.ip_address = pretty_ip_address
 print(pretty_ip_address)
 disbadge.set_splash(DisplayStateIDs.CONNECT)
-while disbadge.button_pressed != Buttons.BUTTON_A:
-    pass
+while True:
+    disbadge.update_inputs()
+    if disbadge.button_pressed == Buttons.BUTTON_A:
+        break
 
 def main():
     """Main sequence"""

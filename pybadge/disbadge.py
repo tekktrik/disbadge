@@ -174,7 +174,7 @@ class DiscordPyBadge:
         """
 
         self._pad.events.get_into(self._event)
-        if self._event.released:
+        if self._event is None or self._event.released:
             self._event = Event(8)
             return False
         return True
