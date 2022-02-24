@@ -44,7 +44,7 @@ def decode_characters(payload: str) -> str:
             sub_seq = char
             try:
                 while True:
-                    next_char = next(payload)
+                    next_char = next(payload_iter)
                     sub_seq += next_char
                     if next_char == "-":
                         break
