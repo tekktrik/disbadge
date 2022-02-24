@@ -1,9 +1,6 @@
-import sys
 import re
 import gc
 
-
-IS_HOST = 'typing' in sys.modules
 
 def _is_alphanumeric(character: str) -> bool:
     return re.match("^[a-zA-Z0-9]+$", character)
