@@ -1,6 +1,11 @@
 import re
 import gc
 
+try:
+    from typing import Dict, Any
+except ImportError:
+    pass
+
 
 def _is_alphanumeric(character: str) -> bool:
     return re.match("^[a-zA-Z0-9]+$", character)
@@ -22,7 +27,7 @@ def _decode_character(char_str: str) -> str:
 
     return chr(int(char_str[1:-1]))
 
-def encode(original: str) -> str:
+def encode_characters(original: str) -> str:
     payload = ""
     for char in original:
         if not _is_alphanumeric(char):
@@ -31,8 +36,8 @@ def encode(original: str) -> str:
     gc.collect()
     return payload
 
-def decode(payload: str) -> str:
-    original = ""
+def decode_characters(payload: str) -> str:
+    translation = ""
     payload_iter = iter(payload)
     for char in payload_iter:
         if char == "-":
@@ -46,4 +51,17 @@ def decode(payload: str) -> str:
             except StopIteration:
                 raise RuntimeError("Could not parse a special character in string")
             char = _decode_character(sub_seq)
-        original += char
+        translation += char
+    gc.collect()
+    return translation
+
+def decode_payload(payload: str) -> Dict[str, Any]:
+    payload_dict = {}
+    kv_pairs = payload.split("&")
+    for kv_str in kv_pairs:
+        key, value = kv_str.split("=")
+        key = decode_characters(key)
+        value = decode_characters(value)
+        payload_dict[key] = value
+    gc.collect()
+    return payload_dict

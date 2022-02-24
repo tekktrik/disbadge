@@ -14,6 +14,8 @@ import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
 from shared import layout, messages
+from shared.uri_codec import decode_payload
+
 
 try:
     from typing import Dict, Any
@@ -106,10 +108,11 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         """Turns a dict into a DiscordMessageGroup.  The dict must have keys
         for 'message', 'user', and 'cmd_type'
 
-        :param json_str: The JSON str
+        :param payload: The payload string
         """
 
-        dict_object = json.loads(payload.read())
+        payload = payload.read()
+        dict_object = decode_payload(payload)
         self.message = dict_object["message"]
         self.user = dict_object["user"]
-        self._cmd_type = dict_object["cmd_type"]
+        self._cmd_type = dict_object["cmdtype"]
