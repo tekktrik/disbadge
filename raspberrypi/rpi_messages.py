@@ -1,5 +1,4 @@
 from typing import Dict, Any
-import json
 from shared.messages import DiscordMessageBase
 
 class RPiDiscordMessage(DiscordMessageBase):
