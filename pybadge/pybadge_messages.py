@@ -17,6 +17,7 @@ from shared import layout, messages
 
 try:
     from typing import Dict, Any
+    from io import StringIO
 except ImportError:
     pass
 
@@ -101,14 +102,14 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         )
         self.append(self._message_label)
 
-    def from_json(self, json_str: str) -> None:
+    def from_json(self, payload: StringIO) -> None:
         """Turns a dict into a DiscordMessageGroup.  The dict must have keys
         for 'message', 'user', and 'cmd_type'
 
         :param json_str: The JSON str
         """
 
-        dict_object = json.loads(json_str)
+        dict_object = json.loads(payload.read())
         self.message = dict_object["message"]
         self.user = dict_object["user"]
         self._cmd_type = dict_object["cmd_type"]

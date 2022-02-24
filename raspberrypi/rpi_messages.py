@@ -7,7 +7,7 @@ class RPiDiscordMessage(DiscordMessageBase):
     Raspberry Pi"""
 
     def to_json(self) -> Dict[str, Any]:
-        dict_object = {
+        return {
             "message": self._message,
             "user": self._user,
             "cmd_type": self._cmd_type,

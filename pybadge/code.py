@@ -55,7 +55,7 @@ def display_message(request: Request):
     """
 
     global_state.CURRENT_MESSAGE = DiscordMessageGroup()
-    global_state.CURRENT_MESSAGE.from_dict(request.query_params)
+    global_state.CURRENT_MESSAGE.from_json(request.body)
     # gc.collect()
 
 server.set_interface(esp32)
