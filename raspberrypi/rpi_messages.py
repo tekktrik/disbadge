@@ -1,6 +1,6 @@
 from typing import Dict
 from shared.messages import DiscordMessageBase
-from shared.uri_codec import encode_payload_kvs
+from shared.uri_codec import encode_dictionary
 
 class RPiDiscordMessage(DiscordMessageBase):
     """The extension of DiscordMessage Base that is used by the
@@ -12,4 +12,4 @@ class RPiDiscordMessage(DiscordMessageBase):
             "user": self._user,
             "cmdtype": self._cmd_type,
         }
-        return encode_payload_kvs(prelim_dict)
+        return encode_dictionary(prelim_dict)

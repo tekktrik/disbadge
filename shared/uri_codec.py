@@ -66,7 +66,7 @@ def decode_payload(payload: str) -> Dict[str, str]:
     gc.collect()
     return payload_dict
 
-def encode_payload_kvs(payload: Dict[str, str]) -> Dict[str, str]:
+def encode_dictionary(payload: Dict[str, str]) -> Dict[str, str]:
     safe_dict = {}
     for key, value in payload.items():
         safe_dict[encode_characters(key)] = encode_characters(value)
