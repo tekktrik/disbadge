@@ -23,7 +23,7 @@ bot = discord.Bot()
 
 def send_message_post(message: str, user: str, command_type: int) -> None:
     new_message = RPiDiscordMessage(message, str(user), command_type)
-    payload = new_message.to_json()
+    payload = new_message.to_dict()
     print(payload)
     requests.post("/".join(["http:/", IP_ADDRESS, "message"]), data=payload)
 

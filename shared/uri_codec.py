@@ -2,7 +2,7 @@ import re
 import gc
 
 try:
-    from typing import Dict, Any
+    from typing import Dict
 except ImportError:
     pass
 
@@ -55,7 +55,7 @@ def decode_characters(payload: str) -> str:
     gc.collect()
     return translation
 
-def decode_payload(payload: str) -> Dict[str, Any]:
+def decode_payload(payload: str) -> Dict[str, str]:
     payload_dict = {}
     kv_pairs = payload.split("&")
     for kv_str in kv_pairs:
@@ -65,3 +65,9 @@ def decode_payload(payload: str) -> Dict[str, Any]:
         payload_dict[key] = value
     gc.collect()
     return payload_dict
+
+def encode_payload_kvs(payload: Dict[str, str]) -> Dict[str, str]:
+    safe_dict = {}
+    for key, value in payload.items():
+        safe_dict[encode_characters(key)] = encode_characters(value)
+    return safe_dict
