@@ -2,11 +2,6 @@ import sys
 import re
 import gc
 
-try:
-    import typing  # pylint: disable=unused-import
-    import urllib
-except ImportError:
-    pass
 
 IS_HOST = 'typing' in sys.modules
 
