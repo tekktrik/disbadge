@@ -25,7 +25,7 @@ def send_message_post(message: str, user: str, command_type: int) -> None:
     new_message = RPiDiscordMessage(message, str(user), command_type)
     payload = new_message.to_dict()
     print(payload)
-    requests.post("/".join(["http:/", IP_ADDRESS, "message"]), data=payload)
+    requests.post("/".join(["http:/", IP_ADDRESS, "message"]), data=payload, timeout=5)
 
 @bot.event
 async def on_ready():
@@ -54,7 +54,7 @@ async def ping(ctx: ApplicationContext, message: str):
 
 def activate_disbadge():
     print("Activating...")
-    requests.post("/".join(["http:/", IP_ADDRESS, "activate"]))
+    requests.post("/".join(["http:/", IP_ADDRESS, "activate"]), timeout=5)
 
 # Run blocking event code
 
