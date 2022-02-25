@@ -55,3 +55,4 @@ jobs:
       uses: csexton/release-asset-action@master
       with:
         file: project.zip
+        github-token: ${{ secrets.GITHUB_TOKEN }}
