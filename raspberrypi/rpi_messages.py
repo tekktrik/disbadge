@@ -10,6 +10,6 @@ class RPiDiscordMessage(DiscordMessageBase):
         prelim_dict = {
             "message": self._message,
             "user": self._user,
-            "cmdtype": self._cmd_type,
+            "cmdtype": str(self._cmd_type),
         }
         return encode_dictionary(prelim_dict)
