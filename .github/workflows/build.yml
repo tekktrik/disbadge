@@ -26,9 +26,11 @@ jobs:
       with:
         submodules: true
     - name: Download mpy-cross
-      run: curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-7.2.0 -o mpy-cross
+      run: |
+        sudo apt-get -y wine64
+        curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-x64-windows-7.2.0.exe -o mpy-cross.exe
     - name: Build pybadge/disbadge.mpy
-      run: mpy-cross.exe pybadge/disbadge.py
+      run: wine mpy-cross.exe pybadge/disbadge.py
     - name: Build pybadge/global_state.mpy
       run: circuitpython-build-bundles --filename_prefix pybadge/global_state --library_location .
     - name: Build pybadge/pybadge_messages.mpy
