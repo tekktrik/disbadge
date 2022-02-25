@@ -29,6 +29,7 @@ from screens import SplashBackground, TextSplashScreen, ImageSplashScreen, Label
 try:
     from typing import Optional, Union
     from pybadge_messages import DiscordMessageGroup
+    from adafruit_led_animation.animation import Animation
 except ImportError:
     pass
 
@@ -72,10 +73,6 @@ class DiscordPyBadge:
 
         # Set IP address
         self._ip_address = ip_address
-
-        # Make the Display Background
-        self.splash = displayio.Group()
-        board.DISPLAY.show(self.splash)
 
         # Display loading screen details
         self._current_message = None
@@ -123,13 +120,11 @@ class DiscordPyBadge:
 
         # Initialize LED animations
         self._neopixels = neopixel.NeoPixel(board.NEOPIXEL, 5, brightness=0.25)
-        self._blank_animation = Solid(self._neopixels, color=BLACK)
-        self._current_animation = self._blank_animation
         self._animations = {
-            LEDStateIDs.PING: Pulse(self._neopixels, speed=0.5, color=RED, period=2),
-            LEDStateIDs.CHEER: Rainbow(self._neopixels, speed=0.1, period=0.75),
-            LEDStateIDs.HYPE: RainbowSparkle(self._neopixels, speed=0.1, period=0.75),
-            LEDStateIDs.NONE: self._blank_animation,
+            LEDStateIDs.PING: {"type": "pulse", "speed": 0.5, "color": RED, "period": 2},
+            LEDStateIDs.CHEER: {"type": "rainbow", "speed": 0.1, "period": 0.75},
+            LEDStateIDs.HYPE: {"type": "rainbowsparkle", "speed": 0.1, "period": 0.75},
+            LEDStateIDs.NONE: {"type": "solid", "color": BLACK},
         }
 
         # Initialize keypad-related functionalities
@@ -157,6 +152,10 @@ class DiscordPyBadge:
 
         self.audio = AudioOut(board.SPEAKER)
         """The audio object for the DiscordPyBadge"""
+
+        # Make the Display Background
+        self.splash = displayio.Group()
+        board.DISPLAY.show(self.splash)
 
     @property
     def ip_address(self) -> Optional[str]:
@@ -191,12 +190,28 @@ class DiscordPyBadge:
 
     @animation.setter
     def animation(self, animation_id: int) -> None:
-        self._current_animation = self._animations.get(animation_id)
+        self._current_animation = self._generate_led_animation(animation_id)
         gc.collect()
 
     def animate_leds(self) -> None:
         """Animates the NeoPixels if there is a current animation"""
         self._current_animation.animate()
+
+    def _generate_led_animation(self, animation_id: int) -> Animation:
+        animation_reqs = self._animations[animation_id]
+        if animation_reqs["type"] == "pulse":
+            animation_class = Pulse
+        elif animation_reqs["type"] == "rainbow":
+            animation_class = Rainbow
+        elif animation_reqs["type"] == "rainbowsparkle":
+            animation_class = RainbowSparkle
+        elif animation_reqs["type"] == "solid":
+            animation_class = Solid
+        true_reqs = animation_reqs.copy()
+        del true_reqs["type"]
+        true_reqs["pixel_object"] = self._neopixels
+        return animation_class(**true_reqs)
+
 
     def _generate_screen(
         self, screen_id: int, message: Optional[displayio.Group] = None
@@ -230,9 +245,9 @@ class DiscordPyBadge:
 
         new_splash = self._generate_screen(screen_id, message)
         self.splash.append(new_splash)
-        if len(self.splash) > 1:
+        while len(self.splash) > 1:
             self.splash.remove(self.splash[0])
-            gc.collect()
+        gc.collect()
 
     @property
     def current_message(self) -> Optional[DiscordMessageGroup]:
