@@ -139,10 +139,7 @@ def main():
         disbadge.play_notification(None)
 
         # Check if new message available
-        if global_state.CURRENT_MESSAGE != disbadge.current_message: # New message
-            disbadge.set_splash(DisplayStateIDs.LOADING)
-            continue
-        else: # Timed out of LED animation
+        if global_state.CURRENT_MESSAGE == disbadge.current_message: # New message
             disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
             global_state.CURRENT_MESSAGE = None
 
