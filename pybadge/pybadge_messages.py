@@ -9,13 +9,17 @@ displayio.Group
 
 """
 
+import json
 import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
 from shared import layout, messages
+from shared.uri_codec import decode_payload
+
 
 try:
     from typing import Dict, Any
+    from io import StringIO
 except ImportError:
     pass
 
@@ -61,8 +65,10 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         self._username_label = None
         self._cmd_type = cmd_type
 
-        self.user = user
-        self.message = message
+        self._user = user
+        self._message = message
+        self.user = self._user
+        self.message = self._message
 
     @property
     def user(self) -> str:
@@ -72,10 +78,12 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
     @user.setter
     def user(self, name: str) -> None:
 
+        self._user = name
+
         if self._username_label:
             self.remove(self._username_label)
 
-        self._username_label = Label(TITLE_FONT, text=name, color=self._text_color, y=8)
+        self._username_label = Label(TITLE_FONT, text=self.username, color=self._text_color, y=8)
         self.append(self._username_label)
         self._message_label = None
 
@@ -86,6 +94,8 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
     @message.setter
     def message(self, text: str) -> None:
+
+        self._message = text
 
         if self._message_label:
             self.remove(self._message_label)
@@ -98,13 +108,15 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         )
         self.append(self._message_label)
 
-    def from_dict(self, dict_object: Dict[str, Any]) -> None:
+    def from_json(self, payload: StringIO) -> None:
         """Turns a dict into a DiscordMessageGroup.  The dict must have keys
         for 'message', 'user', and 'cmd_type'
 
-        :param dict_object: The dict to load from
+        :param payload: The payload string
         """
 
+        payload = payload.read()
+        dict_object = decode_payload(payload)
         self.message = dict_object["message"]
         self.user = dict_object["user"]
-        self._cmd_type = dict_object["cmd_type"]
+        self._cmd_type = int(dict_object["cmdtype"])

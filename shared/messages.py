@@ -51,11 +51,12 @@ class DiscordMessageBase:
         return str(self._message)
 
     def __eq__(self, other: Any) -> bool:
-        if isinstance(other, DiscordMessageBase):
-            if other._message == self._message and other._user == self._user:
-                return True
+        if other is None or not isinstance(other, DiscordMessageBase): # TODO: can probably just use isinstance()
             return False
-        raise TypeError("Can only compare to other Discord messages")
+        
+        if other._message == self._message and other._user == self._user:
+            return True
+        return False
 
     def __add__(self, other: str) -> "DiscordMessageBase":
         if isinstance(other, DiscordMessageBase):
@@ -95,12 +96,12 @@ class DiscordMessageBase:
     def cmd_type(self, command: int) -> None:
         self._cmd_type = command
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_json(self) -> Dict[str, Any]:
         """Converts the message object into an equivalent dict, must be
         implemented in subclasses of DiscordMessageBase"""
         raise NotImplementedError("Must be defined in subclass")
 
-    def from_dict(self, dict_object: Dict[str, Any]) -> None:
+    def from_json(self, dict_object: Dict[str, Any]) -> None:
         """Converts a dict into the equivalent DiscordMessageBase object,
         must be implemented in subclasses of DiscordMessageBase
         """

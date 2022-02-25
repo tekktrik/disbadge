@@ -1,14 +1,15 @@
-from typing import Dict, Any
+from typing import Dict
 from shared.messages import DiscordMessageBase
+from shared.uri_codec import encode_dictionary
 
 class RPiDiscordMessage(DiscordMessageBase):
     """The extension of DiscordMessage Base that is used by the
     Raspberry Pi"""
 
-    def to_dict(self) -> Dict[str, Any]:
-        dict_object = {
+    def to_dict(self) -> Dict[str, str]:
+        prelim_dict = {
             "message": self._message,
             "user": self._user,
-            "cmd_type": self._cmd_type,
+            "cmdtype": str(self._cmd_type),
         }
-        return dict_object
+        return encode_dictionary(prelim_dict)
