@@ -51,7 +51,7 @@ class DiscordMessageBase:
         return str(self._message)
 
     def __eq__(self, other: Any) -> bool:
-        if other is None or not isinstance(DiscordMessageBase): # TODO: can probably just use isinstance()
+        if other is None or not isinstance(other, DiscordMessageBase): # TODO: can probably just use isinstance()
             return False
         
         if other._message == self._message and other._user == self._user:
