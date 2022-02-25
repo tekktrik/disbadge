@@ -27,7 +27,7 @@ jobs:
         submodules: true
     - name: Download mpy-cross
       run: |
-        git clone https://adafruit/circuitpython.git
+        git clone https://github.com/adafruit/circuitpython.git
         cd circuitpython/mpy-cross
         make
     - name: Build pybadge/disbadge.mpy
