@@ -43,15 +43,9 @@ jobs:
     - name: Create ZIP bundle for project
       run: |
         dir
-        tar.exe -a -c -f project.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts
+        tar.exe -a -c -f disbadge_project.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts raspberrypi_bot_link.py
       shell: cmd
     - name: Upload Release Assets
-      # the 'official' actions version does not yet support dynamically
-      # supplying asset names to upload. @csexton's version chosen based on
-      # discussion in the issue below, as its the simplest to implement and
-      # allows for selecting files with a pattern.
-      # https://github.com/actions/upload-release-asset/issues/4
-      #uses: actions/upload-release-asset@v1.0.1
       uses: csexton/release-asset-action@master
       with:
         file: project.zip
