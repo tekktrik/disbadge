@@ -31,6 +31,8 @@ jobs:
       run: ls
     - name: Build pybadge/disbadge.mpy
       run: ./mpy-cross pybadge/disbadge.py
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Build pybadge/global_state.mpy
       run: circuitpython-build-bundles --filename_prefix pybadge/global_state --library_location .
     - name: Build pybadge/pybadge_messages.mpy
