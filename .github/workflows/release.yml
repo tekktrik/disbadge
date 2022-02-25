@@ -43,7 +43,7 @@ jobs:
     - name: Create ZIP bundle for project
       run: |
         dir
-        tar.exe -a -c -f disbadge_project.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts raspberrypi_bot_link.py
+        tar.exe -a -c -f disbadge_project.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts raspberrypi_bot_link.py README.rst requirements.txt
       shell: cmd
     - name: Upload Release Assets
       uses: csexton/release-asset-action@master
