@@ -147,9 +147,9 @@ class DiscordPyBadge:
         # Initialize sounds
         self._current_sound = None
         self._sounds = {
-            DisplayStateIDs.PING: {"type": "mp3", "file": "sound/Victory Stinger.mp3"},
-            DisplayStateIDs.CHEER: {"type": "wav", "file": "sound/chipquest.wav"},
-            DisplayStateIDs.HYPE: {"type": "wav", "file": "sound/Victory.wav"},
+            DisplayStateIDs.PING: {"type": "mp3", "file": "sounds/Victory Stinger.mp3"},
+            DisplayStateIDs.CHEER: {"type": "wav", "file": "sounds/chipquest.wav"},
+            DisplayStateIDs.HYPE: {"type": "wav", "file": "sounds/Victory.wav"},
         }
         if external_speaker:
             self.speaker_enable = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
