@@ -24,6 +24,9 @@ jobs:
       uses: actions/checkout@v1
       with:
         submodules: true
+    - name: Check directory contents
+      run: dir
+      shell: cmd
     - name: Build .mpy files
       run: |
         cd pybadge
