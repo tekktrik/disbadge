@@ -41,7 +41,7 @@ jobs:
         dir
       shell: cmd
     
-    #- name: Upload Release Assets
+    - name: Upload Release Assets
       # the 'official' actions version does not yet support dynamically
       # supplying asset names to upload. @csexton's version chosen based on
       # discussion in the issue below, as its the simplest to implement and
