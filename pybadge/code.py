@@ -124,6 +124,7 @@ def main():
         disbadge.set_splash(new_splash_id)
         disbadge.animation = led_animation_id
         disbadge.play_notification(new_splash_id)
+        print("MESSAGE:", str(global_state.CURRENT_MESSAGE))
         disbadge.set_splash(DisplayStateIDs.MESSAGE, message=global_state.CURRENT_MESSAGE)
 
         # Start LED animation clock
