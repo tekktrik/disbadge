@@ -115,4 +115,4 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         dict_object = decode_payload(payload)
         self.message = dict_object["message"]
         self.user = dict_object["user"]
-        self._cmd_type = dict_object["cmdtype"]
+        self._cmd_type = int(dict_object["cmdtype"])

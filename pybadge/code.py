@@ -50,7 +50,7 @@ web_app = WSGIApp()
 
 
 @web_app.route("/message", ["POST"])
-def display_message(request: Request):
+def display_message(request: Request): # TODO: add request param
     """Function for handling data transmission over WSGI app
     """
 
@@ -117,9 +117,11 @@ def main():
         while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) or global_state.CURRENT_MESSAGE != disbadge.current_message:
             disbadge.animate_leds()
             wsgi_server.update_poll()
+            disbadge.update_inputs()
             if disbadge.button_pressed == Buttons.BUTTON_B:
                 break
         disbadge.animation = LEDStateIDs.NONE
+        disbadge.animate_leds()
 
         # Check if new message available
         if global_state.CURRENT_MESSAGE != disbadge.current_message: # New message

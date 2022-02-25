@@ -49,6 +49,7 @@ NO_MESSAGES_TEXT = "No messages!"
 class Buttons:
     """An enum-like class for the button constants"""
 
+    NONE = const(8)
     BUTTON_LEFT = const(7)
     BUTTON_UP = const(6)
     BUTTON_DOWN = const(5)
@@ -173,6 +174,7 @@ class DiscordPyBadge:
         """
 
         self._pad.events.get_into(self._event)
+        print("EVENT", self._event)
         if self._event is None or self._event.released:
             self._event = Event(8)
             return False
@@ -182,6 +184,10 @@ class DiscordPyBadge:
     def button_pressed(self) -> int:
         """The key number of the button pressed"""
         return self._event.key_number
+
+    def flush_inputs(self):
+        while self.button_pressed != Buttons.NONE:
+            self.update_inputs()
 
     @property
     def animation(self) -> int:
