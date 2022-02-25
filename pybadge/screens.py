@@ -167,7 +167,7 @@ class ImageSplashScreen(SplashBackground):
         super().__init__(screen_id, color)
         self._image_size = image_size
 
-        splash_image, splash_palette = adafruit_imageload.load("//".join(["icons", image_filename]))
+        splash_image, splash_palette = adafruit_imageload.load("/".join(["icons", image_filename]))
         self._image = displayio.TileGrid(
             splash_image,
             pixel_shader=splash_palette,
