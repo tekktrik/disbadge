@@ -51,13 +51,12 @@ class DiscordMessageBase:
         return str(self._message)
 
     def __eq__(self, other: Any) -> bool:
-        if other is None:
+        if other is None or not isinstance(DiscordMessageBase):
             return False
-        if isinstance(other, DiscordMessageBase):
-            if other._message == self._message and other._user == self._user:
-                return True
-            return False
-        raise TypeError("Can only compare to other Discord messages")
+        
+        if other._message == self._message and other._user == self._user:
+            return True
+        return False
 
     def __add__(self, other: str) -> "DiscordMessageBase":
         if isinstance(other, DiscordMessageBase):
