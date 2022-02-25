@@ -27,6 +27,7 @@ jobs:
         submodules: true
     - name: Enter directory
       run: |
+        dir
         cd pybadge-discord-notifier
         dir
     - name: Download mpy-cross
