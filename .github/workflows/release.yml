@@ -48,5 +48,5 @@ jobs:
     - name: Upload Release Assets
       uses: csexton/release-asset-action@master
       with:
-        file: project.zip
+        file: disbadge_project.zip
         github-token: ${{ secrets.GITHUB_TOKEN }}
