@@ -78,6 +78,8 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
     @user.setter
     def user(self, name: str) -> None:
 
+        self._user = name
+
         if self._username_label:
             self.remove(self._username_label)
 
@@ -92,6 +94,8 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
 
     @message.setter
     def message(self, text: str) -> None:
+
+        self._message = text
 
         if self._message_label:
             self.remove(self._message_label)
