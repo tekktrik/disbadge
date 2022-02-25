@@ -24,7 +24,7 @@ from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
 from audiocore import WaveFile
 from audiomp3 import MP3Decoder
 from states import DisplayStateIDs, LEDStateIDs
-from screens import SplashBackground, TextSplashScreen, ImageSplashScreen, LabeledTextSplashScreen
+from screens import SplashBackground, TextSplashScreen, LabeledTextSplashScreen
 
 try:
     from typing import Optional, Union
@@ -80,47 +80,42 @@ class DiscordPyBadge:
         self._splashes = {
             DisplayStateIDs.LOADING: {
                 "type": "ts",
-                "bg": SETUP_BG_COLOR,
                 "text": LOADING_TEXT,
             },
             DisplayStateIDs.CONNECTING: {
                 "type": "ts",
-                "bg": SETUP_BG_COLOR,
                 "text": CONNECTING_TEXT,
             },
             DisplayStateIDs.NO_MESSAGE: {
                 "type": "ts",
-                "bg": MESSAGE_BG_COLOR,
                 "text": NO_MESSAGES_TEXT,
             },
             DisplayStateIDs.MESSAGE: {
-                "type": "s",
-                "bg": MESSAGE_BG_COLOR,
+                "type": "b",
             },
             DisplayStateIDs.PING: {
                 "type": "ts",
-                "bg": MESSAGE_BG_COLOR,
                 "text": "!!!",
             },
             DisplayStateIDs.CHEER: {
                 "type": "ts",
-                "bg": MESSAGE_BG_COLOR,
                 "text": ":D",
             },
             DisplayStateIDs.HYPE: {
                 "type": "ts",
-                "bg": MESSAGE_BG_COLOR,
                 "text": "Hype!",
             },
             DisplayStateIDs.CONNECT: {
                 "type": "lts",
-                "bg": SETUP_BG_COLOR,
                 "text": "IP:",
             },
             DisplayStateIDs.WAITING: {
                 "type": "ts",
+                "text": "Activating...",
+            },
+            DisplayStateIDs.BACKGROUND: {
+                "type": "s",
                 "bg": MESSAGE_BG_COLOR,
-                "text": "Activating..."
             }
         }
 
@@ -164,6 +159,7 @@ class DiscordPyBadge:
 
         # Make the Display Background
         self.splash = displayio.Group()
+        self.splash = self.set_splash(DisplayStateIDs.BACKGROUND)
         board.DISPLAY.show(self.splash)
 
     @property
@@ -233,18 +229,14 @@ class DiscordPyBadge:
         splash_reqs = self._splashes[screen_id]
         if splash_reqs["type"] == "ts":
             new_splash = TextSplashScreen(
-                screen_id, splash_reqs["bg"], splash_reqs["text"]
+                screen_id, splash_reqs["text"]
             )
-        elif splash_reqs["type"] == "s":
-            new_splash = SplashBackground(screen_id, splash_reqs["bg"])
-            new_message = message if message else displayio.Group()
-            new_splash.append(new_message)
-        elif splash_reqs["type"] == "is":
-            new_splash = ImageSplashScreen(
-                screen_id, splash_reqs["bg"], splash_reqs["image"]
-            )
+        elif splash_reqs["type"] == "b":
+            new_splash = message if message else displayio.Group()
         elif splash_reqs["type"] == "lts":
-            new_splash = LabeledTextSplashScreen(screen_id, splash_reqs["bg"], splash_reqs["text"], self.ip_address)
+            new_splash = LabeledTextSplashScreen(screen_id, splash_reqs["text"], self.ip_address)
+        elif splash_reqs["type"] == "s":
+            new_splash = SplashBackground(splash_reqs["bg"])
         return new_splash
 
     def set_splash(
@@ -258,8 +250,8 @@ class DiscordPyBadge:
 
         new_splash = self._generate_screen(screen_id, message)
         self.splash.append(new_splash)
-        while len(self.splash) > 1:
-            self.splash.remove(self.splash[0])
+        while len(self.splash) > 2:
+            self.splash.remove(self.splash[1])
         gc.collect()
 
     @property

@@ -30,16 +30,14 @@ SPLASH_FONT = bitmap_font.load_font(SPLASH_FONTNAME)
 class SplashBackground(displayio.Group):
     """Base class that applies a solid color background as a splash screen
 
-    :param int id: The id of this splash screen
     :param int color: The background color of the splash screen
     """
 
-    def __init__(self, screen_id: int, color: int) -> None:
+    def __init__(self, color: int) -> None:
 
         super().__init__()
 
         self._color = color
-        self._screen_id = screen_id
 
         # TODO: This code is fine, but the background will be the same, only set once
         self._bg_bitmap = displayio.Bitmap(SCREEN_WIDTH, SCREEN_HEIGHT, 1)
@@ -56,17 +54,15 @@ class TextSplashScreen(SplashBackground):
     """A splash screen with a text label in the center
 
     :param int id: The id of this splash screen
-    :param int color: The background color of the splash screen
     :param str text: The text to be displayed on the screen
     :param int text_color: (Optional) The color to apply to the text, default is white
     """
 
     def __init__(
-        self, screen_id: int, color: int, text: str, text_color: int = 0xFFFFFF
+        self, screen_id: int, text: str, text_color: int = 0xFFFFFF
     ) -> None:
 
-        super().__init__(screen_id, color)
-
+        self._screen_id = screen_id
         self._text = text
         self._text_color = text_color
 
@@ -80,18 +76,16 @@ class LabeledTextSplashScreen(SplashBackground):
     """A TextSplashScreen with a label for the given text
     
     :param int id: The id of this splash screen
-    :param int color: The background color of the splash screen
     :param str label: The text to be used as the label text
     :param str text: The text to be displayed on the screen as the message
     :param int text_color: (Optional) The color to apply to the text, default is white
     """
 
     def __init__(
-        self, screen_id: int, color: int, label: str, message: str, text_color: int = 0xFFFFFF
+        self, screen_id: int, label: str, message: str, text_color: int = 0xFFFFFF
     ) -> None:
 
-        super().__init__(screen_id, color)
-
+        self._screen_id = screen_id
         self._text = message
         self._text_color = text_color
         self._label_label = Label(SPLASH_FONT, text=label, color=self._text_color)
@@ -102,33 +96,3 @@ class LabeledTextSplashScreen(SplashBackground):
         self._message_label.y = SCREEN_HEIGHT // 2
         self.append(self._label_label)
         self.append(self._message_label)
-
-
-class ImageSplashScreen(SplashBackground):
-    """A splash screen with an image in the center
-
-    :param int id: The id of this splash screen
-    :param int color: The background color of the splash screen
-    :param str image_filename: The filename of the image to display
-    :param int image_size: (Optional) The height/width of the image in pixels, default is 32
-    """
-
-    def __init__(
-        self, screen_id: int, color: int, image_filename: str, image_size: int = 32
-    ) -> None:
-
-        super().__init__(screen_id, color)
-        self._image_size = image_size
-
-        splash_image, splash_palette = adafruit_imageload.load("/".join(["icons", image_filename]))
-        self._image = displayio.TileGrid(
-            splash_image,
-            pixel_shader=splash_palette,
-            width=1,
-            height=1,
-            tile_height=image_size,
-            tile_width=image_size,
-        )
-        self._image.x = (SCREEN_WIDTH - image_size) // 2
-        self._image.y = (SCREEN_HEIGHT - image_size) // 2
-        self.append(self._image)
