@@ -32,6 +32,7 @@ jobs:
     - name: Build pybadge/disbadge.mpy
       run: |
         mpy-cross.exe pybadge/disbadge.py
+        cd pybadge
         dir
       shell: cmd
     - name: Build pybadge/global_state.mpy
