@@ -28,8 +28,10 @@ jobs:
     - name: Download mpy-cross
       run: |
         sudo apt update
+        sudo apt-get update
         sudo apt install wine64
-        dpkg --add-architecture i386 && apt-get update && apt-get install wine32
+        sudo dpkg --add-architecture i386
+        sudo apt-get install wine32
         curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-x64-windows-7.2.0.exe -o mpy-cross.exe
     - name: Build pybadge/disbadge.mpy
       run: wine mpy-cross.exe pybadge/disbadge.py
