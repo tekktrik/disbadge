@@ -43,6 +43,7 @@ jobs:
     - name: Create ZIP bundle for project
       run: |
         cd ..
+        dir
         tar.exe -a -c -f pybadge.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts
       shell: cmd
     - name: Upload Release Assets
