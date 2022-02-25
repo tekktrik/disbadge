@@ -26,7 +26,7 @@ jobs:
       with:
         submodules: true
     - name: Download mpy-cross
-      run: curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-7.2.0 -o .
+      run: curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-7.2.0 -o mpy-cross
     - name: Build pybadge/disbadge.mpy
       run: ${{ steps.downloadfile.outputs.filename }} pybadge/disbadge.py
     - name: Build pybadge/global_state.mpy
