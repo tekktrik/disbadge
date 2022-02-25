@@ -1,0 +1,52 @@
+# SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
+name: Release Actions
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  upload-release-assets:
+    runs-on: windows-latest
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.x"
+    - name: Versions
+      run: python3 --version
+    - name: Checkout Current Repo
+      uses: actions/checkout@v1
+      with:
+        submodules: true
+    - name: Check directory contents
+      run: dir
+      shell: cmd
+    - name: Build .mpy files
+      run: |
+        cd pybadge
+        curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-x64-windows-7.2.0.exe -o mpy-cross.exe
+        mpy-cross.exe disbadge.py
+        mpy-cross.exe global_state.py
+        mpy-cross.exe pybadge_messages.py
+        mpy-cross.exe screens.py
+        mpy-cross.exe states.py
+        dir
+      shell: cmd
+    - name: Create ZIP bundle for project
+      run: |
+        dir
+        tar.exe -a -c -f disbadge_project.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts raspberrypi_bot_link.py README.rst requirements.txt
+      shell: cmd
+    - name: Upload Release Assets
+      uses: csexton/release-asset-action@master
+      with:
+        file: disbadge_project.zip
+        github-token: ${{ secrets.GITHUB_TOKEN }}
