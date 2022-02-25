@@ -100,19 +100,19 @@ class DiscordPyBadge:
                 "bg": MESSAGE_BG_COLOR,
             },
             DisplayStateIDs.PING: {
-                "type": "is",
+                "type": "ts",
                 "bg": MESSAGE_BG_COLOR,
-                "image": "ping.bmp",
+                "text": "!!!",
             },
             DisplayStateIDs.CHEER: {
-                "type": "is",
+                "type": "ts",
                 "bg": MESSAGE_BG_COLOR,
-                "image": "cheer.bmp",
+                "text": "(｡◕‿‿◕｡)",
             },
             DisplayStateIDs.HYPE: {
-                "type": "is",
+                "type": "ts",
                 "bg": MESSAGE_BG_COLOR,
-                "image": "hype.bmp",
+                "text": "Hype!",
             },
             DisplayStateIDs.CONNECT: {
                 "type": "lts",
