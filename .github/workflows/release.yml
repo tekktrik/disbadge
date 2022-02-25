@@ -51,10 +51,10 @@ jobs:
       uses: csexton/release-asset-action@master
       with:
         files: |
-          disbadge.mpy
-          global_state.mpy
-          pybadge_messages.mpy
-          screens.mpy
-          states.mpy
-          code.py
+          pybadge/disbadge.mpy
+          pybadge/global_state.mpy
+          pybadge/pybadge_messages.mpy
+          pybadge/screens.mpy
+          pybadge/states.mpy
+          pybadge/code.py
         github-token: ${{ secrets.GITHUB_TOKEN }}
