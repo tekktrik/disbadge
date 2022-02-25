@@ -69,6 +69,12 @@ def activate_disbadge(request: Request): # TODO: add request param
     print("Activated!")
     return ("200 OK", ["Content-Type", "text/plain"], "")
 
+@web_app.route("/sound/<setting>", ["POST"])
+def set_sound(request: Request, setting: str):
+    if setting == "off":
+        disbadge.muted = True
+    return ("200 OK", ["Content-Type", "text/plain"], "")
+
 server.set_interface(esp32)
 wsgi_server = server.WSGIServer(80, application=web_app)
 wsgi_server.start()

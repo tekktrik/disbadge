@@ -14,6 +14,7 @@ MY_NUMBER = "0458"
 
 parser = argparse.ArgumentParser(description="Set the IP address for the PyBadge")
 parser.add_argument('ip', metavar="IP", type=str, help="the IP address")
+parser.add_argument("--mute", help="Mute DisBadge for notification sounds", action="store_true")
 args = parser.parse_args()
 
 IP_ADDRESS = args.ip
@@ -55,6 +56,8 @@ async def ping(ctx: ApplicationContext, message: str):
 def activate_disbadge():
     print("Activating...")
     requests.post("/".join(["http:/", IP_ADDRESS, "activate"]), timeout=5)
+    if args.mute:
+        requests.post("/".join(["http:/", IP_ADDRESS, "sound", "off"]), timeout=5)
 
 # Run blocking event code
 

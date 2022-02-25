@@ -10,6 +10,7 @@ Manager for the PyBadge that handles user input, displays, and sounds
 
 import gc
 import board
+import time
 from micropython import const
 from keypad import ShiftRegisterKeys, Event
 import neopixel
@@ -154,6 +155,8 @@ class DiscordPyBadge:
         else:
             self.external_speaker = False
 
+        self.muted = False
+
         self.audio = AudioOut(board.SPEAKER)
         """The audio object for the DiscordPyBadge"""
 
@@ -284,15 +287,23 @@ class DiscordPyBadge:
             gc.collect()
             return
 
-        self._current_sound = self._generate_audio_file(sound_id)
-        if self._current_sound:
-            if self.external_speaker:
-                self.speaker_enable.value = True
-            self.audio.play(self._current_sound)
-            while self.audio.playing:
+        if self.muted:
+            start_time = time.monotonic()
+            end_time = start_time + 4
+            while time.monotonic() < end_time:
                 if self._current_animation:
                     self._current_animation.animate()
-            if self.external_speaker:
-                self.speaker_enable.value = False
-            self._current_sound.deinit()
-            gc.collect()
+        else:
+            self._current_sound = self._generate_audio_file(sound_id)
+            if self._current_sound:
+                if self.external_speaker:
+                    self.speaker_enable.value = True
+                self.audio.play(self._current_sound)
+                while self.audio.playing:
+                    if self._current_animation:
+                        self._current_animation.animate()
+                if self.external_speaker:
+                    self.speaker_enable.value = False
+                self._current_sound.deinit()
+                gc.collect()
+            
