@@ -50,7 +50,7 @@ class SplashBackground(displayio.Group):
         self.append(self._bg)
 
 
-class TextSplashScreen(SplashBackground):
+class TextSplashScreen(displayio.Group):
     """A splash screen with a text label in the center
 
     :param int id: The id of this splash screen
@@ -62,6 +62,8 @@ class TextSplashScreen(SplashBackground):
         self, screen_id: int, text: str, text_color: int = 0xFFFFFF
     ) -> None:
 
+        super().__init__()
+
         self._screen_id = screen_id
         self._text = text
         self._text_color = text_color
@@ -72,7 +74,7 @@ class TextSplashScreen(SplashBackground):
         self.append(self._label)
 
 
-class LabeledTextSplashScreen(SplashBackground):
+class LabeledTextSplashScreen(displayio.Group):
     """A TextSplashScreen with a label for the given text
     
     :param int id: The id of this splash screen
@@ -84,6 +86,8 @@ class LabeledTextSplashScreen(SplashBackground):
     def __init__(
         self, screen_id: int, label: str, message: str, text_color: int = 0xFFFFFF
     ) -> None:
+
+        super().__init__()
 
         self._screen_id = screen_id
         self._text = message
