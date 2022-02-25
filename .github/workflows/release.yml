@@ -35,7 +35,7 @@ jobs:
         curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-x64-windows-7.2.0.exe -o mpy-cross.exe
         mpy-cross.exe disbadge.py
         mpy-cross.exe global_state.py
-        mpy-cross.exe pybadge_messages
+        mpy-cross.exe pybadge_messages.py
         mpy-cross.exe screens.py
         mpy-cross.exe states.py
         dir
@@ -43,7 +43,7 @@ jobs:
     - name: Create ZIP bundle for project
       run: |
         dir
-        tar.exe -a -c -f pybadge.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts
+        tar.exe -a -c -f project.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts
       shell: cmd
     - name: Upload Release Assets
       # the 'official' actions version does not yet support dynamically
@@ -54,11 +54,4 @@ jobs:
       #uses: actions/upload-release-asset@v1.0.1
       uses: csexton/release-asset-action@master
       with:
-        files: |
-          pybadge/disbadge.mpy
-          pybadge/global_state.mpy
-          pybadge/pybadge_messages.mpy
-          pybadge/screens.mpy
-          pybadge/states.mpy
-          pybadge/code.py
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+        file: project.zip
