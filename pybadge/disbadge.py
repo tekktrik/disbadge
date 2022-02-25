@@ -158,8 +158,7 @@ class DiscordPyBadge:
         """The audio object for the DiscordPyBadge"""
 
         # Make the Display Background
-        self.splash = displayio.Group()
-        self.splash = self.set_splash(DisplayStateIDs.BACKGROUND)
+        self.splash = self._generate_screen(DisplayStateIDs.BACKGROUND)
         board.DISPLAY.show(self.splash)
 
     @property
