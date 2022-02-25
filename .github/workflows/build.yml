@@ -30,8 +30,8 @@ jobs:
         git clone https://github.com/adafruit/circuitpython.git
         cd circuitpython
         pip install -r requirements-dev.txt
-        cd mpy-cross
-        make
+        pip install --upgrade click==7.1.2
+        make -C mpy-cross
     - name: Build pybadge/disbadge.mpy
       run: ./mpy-cross pybadge/disbadge.py
     - name: Build pybadge/global_state.mpy
