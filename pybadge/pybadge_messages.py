@@ -83,7 +83,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         if self._username_label:
             self.remove(self._username_label)
 
-        self._username_label = Label(TITLE_FONT, text=name, color=self._text_color, y=8)
+        self._username_label = Label(TITLE_FONT, text=self.username, color=self._text_color, y=8)
         self.append(self._username_label)
         self._message_label = None
 
