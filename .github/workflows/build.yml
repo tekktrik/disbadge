@@ -28,8 +28,9 @@ jobs:
     - name: Download mpy-cross
       run: |
         git clone https://github.com/adafruit/circuitpython.git
+        cd circuitpython
         pip install -r requirements-dev.txt
-        cd circuitpython/mpy-cross
+        cd mpy-cross
         make
     - name: Build pybadge/disbadge.mpy
       run: ./mpy-cross pybadge/disbadge.py
