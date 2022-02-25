@@ -26,11 +26,14 @@ jobs:
       uses: actions/checkout@v1
       with:
         submodules: true
+    - name: Check directory contents
+      run: dir
+      shell: cmd
     - name: Build .mpy files
       run: |
         cd pybadge
-        curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-x64-windows-7.2.0.exe -o mpy-cross
-        mpy-cross disbadge.py
+        curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-x64-windows-7.2.0.exe -o mpy-cross.exe
+        mpy-cross.exe disbadge.py
         mpy-cross.exe global_state.py
         mpy-cross.exe pybadge_messages
         mpy-cross.exe screens.py
