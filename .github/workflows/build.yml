@@ -1,0 +1,54 @@
+# SPDX-FileCopyrightText: 2017 Scott Shawcroft, written for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
+name: Release Actions
+
+on: [push]
+
+jobs:
+  upload-release-assets:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v2
+      with:
+        python-version: "3.x"
+    - name: Versions
+      run: |
+        python3 --version
+    - name: Checkout Current Repo
+      uses: actions/checkout@v1
+      with:
+        submodules: true
+    - name: Download mpy-cross
+      uses: suisei-cn/actions-download-file@v1
+      id: downloadfile
+      with:
+        url: "https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-amd64-linux-7.2.0"
+        target: /
+    - name: Build pybadge/disbadge.mpy
+      run: ${{ steps.downloadfile.outputs.filename }} pybadge/disbadge.py
+    - name: Build pybadge/global_state.mpy
+      run: circuitpython-build-bundles --filename_prefix pybadge/global_state --library_location .
+    - name: Build pybadge/pybadge_messages.mpy
+      run: circuitpython-build-bundles --filename_prefix pybadge/pybadge_messages --library_location .
+    - name: Build pybadge/screens.mpy
+      run: circuitpython-build-bundles --filename_prefix pybadge/screens --library_location .
+    - name: Build pybadge/states.mpy
+      run: circuitpython-build-bundles --filename_prefix pybadge/states --library_location .
+    #- name: Upload Release Assets
+      # the 'official' actions version does not yet support dynamically
+      # supplying asset names to upload. @csexton's version chosen based on
+      # discussion in the issue below, as its the simplest to implement and
+      # allows for selecting files with a pattern.
+      # https://github.com/actions/upload-release-asset/issues/4
+      #uses: actions/upload-release-asset@v1.0.1
+      #uses: csexton/release-asset-action@master
+      #with:
+      #  pattern: "bundles/*"
+      #  github-token: ${{ secrets.GITHUB_TOKEN }}
