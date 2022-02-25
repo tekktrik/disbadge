@@ -31,6 +31,7 @@ jobs:
         dir
     - name: Build pybadge/disbadge.mpy
       run: mpy-cross.exe pybadge/disbadge.py
+      shell: cmd
     - name: Build pybadge/global_state.mpy
       run: circuitpython-build-bundles --filename_prefix pybadge/global_state --library_location .
     - name: Build pybadge/pybadge_messages.mpy
