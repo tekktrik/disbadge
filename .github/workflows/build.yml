@@ -30,7 +30,7 @@ jobs:
     - name: Check dir
       run: ls
     - name: Build pybadge/disbadge.mpy
-      run: sudo ./mpy-cross pybadge/disbadge.py
+      run: make ./mpy-cross pybadge/disbadge.py
     - name: Build pybadge/global_state.mpy
       run: circuitpython-build-bundles --filename_prefix pybadge/global_state --library_location .
     - name: Build pybadge/pybadge_messages.mpy
