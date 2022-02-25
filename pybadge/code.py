@@ -59,6 +59,15 @@ def display_message(request: Request): # TODO: add request param
     # gc.collect()
     return ("200 OK", ["Content-Type", "text/plain"], "")
 
+@web_app.route("/activate", ["POST"])
+def activate_disbadge(request: Request): # TODO: add request param
+    """Function for activating the DisBadge
+    """
+
+    global_state.DISCORD_CONNECTION = True
+    print("Activated!")
+    return ("200 OK", ["Content-Type", "text/plain"], "")
+
 server.set_interface(esp32)
 wsgi_server = server.WSGIServer(80, application=web_app)
 wsgi_server.start()
@@ -70,8 +79,11 @@ disbadge.set_splash(DisplayStateIDs.CONNECT)
 while True:
     disbadge.update_inputs()
     if disbadge.button_pressed == Buttons.BUTTON_A:
-        disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
+        disbadge.set_splash(DisplayStateIDs.WAITING)
         break
+while not global_state.DISCORD_CONNECTION:
+    wsgi_server.update_poll()
+disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
 
 def main():
     """Main sequence"""
@@ -98,6 +110,7 @@ def main():
             continue
 
         # Handle actual message
+        disbadge.flush_inputs()
         if global_state.CURRENT_MESSAGE.cmd_type == CommandType.PING:
             led_animation_id = LEDStateIDs.PING
             new_splash_id = DisplayStateIDs.PING
@@ -122,6 +135,7 @@ def main():
                 break
         disbadge.animation = LEDStateIDs.NONE
         disbadge.animate_leds()
+        disbadge.play_notification(None)
 
         # Check if new message available
         if global_state.CURRENT_MESSAGE != disbadge.current_message: # New message

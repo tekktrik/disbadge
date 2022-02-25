@@ -52,7 +52,13 @@ async def ping(ctx: ApplicationContext, message: str):
     await ctx.respond("Pinging {0} with your message!".format(MY_NAME))
     send_message_post(message, ctx.user, CommandType.PING)
 
+def activate_disbadge():
+    print("Activating...")
+    requests.post("/".join(["http:/", IP_ADDRESS, "activate"]))
+
 # Run blocking event code
+
+activate_disbadge()
 bot.run(secrets["login-token"])
 # loop = asyncio.new_event_loop()
 # bluetooth_task = loop.create_task(bluetooth_functionality())

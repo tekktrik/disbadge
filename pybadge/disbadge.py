@@ -105,7 +105,7 @@ class DiscordPyBadge:
             DisplayStateIDs.CHEER: {
                 "type": "ts",
                 "bg": MESSAGE_BG_COLOR,
-                "text": "(｡◕‿‿◕｡)",
+                "text": ":D",
             },
             DisplayStateIDs.HYPE: {
                 "type": "ts",
@@ -117,6 +117,11 @@ class DiscordPyBadge:
                 "bg": SETUP_BG_COLOR,
                 "text": "IP:",
             },
+            DisplayStateIDs.WAITING: {
+                "type": "ts",
+                "bg": MESSAGE_BG_COLOR,
+                "text": "Activating..."
+            }
         }
 
         # Initialize LED animations
@@ -143,13 +148,16 @@ class DiscordPyBadge:
         # Initialize sounds
         self._current_sound = None
         self._sounds = {
-            DisplayStateIDs.PING: {"type": "mp3", "file": "sounds/Victory Stinger.mp3"},
+            DisplayStateIDs.PING: {"type": "wav", "file": "sounds/vgdeathsound.wav"},
             DisplayStateIDs.CHEER: {"type": "wav", "file": "sounds/chipquest.wav"},
             DisplayStateIDs.HYPE: {"type": "wav", "file": "sounds/Victory.wav"},
         }
         if external_speaker:
+            self.external_speaker = True
             self.speaker_enable = digitalio.DigitalInOut(board.SPEAKER_ENABLE)
             self.speaker_enable.switch_to_output()
+        else:
+            self.external_speaker = False
 
         self.audio = AudioOut(board.SPEAKER)
         """The audio object for the DiscordPyBadge"""
@@ -174,7 +182,6 @@ class DiscordPyBadge:
         """
 
         self._pad.events.get_into(self._event)
-        print("EVENT", self._event)
         if self._event is None or self._event.released:
             self._event = Event(8)
             return False
@@ -274,20 +281,27 @@ class DiscordPyBadge:
             return MP3Decoder(open(sound_reqs["file"], "rb"))
         return WaveFile(open(sound_reqs["file"], "rb"))
 
-    def play_notification(self, sound_id: int) -> None:
+    def play_notification(self, sound_id: Optional[int]) -> None:
         """Plays a notification sound, and pauses execution while doing so
         (still animates LEDs, however)
 
         :param int sound_id: The id of the notification sound
         """
 
+        if sound_id is None:
+            self._current_sound = None
+            gc.collect()
+            return
+
         self._current_sound = self._generate_audio_file(sound_id)
         if self._current_sound:
-            self.speaker_enable.value = True
+            if self.external_speaker:
+                self.speaker_enable.value = True
             self.audio.play(self._current_sound)
             while self.audio.playing:
                 if self._current_animation:
                     self._current_animation.animate()
-            self.speaker_enable.value = False
+            if self.external_speaker:
+                self.speaker_enable.value = False
             self._current_sound.deinit()
             gc.collect()
