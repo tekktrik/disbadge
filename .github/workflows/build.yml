@@ -28,6 +28,7 @@ jobs:
     - name: Download mpy-cross
       run: |
         curl https://adafruit-circuit-python.s3.amazonaws.com/bin/mpy-cross/mpy-cross.static-x64-windows-7.2.0.exe -o mpy-cross.exe
+        dir
     - name: Build pybadge/disbadge.mpy
       run: mpy-cross.exe pybadge/disbadge.py
     - name: Build pybadge/global_state.mpy
