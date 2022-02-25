@@ -27,12 +27,9 @@ jobs:
         submodules: true
     - name: Download mpy-cross
       run: |
-        sudo apt update
-        git clone https://github.com/adafruit/circuitpython.git
-        cd circuitpython
-        pip3 install -r requirements-dev.txt
-        pip3 install --upgrade click==7.1.2
-        make -C mpy-cross
+        git clone https://adafruit/circuitpython.git
+        cd circuitpython/mpy-cross
+        make
     - name: Build pybadge/disbadge.mpy
       run: ./mpy-cross pybadge/disbadge.py
     - name: Build pybadge/global_state.mpy
