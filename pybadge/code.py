@@ -129,7 +129,7 @@ def main():
 
         # Start LED animation clock
         popup_start_time = time.monotonic()
-        while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) or global_state.CURRENT_MESSAGE != disbadge.current_message:
+        while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) or global_state.CURRENT_MESSAGE == disbadge.current_message:
             disbadge.animate_leds()
             wsgi_server.update_poll()
             disbadge.update_inputs()
