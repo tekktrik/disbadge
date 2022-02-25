@@ -54,6 +54,7 @@ def display_message(request: Request): # TODO: add request param
     """Function for handling data transmission over WSGI app
     """
 
+    print("RECEIVED NEW MESSAGE!")
     global_state.CURRENT_MESSAGE = DiscordMessageGroup()
     global_state.CURRENT_MESSAGE.from_json(request.body)
     # gc.collect()
@@ -95,7 +96,7 @@ def main():
         if not esp32.is_connected:
             disbadge.set_splash(DisplayStateIDs.CONNECTING)
             while not esp32.is_connected:
-                # TODO: Try to reconnect
+                wifi.reset()
                 pass
 
         wsgi_server.update_poll()
