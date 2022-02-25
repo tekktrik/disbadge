@@ -57,6 +57,7 @@ def display_message(request: Request):
     global_state.CURRENT_MESSAGE = DiscordMessageGroup()
     global_state.CURRENT_MESSAGE.from_json(request.body)
     # gc.collect()
+    return ("200 OK", ["Content-Type", "text/plain"], "")
 
 server.set_interface(esp32)
 wsgi_server = server.WSGIServer(80, application=web_app)
