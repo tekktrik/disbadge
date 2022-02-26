@@ -21,4 +21,4 @@ repos:
         types: [python]
         args:
           - --disable=consider-using-f-string,duplicate-code
-        exclude: "^(docs/|examples/|tests/|setup.py$)"
+        files: "pybadge/*.py|raspberrypi/*.py|raspberrypi_bot_link.py"
