@@ -38,15 +38,16 @@ jobs:
         mpy-cross.exe pybadge_messages.py
         mpy-cross.exe screens.py
         mpy-cross.exe states.py
-        dir
       shell: cmd
     - name: Create ZIP bundle for project
       run: |
-        dir
         tar.exe -a -c -f disbadge_project.zip raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts raspberrypi_bot_link.py README.rst requirements.txt
+        tar.exe -a -c -f disbadge_project.tar.gz raspberrypi shared pybadge/*.mpy pybadge/code.py pybadge/sounds pybadge/fonts raspberrypi_bot_link.py README.rst requirements.txt
       shell: cmd
     - name: Upload Release Assets
       uses: csexton/release-asset-action@master
       with:
-        file: disbadge_project.zip
+        files: |
+          disbadge_project.zip
+          disbadge_project.tar.gz
         github-token: ${{ secrets.GITHUB_TOKEN }}
