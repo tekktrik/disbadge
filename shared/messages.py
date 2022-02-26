@@ -103,7 +103,7 @@ class DiscordMessageBase:
         implemented in subclasses of DiscordMessageBase"""
         raise NotImplementedError("Must be defined in subclass")
 
-    def from_json(self, dict_object: Dict[str, Any]) -> None:
+    def from_json(self, payload: Dict[str, Any]) -> None:
         """Converts a dict into the equivalent DiscordMessageBase object,
         must be implemented in subclasses of DiscordMessageBase
         """
