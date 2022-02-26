@@ -13,8 +13,10 @@ MY_NUMBER = "0458"
 
 
 parser = argparse.ArgumentParser(description="Set the IP address for the PyBadge")
-parser.add_argument('ip', metavar="IP", type=str, help="the IP address")
-parser.add_argument("--mute", help="Mute DisBadge for notification sounds", action="store_true")
+parser.add_argument("ip", metavar="IP", type=str, help="the IP address")
+parser.add_argument(
+    "--mute", help="Mute DisBadge for notification sounds", action="store_true"
+)
 args = parser.parse_args()
 
 IP_ADDRESS = args.ip
@@ -22,15 +24,18 @@ IP_ADDRESS = args.ip
 # Prepare Discord bot
 bot = discord.Bot()
 
+
 def send_message_post(message: str, user: str, command_type: int) -> None:
     new_message = RPiDiscordMessage(message, str(user), command_type)
     payload = new_message.to_dict()
     print(payload)
     requests.post("/".join(["http:/", IP_ADDRESS, "message"]), data=payload, timeout=5)
 
+
 @bot.event
 async def on_ready():
     print(f"We have logged in as {bot.user}")
+
 
 @bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def cheer(ctx: ApplicationContext, message: str):
@@ -39,12 +44,14 @@ async def cheer(ctx: ApplicationContext, message: str):
     await ctx.respond("Sending your message to {0}!".format(MY_NAME))
     send_message_post(message, ctx.user, CommandType.CHEER)
 
+
 @bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def hype(ctx: ApplicationContext, message: str):
     """Cheers on the gamer with an exciting message!"""
 
     await ctx.respond("Sending your hype to {0}!".format(MY_NAME))
     send_message_post(message, ctx.user, CommandType.HYPE)
+
 
 @bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def ping(ctx: ApplicationContext, message: str):
@@ -53,11 +60,13 @@ async def ping(ctx: ApplicationContext, message: str):
     await ctx.respond("Pinging {0} with your message!".format(MY_NAME))
     send_message_post(message, ctx.user, CommandType.PING)
 
+
 def activate_disbadge():
     print("Activating...")
     requests.post("/".join(["http:/", IP_ADDRESS, "activate"]), timeout=5)
     if args.mute:
         requests.post("/".join(["http:/", IP_ADDRESS, "sound", "off"]), timeout=5)
+
 
 # Run blocking event code
 
