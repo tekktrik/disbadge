@@ -75,7 +75,7 @@ Setting Up Discord Bot
 You can find instructions on how to set up a Discord bot for Py-Cord `here <https://docs.pycord.dev/en/master/discord.html>`_.
 Take note of the bot token, you'll need it later.
 
-You can also find instructions `here <https://poshbot.readthedocs.io/en/latest/guides/backends/setup-discord-backend/#find-your-guild-id-server-id>`_`
+You can also find instructions `here <https://poshbot.readthedocs.io/en/latest/guides/backends/setup-discord-backend/#find-your-guild-id-server-id>`_
 for determining the Guild ID of where your bot will live.  You will need this later as well!
 
 Final Touches
@@ -114,6 +114,7 @@ Adding Files to the EdgeBadge/PyBadge
 Simply plug in the EdgeBadge/PyBadge to your computer and copy/paste the files in the ``pybadge`` folder to it.
 Additionally, you should copy/paste the ``shared`` folder to the device as well.  Finally, add all of the
 CircuitPython libraries to a folder named ``lib``.
+
 
 Starting Up the DisBadge
 ====================
