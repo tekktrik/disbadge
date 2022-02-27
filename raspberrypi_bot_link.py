@@ -5,8 +5,9 @@ import argparse
 import discord
 from discord.commands.context import ApplicationContext
 import requests
-from shared import messages, secrets
+from shared.messages import CommandType
 from raspberrypi.rpi_messages import RPiDiscordMessage
+from shared.secrets import secrets  # pylint: disable=ungrouped-imports
 
 # Define variables used throughout Discord bot
 MY_NAME = "Tekktrik"
@@ -40,28 +41,28 @@ async def on_ready():
     print(f"We have logged in as {bot.user}")
 
 
-@bot.slash_command(guild_ids=[secrets.secrets["guild-id"]])
+@bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def cheer(ctx: ApplicationContext, message: str):
     """Sends the gamer a message"""
 
     await ctx.respond("Sending your message to {0}!".format(MY_NAME))
-    send_message_post(message, ctx.user, messages.CommandType.CHEER)
+    send_message_post(message, ctx.user, CommandType.CHEER)
 
 
-@bot.slash_command(guild_ids=[secrets.secrets["guild-id"]])
+@bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def hype(ctx: ApplicationContext, message: str):
     """Cheers on the gamer with an exciting message!"""
 
     await ctx.respond("Sending your hype to {0}!".format(MY_NAME))
-    send_message_post(message, ctx.user, messages.CommandType.HYPE)
+    send_message_post(message, ctx.user, CommandType.HYPE)
 
 
-@bot.slash_command(guild_ids=[secrets.secrets["guild-id"]])
+@bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def ping(ctx: ApplicationContext, message: str):
     """Pings the gamer with the given message"""
 
     await ctx.respond("Pinging {0} with your message!".format(MY_NAME))
-    send_message_post(message, ctx.user, messages.CommandType.PING)
+    send_message_post(message, ctx.user, CommandType.PING)
 
 
 def activate_disbadge():
@@ -75,7 +76,7 @@ def activate_disbadge():
 # Run blocking event code
 
 activate_disbadge()
-bot.run(secrets.secrets["login-token"])
+bot.run(secrets["login-token"])
 # loop = asyncio.new_event_loop()
 # bluetooth_task = loop.create_task(bluetooth_functionality())
 # discord_task = loop.create_task(bot.start(secrets["login-token"]))
