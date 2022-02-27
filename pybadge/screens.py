@@ -58,9 +58,7 @@ class TextSplashScreen(displayio.Group):
     :param int text_color: (Optional) The color to apply to the text, default is white
     """
 
-    def __init__(
-        self, screen_id: int, text: str, text_color: int = 0xFFFFFF
-    ) -> None:
+    def __init__(self, screen_id: int, text: str, text_color: int = 0xFFFFFF) -> None:
 
         super().__init__()
 
@@ -76,7 +74,7 @@ class TextSplashScreen(displayio.Group):
 
 class LabeledTextSplashScreen(displayio.Group):
     """A TextSplashScreen with a label for the given text
-    
+
     :param int id: The id of this splash screen
     :param str label: The text to be used as the label text
     :param str text: The text to be displayed on the screen as the message

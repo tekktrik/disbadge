@@ -51,9 +51,11 @@ class DiscordMessageBase:
         return str(self._message)
 
     def __eq__(self, other: Any) -> bool:
-        if other is None or not isinstance(other, DiscordMessageBase): # TODO: can probably just use isinstance()
+        if other is None or not isinstance(
+            other, DiscordMessageBase
+        ):  # TODO: can probably just use isinstance()
             return False
-        
+
         if other._message == self._message and other._user == self._user:
             return True
         return False
@@ -101,7 +103,7 @@ class DiscordMessageBase:
         implemented in subclasses of DiscordMessageBase"""
         raise NotImplementedError("Must be defined in subclass")
 
-    def from_json(self, dict_object: Dict[str, Any]) -> None:
+    def from_json(self, payload: Dict[str, Any]) -> None:
         """Converts a dict into the equivalent DiscordMessageBase object,
         must be implemented in subclasses of DiscordMessageBase
         """

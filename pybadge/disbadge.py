@@ -66,12 +66,14 @@ class DiscordPyBadge:
     """A helper class that manages the IO for the PyBadge, including NeoPixels,
     sound, and button inputs
 
-    :param str ip_address: The IP address of the 
+    :param str ip_address: The IP address of the
     :param bool external_speaker: Whether the PyBadge is set up to use an
         external speaker; default is False
     """
 
-    def __init__(self, ip_address: Optional[str] = None, external_speaker: bool = False) -> None:
+    def __init__(
+        self, ip_address: Optional[str] = None, external_speaker: bool = False
+    ) -> None:
 
         # Set IP address
         self._ip_address = ip_address
@@ -117,13 +119,18 @@ class DiscordPyBadge:
             DisplayStateIDs.BACKGROUND: {
                 "type": "s",
                 "bg": MESSAGE_BG_COLOR,
-            }
+            },
         }
 
         # Initialize LED animations
         self._neopixels = neopixel.NeoPixel(board.NEOPIXEL, 5, brightness=0.25)
         self._animations = {
-            LEDStateIDs.PING: {"type": "pulse", "speed": 0.5, "color": RED, "period": 2},
+            LEDStateIDs.PING: {
+                "type": "pulse",
+                "speed": 0.5,
+                "color": RED,
+                "period": 2,
+            },
             LEDStateIDs.CHEER: {"type": "rainbow", "speed": 0.1, "period": 0.75},
             LEDStateIDs.HYPE: {"type": "rainbowsparkle", "speed": 0.1, "period": 0.75},
             LEDStateIDs.NONE: {"type": "solid", "color": BLACK},
@@ -223,20 +230,19 @@ class DiscordPyBadge:
         true_reqs["pixel_object"] = self._neopixels
         return animation_class(**true_reqs)
 
-
     def _generate_screen(
         self, screen_id: int, message: Optional[displayio.Group] = None
     ) -> SplashBackground:
         self._current_message = message if message else None
         splash_reqs = self._splashes[screen_id]
         if splash_reqs["type"] == "ts":
-            new_splash = TextSplashScreen(
-                screen_id, splash_reqs["text"]
-            )
+            new_splash = TextSplashScreen(screen_id, splash_reqs["text"])
         elif splash_reqs["type"] == "b":
             new_splash = message if message else displayio.Group()
         elif splash_reqs["type"] == "lts":
-            new_splash = LabeledTextSplashScreen(screen_id, splash_reqs["text"], self.ip_address)
+            new_splash = LabeledTextSplashScreen(
+                screen_id, splash_reqs["text"], self.ip_address
+            )
         elif splash_reqs["type"] == "s":
             new_splash = SplashBackground(splash_reqs["bg"])
         return new_splash
@@ -306,4 +312,3 @@ class DiscordPyBadge:
                     self.speaker_enable.value = False
                 self._current_sound.deinit()
                 gc.collect()
-            

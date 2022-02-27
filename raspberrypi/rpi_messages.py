@@ -2,6 +2,7 @@ from typing import Dict
 from shared.messages import DiscordMessageBase
 from shared.uri_codec import encode_dictionary
 
+
 class RPiDiscordMessage(DiscordMessageBase):
     """The extension of DiscordMessage Base that is used by the
     Raspberry Pi"""

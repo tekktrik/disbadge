@@ -9,7 +9,6 @@ displayio.Group
 
 """
 
-import json
 import displayio
 from adafruit_display_text.label import Label
 from adafruit_bitmap_font import bitmap_font
@@ -18,7 +17,7 @@ from shared.uri_codec import decode_payload
 
 
 try:
-    from typing import Dict, Any
+    import typing  # pylint: disable=unused-import
     from io import StringIO
 except ImportError:
     pass
@@ -32,7 +31,7 @@ MESSAGE_FONTNAME = "/fonts/cherry-11-r.bdf"
 MESSAGE_FONT = bitmap_font.load_font(MESSAGE_FONTNAME)
 
 
-# pylint: disable=too-many-instance-attributes
+# pylint: disable=too-many-instance-attributes,abstract-method
 class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
     """Display class for Discord messages, as both a displayio Group and
     an extension of DiscordMessageBase
@@ -83,7 +82,9 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         if self._username_label:
             self.remove(self._username_label)
 
-        self._username_label = Label(TITLE_FONT, text=self.username, color=self._text_color, y=8)
+        self._username_label = Label(
+            TITLE_FONT, text=self.username, color=self._text_color, y=8
+        )
         self.append(self._username_label)
         self._message_label = None
 

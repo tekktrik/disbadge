@@ -40,7 +40,9 @@ disbadge.set_splash(DisplayStateIDs.LOADING)
 esp32_cs = DigitalInOut(board.D13)
 esp32_ready = DigitalInOut(board.D11)
 esp32_reset = DigitalInOut(board.D12)
-esp32 = adafruit_esp32spi.ESP_SPIcontrol(board.SPI(), esp32_cs, esp32_ready, esp32_reset)
+esp32 = adafruit_esp32spi.ESP_SPIcontrol(
+    board.SPI(), esp32_cs, esp32_ready, esp32_reset
+)
 
 disbadge.set_splash(DisplayStateIDs.CONNECTING)
 wifi = wifimanager.ESPSPI_WiFiManager(esp32, secrets, attempts=3, debug=True)
@@ -50,9 +52,8 @@ web_app = WSGIApp()
 
 
 @web_app.route("/message", ["POST"])
-def display_message(request: Request): # TODO: add request param
-    """Function for handling data transmission over WSGI app
-    """
+def display_message(request: Request):  # TODO: add request param
+    """Function for handling data transmission over WSGI app"""
 
     print("RECEIVED NEW MESSAGE!")
     global_state.CURRENT_MESSAGE = DiscordMessageGroup()
@@ -60,20 +61,22 @@ def display_message(request: Request): # TODO: add request param
     # gc.collect()
     return ("200 OK", ["Content-Type", "text/plain"], "")
 
+
 @web_app.route("/activate", ["POST"])
-def activate_disbadge(request: Request): # TODO: add request param
-    """Function for activating the DisBadge
-    """
+def activate_disbadge(request: Request):  # TODO: add request param
+    """Function for activating the DisBadge"""
 
     global_state.DISCORD_CONNECTION = True
     print("Activated!")
     return ("200 OK", ["Content-Type", "text/plain"], "")
+
 
 @web_app.route("/sound/<setting>", ["POST"])
 def set_sound(request: Request, setting: str):
     if setting == "off":
         disbadge.muted = True
     return ("200 OK", ["Content-Type", "text/plain"], "")
+
 
 server.set_interface(esp32)
 wsgi_server = server.WSGIServer(80, application=web_app)
@@ -86,6 +89,7 @@ disbadge.set_splash(DisplayStateIDs.CONNECT)
 while not global_state.DISCORD_CONNECTION:
     wsgi_server.update_poll()
 disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
+
 
 def main():
     """Main sequence"""
@@ -105,7 +109,7 @@ def main():
         # Guard statement for message equality
         if global_state.CURRENT_MESSAGE == disbadge.current_message:
             continue
-            
+
         # Check if no messsage
         if global_state.CURRENT_MESSAGE is None:
             disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
@@ -125,11 +129,16 @@ def main():
         disbadge.set_splash(new_splash_id)
         disbadge.animation = led_animation_id
         disbadge.play_notification(new_splash_id)
-        disbadge.set_splash(DisplayStateIDs.MESSAGE, message=global_state.CURRENT_MESSAGE)
+        disbadge.set_splash(
+            DisplayStateIDs.MESSAGE, message=global_state.CURRENT_MESSAGE
+        )
 
         # Start LED animation clock
         popup_start_time = time.monotonic()
-        while time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME*60) and global_state.CURRENT_MESSAGE == disbadge.current_message:
+        while (
+            time.monotonic() < popup_start_time + (MESSAGE_PIN_TIME * 60)
+            and global_state.CURRENT_MESSAGE == disbadge.current_message
+        ):
             disbadge.animate_leds()
             wsgi_server.update_poll()
             disbadge.update_inputs()
@@ -140,7 +149,7 @@ def main():
         disbadge.play_notification(None)
 
         # Check if new message available
-        if global_state.CURRENT_MESSAGE == disbadge.current_message: # New message
+        if global_state.CURRENT_MESSAGE == disbadge.current_message:  # New message
             disbadge.set_splash(DisplayStateIDs.NO_MESSAGE)
             global_state.CURRENT_MESSAGE = None
 
