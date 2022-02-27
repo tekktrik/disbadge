@@ -7,7 +7,9 @@ from discord.commands.context import ApplicationContext
 import requests
 from shared.messages import CommandType
 from raspberrypi.rpi_messages import RPiDiscordMessage
-from shared.secrets import secrets  # pylint: disable=ungrouped-imports
+from shared.secrets import (  # pylint: disable=ungrouped-imports,no-name-in-module
+    secrets,
+)
 
 # Define variables used throughout Discord bot
 MY_NAME = "Tekktrik"
