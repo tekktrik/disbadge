@@ -7,8 +7,8 @@ Turns that PyBadge into a sweet Discord notification companion!
 Hardware Dependencies
 =====================
 
-* `Adafruit EdgeBadge <https://www.adafruit.com/product/4400>`_ OR `Adafruit PyBadge <https://www.adafruit.com/product/4200>`_
-* `Adafruit AirLift FeatherWing <https://www.adafruit.com/product/4264>`_
+* [Adafruit EdgeBadge](https://www.adafruit.com/product/4400) OR [Adafruit PyBadge](https://www.adafruit.com/product/4200)
+* [Adafruit AirLift FeatherWing](https://www.adafruit.com/product/4264)
 
 
 Firmware Dependencies
@@ -16,8 +16,8 @@ Firmware Dependencies
 
 This project runs on CircuitPython 7.1 or later!  Here are versions 7.2, depending on your device:
 
-* `CircuitPython for Adafruit EdgeBadge <https://circuitpython.org/board/edgebadge/>`_
-* `CircuitPython for Adafruit PyBadge <https://circuitpython.org/board/pybadge/>`_
+* [CircuitPython for Adafruit EdgeBadge](https://circuitpython.org/board/edgebadge/)
+* [CircuitPython for Adafruit PyBadge](https://circuitpython.org/board/pybadge/)
 
 
 CircuitPython Library Dependencies
@@ -36,8 +36,7 @@ These are the CircuitPython libraries you'll need to download:
 * adafruit_wsgi
 * neopixel
 
-You can find them by downloading the latest version of the `CircuitPython Bundle <https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases>`_.
-Make sure to download the ZIP file named something like  ``adafruit-circuitpython-bundle-7.x-mpy-XXXXXXXX.zip``.
+You can find them by downloading the latest version of the [CircuitPython Bundle](https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases).  Make sure to download the ZIP file named something like  ``adafruit-circuitpython-bundle-7.x-mpy-XXXXXXXX.zip``.
 
 
 Installation
@@ -46,13 +45,12 @@ Installation
 Upgrading CircuitPython
 -----------------------
 
-You can find instructions on installing or upgrading CircuitPython `here <https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython>`_.
+You can find instructions on installing or upgrading CircuitPython [here](https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython).
 
 Downloading Project Files
 ------------------------
 
-You can download the latest release of this project on Github in the `Releases section <https://github.com/tekktrik/disbadge/releases>`_.
-Download the ``disbadge_project.zip`` or ``disbadge_project.tar.gz`` file and extract the files to a folder.
+You can download the latest release of this project on Github in the [Releases section](https://github.com/tekktrik/disbadge/releases). Download the ``disbadge_project.zip`` or ``disbadge_project.tar.gz`` file and extract the files to a folder.
 
 Install required libraries
 --------------------------
@@ -72,11 +70,10 @@ python3 -m pip install -r requirements.txt
 Setting Up Discord Bot
 ----------------------
 
-You can find instructions on how to set up a Discord bot for Py-Cord `here <https://docs.pycord.dev/en/master/discord.html>`_.
+You can find instructions on how to set up a Discord bot for Py-Cord [here](https://docs.pycord.dev/en/master/discord.html).
 Take note of the bot token, you'll need it later.
 
-You can also find instructions `here <https://poshbot.readthedocs.io/en/latest/guides/backends/setup-discord-backend/#find-your-guild-id-server-id>`_
-for determining the Guild ID of where your bot will live.  You will need this later as well!
+You can also find instructions [here](https://poshbot.readthedocs.io/en/latest/guides/backends/setup-discord-backend/#find-your-guild-id-server-id) for determining the Guild ID of where your bot will live.  You will need this later as well!
 
 Final Touches
 -------------
