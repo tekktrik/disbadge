@@ -30,7 +30,13 @@ bot = discord.Bot()
 
 
 def send_message_post(message: str, user: str, command_type: int) -> None:
-    """Send a message to the PyBadge"""
+    """Send a message to the PyBadge
+
+    :param str message: The message to send
+    :param str user: The user sending the message
+    :param int command_type: The command type being used
+    """
+
     new_message = RPiDiscordMessage(message, str(user), command_type)
     payload = new_message.to_dict()
     print(payload)
@@ -45,7 +51,11 @@ async def on_ready():
 
 @bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def cheer(ctx: ApplicationContext, message: str):
-    """Sends the gamer a message"""
+    """Sends the gamer a message
+
+    :param ApplicationContext ctx: The application context
+    :param str message: The message to send
+    """
 
     await ctx.respond("Sending your message to {0}!".format(MY_NAME))
     send_message_post(message, ctx.user, CommandType.CHEER)
@@ -53,7 +63,11 @@ async def cheer(ctx: ApplicationContext, message: str):
 
 @bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def hype(ctx: ApplicationContext, message: str):
-    """Cheers on the gamer with an exciting message!"""
+    """Cheers on the gamer with an exciting message!
+
+    :param ApplicationContext ctx: The application context
+    :param str message: The message to send
+    """
 
     await ctx.respond("Sending your hype to {0}!".format(MY_NAME))
     send_message_post(message, ctx.user, CommandType.HYPE)
@@ -61,7 +75,11 @@ async def hype(ctx: ApplicationContext, message: str):
 
 @bot.slash_command(guild_ids=[secrets["guild-id"]])
 async def ping(ctx: ApplicationContext, message: str):
-    """Pings the gamer with the given message"""
+    """Pings the gamer with the given message
+
+    :param ApplicationContext ctx: The application context
+    :param str message: The message to send
+    """
 
     await ctx.respond("Pinging {0} with your message!".format(MY_NAME))
     send_message_post(message, ctx.user, CommandType.PING)
@@ -69,6 +87,7 @@ async def ping(ctx: ApplicationContext, message: str):
 
 def activate_disbadge():
     """Send an activation POST to the PyBadge"""
+
     print("Activating...")
     requests.post("/".join(["http:/", IP_ADDRESS, "activate"]), timeout=5)
     if args.mute:

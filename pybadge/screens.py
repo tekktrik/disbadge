@@ -12,6 +12,7 @@ import displayio
 from adafruit_bitmap_font import bitmap_font
 import adafruit_imageload
 from adafruit_display_text.label import Label
+from pybadge_messages import MESSAGE_FONT
 
 try:
     from typing import Tuple
@@ -53,7 +54,7 @@ class SplashBackground(displayio.Group):
 class TextSplashScreen(displayio.Group):
     """A splash screen with a text label in the center
 
-    :param int id: The id of this splash screen
+    :param int screen_id: The id of this splash screen
     :param str text: The text to be displayed on the screen
     :param int text_color: (Optional) The color to apply to the text, default is white
     """
@@ -75,7 +76,7 @@ class TextSplashScreen(displayio.Group):
 class LabeledTextSplashScreen(displayio.Group):
     """A TextSplashScreen with a label for the given text
 
-    :param int id: The id of this splash screen
+    :param int screen_id: The ID of this splash screen
     :param str label: The text to be used as the label text
     :param str text: The text to be displayed on the screen as the message
     :param int text_color: (Optional) The color to apply to the text, default is white
@@ -90,10 +91,10 @@ class LabeledTextSplashScreen(displayio.Group):
         self._screen_id = screen_id
         self._text = message
         self._text_color = text_color
-        self._label_label = Label(SPLASH_FONT, text=label, color=self._text_color)
+        self._label_label = Label(MESSAGE_FONT, text=label, color=self._text_color)
         self._label_label.x = (SCREEN_WIDTH - self._label_label.width) // 2
         self._label_label.y = SCREEN_HEIGHT // 2 - self._label_label.height
-        self._message_label = Label(SPLASH_FONT, text=message, color=self._text_color)
+        self._message_label = Label(MESSAGE_FONT, text=message, color=self._text_color)
         self._message_label.x = (SCREEN_WIDTH - self._message_label.width) // 2
         self._message_label.y = SCREEN_HEIGHT // 2
         self.append(self._label_label)

@@ -113,7 +113,7 @@ class DiscordMessageGroup(displayio.Group, messages.DiscordMessageBase):
         """Turns a dict into a DiscordMessageGroup.  The dict must have keys
         for 'message', 'user', and 'cmd_type'
 
-        :param payload: The payload string
+        :param StringIO payload: The payload string
         """
 
         payload = payload.read()
