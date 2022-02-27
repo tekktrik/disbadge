@@ -53,7 +53,7 @@ class SplashBackground(displayio.Group):
 class TextSplashScreen(displayio.Group):
     """A splash screen with a text label in the center
 
-    :param int id: The id of this splash screen
+    :param int screen_id: The id of this splash screen
     :param str text: The text to be displayed on the screen
     :param int text_color: (Optional) The color to apply to the text, default is white
     """
@@ -75,7 +75,7 @@ class TextSplashScreen(displayio.Group):
 class LabeledTextSplashScreen(displayio.Group):
     """A TextSplashScreen with a label for the given text
 
-    :param int id: The id of this splash screen
+    :param int screen_id: The ID of this splash screen
     :param str label: The text to be used as the label text
     :param str text: The text to be displayed on the screen as the message
     :param int text_color: (Optional) The color to apply to the text, default is white

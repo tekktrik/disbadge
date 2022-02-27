@@ -53,7 +53,10 @@ web_app = WSGIApp()
 
 @web_app.route("/message", ["POST"])
 def display_message(request: Request):  # TODO: add request param
-    """Function for handling data transmission over WSGI app"""
+    """Function for handling data transmission over WSGI app
+
+    :param Request request: The incoming request
+    """
 
     print("RECEIVED NEW MESSAGE!")
     global_state.CURRENT_MESSAGE = DiscordMessageGroup()
@@ -64,7 +67,10 @@ def display_message(request: Request):  # TODO: add request param
 
 @web_app.route("/activate", ["POST"])
 def activate_disbadge(request: Request):  # TODO: add request param
-    """Function for activating the DisBadge"""
+    """Function for activating the DisBadge
+
+    :param Request request: The incoming request
+    """
 
     global_state.DISCORD_CONNECTION = True
     print("Activated!")
@@ -73,6 +79,11 @@ def activate_disbadge(request: Request):  # TODO: add request param
 
 @web_app.route("/sound/<setting>", ["POST"])
 def set_sound(request: Request, setting: str):
+    """Turn off the DisBadge sound
+
+    :param Request request: The incoming request
+    :param str setting: The sound setting
+    """
     if setting == "off":
         disbadge.muted = True
     return ("200 OK", ["Content-Type", "text/plain"], "")

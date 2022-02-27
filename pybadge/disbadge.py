@@ -66,7 +66,7 @@ class DiscordPyBadge:
     """A helper class that manages the IO for the PyBadge, including NeoPixels,
     sound, and button inputs
 
-    :param str ip_address: The IP address of the
+    :param str ip_address: The IP address of the Disbadge
     :param bool external_speaker: Whether the PyBadge is set up to use an
         external speaker; default is False
     """
@@ -180,11 +180,7 @@ class DiscordPyBadge:
         self._ip_address = ip_address
 
     def update_inputs(self) -> bool:
-        """Get the latest button press Event
-
-        :return: Whether the lastest event was a press
-        :rtype: bool
-        """
+        """Get the latest button press Event"""
 
         new_event = self._pad.events.get_into(self._event)
         if self._event is None or self._event.released or not new_event:
@@ -198,6 +194,7 @@ class DiscordPyBadge:
         return self._event.key_number
 
     def flush_inputs(self):
+        """Flushes the input of button presses"""
         while self.button_pressed != Buttons.NONE:
             self.update_inputs()
 
@@ -216,6 +213,11 @@ class DiscordPyBadge:
         self._current_animation.animate()
 
     def _generate_led_animation(self, animation_id: int) -> Animation:
+        """Dynamically generates the LED animation object
+
+        :param int animation_id: The animation ID
+        """
+
         animation_reqs = self._animations[animation_id]
         if animation_reqs["type"] == "pulse":
             animation_class = Pulse
@@ -233,6 +235,12 @@ class DiscordPyBadge:
     def _generate_screen(
         self, screen_id: int, message: Optional[displayio.Group] = None
     ) -> SplashBackground:
+        """Dynamically generates the screen to show
+
+        :param int screen_id: The screen ID
+        :param displayio.Group message: (Optional) The message
+        """
+
         self._current_message = message if message else None
         splash_reqs = self._splashes[screen_id]
         if splash_reqs["type"] == "ts":
@@ -274,6 +282,11 @@ class DiscordPyBadge:
         return current_splash.screen_id
 
     def _generate_audio_file(self, sound_id: int) -> Union[MP3Decoder, WaveFile]:
+        """Dynamically generate the sound object
+
+        :param int sound_id: The sound ID
+        """
+
         sound_reqs = self._sounds.get(sound_id)
         if not sound_reqs:
             raise ValueError("Invalid sound id")
@@ -285,7 +298,8 @@ class DiscordPyBadge:
         """Plays a notification sound, and pauses execution while doing so
         (still animates LEDs, however)
 
-        :param int sound_id: The id of the notification sound
+        :param int sound_id: (Optional) The id of the notification sound,
+            stops playing if ``None``
         """
 
         if sound_id is None:
