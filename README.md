@@ -50,7 +50,7 @@ You can find instructions on installing or upgrading CircuitPython [here](https:
 Downloading Project Files
 ------------------------
 
-You can download the latest release of this project on Github in the [Releases section](https://github.com/tekktrik/disbadge/releases). Download the ``disbadge_project.zip`` or ``disbadge_project.tar.gz`` file and extract the files to a folder.
+You can download the latest release of this project on Github in the [Releases section](https://github.com/tekktrik/disbadge/releases). Download the ``disbadge_project.zip`` file and extract the files to a folder.
 
 Install required libraries
 --------------------------
