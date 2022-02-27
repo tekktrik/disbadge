@@ -13,3 +13,12 @@ repos:
     -   id: check-yaml
     -   id: end-of-file-fixer
     -   id: trailing-whitespace
+-   repo: https://github.com/pycqa/pylint
+    rev: v2.11.1
+    hooks:
+    -   id: pylint
+        name: pylint (library code)
+        types: [python]
+        args:
+          - --disable=consider-using-f-string,duplicate-code
+        files: "pybadge/*.py|raspberrypi/*.py|raspberrypi_bot_link.py"
