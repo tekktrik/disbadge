@@ -1,7 +1,7 @@
 DisBadge
 ========
 
-Turns that PyBadge into a sweet Discord notification companion!
+Turns that EdgeBadge or PyBadge into a sweet Discord notification companion!
 
 
 Hardware Dependencies
@@ -9,6 +9,8 @@ Hardware Dependencies
 
 * [Adafruit EdgeBadge](https://www.adafruit.com/product/4400) OR [Adafruit PyBadge](https://www.adafruit.com/product/4200)
 * [Adafruit AirLift FeatherWing](https://www.adafruit.com/product/4264)
+
+:warning: This project will not work with the low cost version of the PyBadge!
 
 
 Firmware Dependencies
@@ -39,8 +41,13 @@ These are the CircuitPython libraries you'll need to download:
 You can find them by downloading the latest version of the [CircuitPython Bundle](https://github.com/adafruit/Adafruit_CircuitPython_Bundle/releases).  Make sure to download the ZIP file named something like  ``adafruit-circuitpython-bundle-7.x-mpy-XXXXXXXX.zip``.
 
 
-Installation
-============
+Setup
+=====
+
+Hardware Setup
+--------------
+
+Solder the male header pins to the AirLift FeatherWing and connect it to the back of the EdgeBadge/Pybadge.
 
 Upgrading CircuitPython
 -----------------------
