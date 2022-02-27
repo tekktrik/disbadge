@@ -10,8 +10,7 @@ Hardware Dependencies
 * [Adafruit EdgeBadge](https://www.adafruit.com/product/4400) OR [Adafruit PyBadge](https://www.adafruit.com/product/4200)
 * [Adafruit AirLift FeatherWing](https://www.adafruit.com/product/4264)
 
-:warning: This project will not work with the low cost version of the PyBadge, which does not have the hardware for
-attaching FeatherWings!
+:warning: This project will not work with the low cost version of the PyBadge!
 
 
 Firmware Dependencies
