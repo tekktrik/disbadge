@@ -85,13 +85,12 @@ One file that must be added to the project yourself is a file called ``secrets.p
 information that you must supply yourself.  This file should be saved in the ``shared`` folder and will contain the
 following information:
 
-===========  =================================  ====
-Setting                 Description             Type
-===========  =================================  ====
-SSID         Wi-Fi network name                 str
-Password     Wi-Fi password                     str
-Guid ID      The Discord channel the bot is in  int
-Login Token  The Bot token                      str
+| Setting     |            Description            | Type |
+| ----------- | --------------------------------- | ---- |
+| SSID        | Wi-Fi network name                | str  |
+| Password    | Wi-Fi password                    | str  |
+| Guild ID    | The Discord channel the bot is in | int  |
+| Login Token | The Bot token                     | str  |
 
 Here's an example of what the file should look like:
 
@@ -104,9 +103,7 @@ secrets = {
 }
 ```
 
-.. warning::
-
-    The above information isn't real. **NEVER** share your network or Discord information with anyone!
+:warning: The above information isn't real. **NEVER** share your network or Discord information with anyone!
 
 Adding Files to the EdgeBadge/PyBadge
 -------------------------------------
@@ -139,12 +136,11 @@ Using the DisBadge
 Using the DisBadge is easy!  From the channel containing the bot, anyone can just use any of the following slash commands,
 along with an associated message:
 
-=============  =========================
-Slash Command         Description
-=============  =========================
-``/ping``      Send a ping
-``/cheer``     Send some good vibes!
-``/hype``      LET'S GOOOOOOOOOOOOOOOOOO
+| Slash Command |        Description        |
+| ------------- | ------------------------- |
+| ``/ping``     | Send a ping               |
+| ``/cheer``    | Send some good vibes!     |
+| ``/hype``     | LET'S GOOOOOOOOOOOOOOOOOO |
 
 This will send the message attached with each slash command to the DisBadge, which will notify you and display the message
 afterwards. Each has a slightly different sound, notification screen, and light sequence when it receives the message. Try
