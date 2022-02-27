@@ -27,7 +27,7 @@ jobs:
         submodules: true
     - name: Pip install Sphinx, pre-commit
       run: |
-        pip install --force-reinstall Sphinx sphinx-rtd-theme pre-commit
+        pip install --force-reinstall pre-commit
     - name: Pre-commit hooks
       run: |
         pre-commit run --all-files
