@@ -8,7 +8,6 @@ Main sequence for Discord PyBadge
 
 """
 
-import gc
 import time
 import board
 from digitalio import DigitalInOut
@@ -61,7 +60,6 @@ def display_message(request: Request):  # TODO: add request param
     print("RECEIVED NEW MESSAGE!")
     global_state.CURRENT_MESSAGE = DiscordMessageGroup()
     global_state.CURRENT_MESSAGE.from_json(request.body)
-    # gc.collect()
     return ("200 OK", ["Content-Type", "text/plain"], "")
 
 
