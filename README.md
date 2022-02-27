@@ -59,15 +59,15 @@ Install required libraries
 
 In a command terminal, install the libraries in ``requirements.txt`` using ``pip``:
 
-.. code-block::
-
-    pip3 install -r requirements.txt
+```
+pip3 install -r requirements.txt
+```
 
 If that doesn't work, try the following:
 
-.. code-block::
-
-    python3 -m pip install -r requirements.txt
+```
+python3 -m pip install -r requirements.txt
+```
 
 Setting Up Discord Bot
 ----------------------
@@ -95,14 +95,14 @@ Login Token  The Bot token                      str
 
 Here's an example of what the file should look like:
 
-.. code-block:: python
-
-    secrets = {
+```python
+secrets = {
     "ssid": "NetworkName",
     "password": "YourPassword123",
     "guild-id": 123456789123456789,
     "login-token": "a1B2c3D4e5F6g7H8i9J0.k1L2m3N4o5P6q7R8_s9T0u1V2w3X4y5Z6"
 }
+```
 
 .. warning::
 
@@ -125,9 +125,9 @@ The device will begin setting up things behind the scenes, like connecting to Wi
 Open up a command terminal in the project folder and run ``raspberrypi_bot_link.py`` and add the IP address displayed as a command
 lin argument:
 
-.. code-block::
-
-    python3 raspberrypi_bot_link.py 123.45.6.789
+```
+python3 raspberrypi_bot_link.py 123.45.6.789
+```
 
 This will start up the program on your computer that will actually managing communication with the bot.  It will automatically setup-discord-backend
 connect to the DisBadge, as the screen will display "No messages!"
@@ -165,8 +165,8 @@ Additional Features
 
 If you want to use the DisBadge without sound, you can use the ``--mute`` flag when starting up the computer script:
 
-.. code-block::
-
-    python3 raspberrypi_bot_link.py 123.45.6.789 --mute
+```
+python3 raspberrypi_bot_link.py 123.45.6.789 --mute
+```
 
 This will let the DisBadge know that it shouldn't make any notification sounds.
