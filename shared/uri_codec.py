@@ -1,3 +1,17 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
+"""
+`shared.codec`
+=================
+
+Codec for working with special characters over JSON payloads
+
+* Author(s): Alec Delaney
+
+"""
+
 import re
 import gc
 

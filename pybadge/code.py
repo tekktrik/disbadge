@@ -1,6 +1,10 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
 """
-`code`
-====================================================
+`pybadge.code`
+==============
 
 Main sequence for Discord PyBadge
 
@@ -14,13 +18,12 @@ from digitalio import DigitalInOut
 from adafruit_esp32spi import adafruit_esp32spi
 import adafruit_esp32spi.adafruit_esp32spi_wifimanager as wifimanager
 import adafruit_esp32spi.adafruit_esp32spi_wsgiserver as server
-from states import LEDStateIDs
+from states import LEDStateIDs, DisplayStateIDs
 from pybadge_messages import DiscordMessageGroup
-from disbadge import DiscordPyBadge, Buttons
-from shared.messages import CommandType
-from states import DisplayStateIDs
 from adafruit_wsgi.wsgi_app import WSGIApp
 import global_state
+from disbadge import DiscordPyBadge, Buttons
+from shared.messages import CommandType
 from shared.secrets import secrets
 
 try:
@@ -51,7 +54,7 @@ web_app = WSGIApp()
 
 
 @web_app.route("/message", ["POST"])
-def display_message(request: Request):  # TODO: add request param
+def display_message(request: Request):
     """Function for handling data transmission over WSGI app
 
     :param Request request: The incoming request
@@ -63,8 +66,9 @@ def display_message(request: Request):  # TODO: add request param
     return ("200 OK", ["Content-Type", "text/plain"], "")
 
 
+# pylint: disable=unused-argument
 @web_app.route("/activate", ["POST"])
-def activate_disbadge(request: Request):  # TODO: add request param
+def activate_disbadge(request: Request):
     """Function for activating the DisBadge
 
     :param Request request: The incoming request
@@ -75,6 +79,7 @@ def activate_disbadge(request: Request):  # TODO: add request param
     return ("200 OK", ["Content-Type", "text/plain"], "")
 
 
+# pylint: disable=unused-argument
 @web_app.route("/sound/<setting>", ["POST"])
 def set_sound(request: Request, setting: str):
     """Turn off the DisBadge sound
@@ -111,7 +116,6 @@ def main():
             disbadge.set_splash(DisplayStateIDs.CONNECTING)
             while not esp32.is_connected:
                 wifi.reset()
-                pass
 
         wsgi_server.update_poll()
 

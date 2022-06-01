@@ -1,6 +1,10 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
 """
 `shared.messages`
-====================================================
+=================
 
 Base class for holding Discord messages
 

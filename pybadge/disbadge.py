@@ -1,6 +1,10 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
 """
-`disbadge`
-====================================================
+`pybadge.disbadge`
+==================
 
 Manager for the PyBadge that handles user input, displays, and sounds
 
@@ -9,8 +13,8 @@ Manager for the PyBadge that handles user input, displays, and sounds
 """
 
 import gc
-import board
 import time
+import board
 from micropython import const
 from keypad import ShiftRegisterKeys, Event
 import neopixel
@@ -30,7 +34,9 @@ from screens import SplashBackground, TextSplashScreen, LabeledTextSplashScreen
 try:
     from typing import Optional, Union
     from pybadge_messages import DiscordMessageGroup
-    from adafruit_led_animation.animation import Animation
+    from adafruit_led_animation.animation import (  # pylint: disable=ungrouped-imports
+        Animation,
+    )
 except ImportError:
     pass
 
@@ -173,6 +179,7 @@ class DiscordPyBadge:
 
     @property
     def ip_address(self) -> Optional[str]:
+        """Returns the IP address of the DisBadge"""
         return self._ip_address
 
     @ip_address.setter

@@ -1,5 +1,15 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
 """
+`raspberrypi_bot_link`
+======================
+
 Bot link for the DisBadge!
+
+* Author(s): Alec Delaney
+
 """
 import argparse
 import discord

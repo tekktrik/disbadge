@@ -1,6 +1,10 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
 """
-`states`
-====================================================
+`pybadge.states`
+================
 
 Various program states stored in Enum-like objects
 

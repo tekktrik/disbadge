@@ -1,24 +1,36 @@
-# SPDX-FileCopyrightText: 2020 Diego Elio Pettenò
+# SPDX-FileCopyrightText: 2022 Alec Delaney
 #
-# SPDX-License-Identifier: Unlicense
+# SPDX-License-Identifier: MIT
 
 repos:
--   repo: https://github.com/python/black
-    rev: 20.8b1
+  - repo: https://github.com/python/black
+    rev: 22.3.0
     hooks:
-    - id: black
--   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.3.0
+      - id: black
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v0.14.0
     hooks:
-    -   id: check-yaml
-    -   id: end-of-file-fixer
-    -   id: trailing-whitespace
--   repo: https://github.com/pycqa/pylint
+      - id: reuse
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.2.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/pycqa/pylint
     rev: v2.11.1
     hooks:
-    -   id: pylint
-        name: pylint (library code)
+      - id: pylint
+        name: pylint (PyBadge code)
         types: [python]
         args:
           - --disable=consider-using-f-string,duplicate-code
-        files: "pybadge/*.py|raspberrypi/*.py|raspberrypi_bot_link.py"
+        files: pybadge/
+      - id: pylint
+        name: pylint (RPi code)
+        types: [python]
+        files: raspberrypi/
+      - id: pylint
+        name: pylint (Bot Link code)
+        types: [python]
+        files: raspberrypi_bot_link.py
