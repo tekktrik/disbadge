@@ -25,4 +25,4 @@ repos:
         types: [python]
         args:
           - --disable=consider-using-f-string,duplicate-code
-        files: "pybadge/*.py|raspberrypi/*.py|raspberrypi_bot_link.py"
+          - pybadge/ raspberrypi/ raspberrypi_bot_link.py
