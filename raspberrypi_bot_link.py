@@ -5,6 +5,16 @@
 """
 Bot link for the DisBadge!
 """
+
+"""
+`raspberrypi_bot_link`
+======================
+
+Bot link for the DisBadge!
+
+* Author(s): Alec Delaney
+
+"""
 import argparse
 import discord
 from discord.commands.context import ApplicationContext

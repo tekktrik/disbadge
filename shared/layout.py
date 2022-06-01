@@ -4,7 +4,7 @@
 
 """
 `shared.layout`
-====================================================
+===============
 
 Helper function(s) that may be used as part of layout management
 across the PyBadge and Raspberry Pi

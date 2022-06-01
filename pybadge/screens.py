@@ -4,7 +4,7 @@
 
 """
 `screens`
-====================================================
+=========
 
 Screens that are generated as part of the Discord PyBadge program
 

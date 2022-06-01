@@ -4,7 +4,7 @@
 
 """
 `disbadge`
-====================================================
+==========
 
 Manager for the PyBadge that handles user input, displays, and sounds
 

@@ -4,7 +4,7 @@
 
 """
 `shared.messages`
-====================================================
+=================
 
 Base class for holding Discord messages
 

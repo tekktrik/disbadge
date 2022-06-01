@@ -2,6 +2,16 @@
 #
 # SPDX-License-Identifier: MIT
 
+"""
+`raspberrypi.rpi_messages`
+==========================
+
+RaspberryPi-specific Discord message class
+
+* Author(s): Alec Delaney
+
+"""
+
 from typing import Dict
 from shared.messages import DiscordMessageBase
 from shared.uri_codec import encode_dictionary
