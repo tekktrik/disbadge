@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 """
-`global_state`
-==============
+`pybadge.global_state`
+======================
 
 File for storing and working with global states
 

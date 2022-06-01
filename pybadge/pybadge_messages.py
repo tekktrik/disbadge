@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 """
-`pybadge_messages`
-==================
+`pybadge.pybadge_messages`
+==========================
 
 PyBadge-specific Discord message class that also inherits from
 displayio.Group

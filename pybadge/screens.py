@@ -3,8 +3,8 @@
 # SPDX-License-Identifier: MIT
 
 """
-`screens`
-=========
+`pybadge.screens`
+=================
 
 Screens that are generated as part of the Discord PyBadge program
 
