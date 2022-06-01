@@ -21,8 +21,16 @@ repos:
     rev: v2.11.1
     hooks:
       - id: pylint
-        name: pylint (library code)
+        name: pylint (PyBadge code)
         types: [python]
         args:
           - --disable=consider-using-f-string,duplicate-code
-          - pybadge/ raspberrypi/ raspberrypi_bot_link.py
+        files: pybadge/
+      - id: pylint
+        name: pylint (RPi code)
+        types: [python]
+        files: raspberrypi/
+      - id: pylint
+        name: pylint (Bot Link code)
+        types: [python]
+        files: raspberrypi_bot_link.py
