@@ -14,14 +14,9 @@ Screens that are generated as part of the Discord PyBadge program
 
 import displayio
 from adafruit_bitmap_font import bitmap_font
-import adafruit_imageload
 from adafruit_display_text.label import Label
 from pybadge_messages import MESSAGE_FONT
 
-try:
-    from typing import Tuple
-except ImportError:
-    pass
 
 # Screen properties
 SCREEN_HEIGHT = 128
@@ -32,6 +27,7 @@ SPLASH_FONTNAME = "/fonts/Noto-18.bdf"
 SPLASH_FONT = bitmap_font.load_font(SPLASH_FONTNAME)
 
 
+# pylint: disable=too-few-public-methods
 class SplashBackground(displayio.Group):
     """Base class that applies a solid color background as a splash screen
 
@@ -44,7 +40,6 @@ class SplashBackground(displayio.Group):
 
         self._color = color
 
-        # TODO: This code is fine, but the background will be the same, only set once
         self._bg_bitmap = displayio.Bitmap(SCREEN_WIDTH, SCREEN_HEIGHT, 1)
         self._bg_palette = displayio.Palette(1)
         self._bg_palette[0] = self._color
@@ -55,6 +50,7 @@ class SplashBackground(displayio.Group):
         self.append(self._bg)
 
 
+# pylint: disable=too-few-public-methods
 class TextSplashScreen(displayio.Group):
     """A splash screen with a text label in the center
 
@@ -77,6 +73,7 @@ class TextSplashScreen(displayio.Group):
         self.append(self._label)
 
 
+# pylint: disable=too-few-public-methods
 class LabeledTextSplashScreen(displayio.Group):
     """A TextSplashScreen with a label for the given text
 
