@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
 from typing import Dict
 from shared.messages import DiscordMessageBase
 from shared.uri_codec import encode_dictionary

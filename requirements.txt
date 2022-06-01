@@ -1,2 +1,6 @@
+# SPDX-FileCopyrightText: 2022 Alec Delaney
+#
+# SPDX-License-Identifier: MIT
+
 py-cord==2.0.0b4
 requests
