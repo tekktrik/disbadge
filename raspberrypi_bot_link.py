@@ -3,10 +3,6 @@
 # SPDX-License-Identifier: MIT
 
 """
-Bot link for the DisBadge!
-"""
-
-"""
 `raspberrypi_bot_link`
 ======================
 
